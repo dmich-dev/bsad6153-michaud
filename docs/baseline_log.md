@@ -3,15 +3,16 @@
 **My decision:** Choose an AI model for coding or agent tasks.
 **How often I make it:** Daily, confirmed on October 22, 2026.
 
-**Log started:** October 22, 2026. No timed decision observation has been recorded yet. Leave missing
-measurements blank rather than inventing values; label any later reconstruction explicitly.
+**Log started:** October 22, 2026. The first entry is reconstructed from my report of recent heavy use
+of 6.1 sol for homelab tasks. The specific decision date, comparison sources, duration, and confidence
+were not recorded. No timed decision observation has been recorded yet.
 
 Log each decision **while it happens**. Time yourself with a timer; don't estimate afterward.
 Mark any entry you had to reconstruct from memory as *(reconstructed)*.
 
 | Date | What I was deciding | What I looked at | Time (min) | What I wished I knew | Confidence (1&ndash;5) |
 |---|---|---|---|---|---|
-|  |  |  |  |  |  |
+| Date unknown; reported October 22, 2026 *(reconstructed)* | Model for homelab tasks; recently using 6.1 sol heavily | Not recorded | Not measured | Not recorded | Not recorded |
 
 ## Reflection
 
