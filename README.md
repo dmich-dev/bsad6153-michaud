@@ -1,12 +1,24 @@
-# BSAD 6153 Project: &lt;your project name&gt;
+# BSAD 6153 Project: Agent Model Selection
 
-**Student:** &lt;your name&gt;
-**My decision:** &lt;the decision you make regularly that this project improves&gt;
-**Website:** &lt;your domain, from Week 4&gt;
+**Student:** David Michaud (DJ)
+**My decision:** Choose an AI model for coding or agent tasks, a decision I make daily.
+**Website:** Planned for Week 4.
 
 This repository is one complete AI system, built over eight weeks: a real API, synced on a schedule into a
 PostgreSQL database, shown on a public website, with a chatbot and an agent that answer and act from your
 own data. You build it with an AI coding agent, and you read and verify everything it writes.
+
+## Decision and data
+
+I find it hard to choose a model consistently because new models seem to come out every other day.
+
+This project will compare current API prices, context limits, and advertised tool support from the
+[OpenRouter model catalog](https://openrouter.ai/api/v1/models). Those fields can support a shortlist;
+they are not measurements of coding quality or reliability. API price estimates will be kept separate
+from personal subscriptions and access provided through Newman.
+
+The [baseline log](docs/baseline_log.md) records the current decision process before the system is built.
+No model benchmarks or time savings have been measured for this project yet.
 
 ---
 
