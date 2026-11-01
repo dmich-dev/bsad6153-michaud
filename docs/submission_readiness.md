@@ -1,6 +1,6 @@
 # Submission readiness — current work
 
-Updated November 1, 2026. **Neither assignment is ready to turn in.** A fresh authenticated Canvas API check confirmed David Michaud, user 11643, and AI Implementations, course 14628. The assignment list was paginated to completion (six assignments, one page); modules, relevant announcements, calendar, and the 1.2/1.3 self-submissions were checked. 1.3 remains due November 1 at 11:59:59 p.m. CST, and 1.4 remains locked after the same instant. Both are unsubmitted.
+Updated November 1, 2026. **The 1.3 current-work delivery text is prepared for the deadline, with pending API approval and the incomplete baseline disclosed. This does not certify every rubric requirement complete. Assignment 1.4 remains outstanding.** A fresh authenticated Canvas API check confirmed David Michaud, user 11643, and AI Implementations, course 14628. The assignment list was paginated to completion (six assignments, one page); modules, relevant announcements, calendar, and the 1.2/1.3 self-submissions were checked. 1.3 remains due November 1 at 11:59:59 p.m. CST, and 1.4 remains locked after the same instant. Both are unsubmitted.
 
 The submitted 1.2 comment explicitly proposes OpenRouter for this model-choice project. On November 1,
 DJ confirmed retaining OpenRouter after discussing alternatives and the difference between catalog data
@@ -23,7 +23,7 @@ approval request is saved as an unsent Gmail draft for DJ's review; it has not b
 | Screencast: 10 points | [Student recording](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1) supplied; about 4:35; existing access Public; required topics present in transcript | DJ reviews [retry/price clarifications](screencast_review_2026-11-01.md) and checks full-screen legibility/audio before final approval |
 | Repository practice: 5 points | Milestone branch pushed; draft PR #2 targets main; raw folder ignored; run/test commands and recording link documented | DJ reviews the exact PR and completes personal evidence; PR remains draft |
 | Required review | No credential signatures found in limited copied-file/remote-history checks; assistant work recorded in [AI log](ai_review_log.md) | DJ's actual Read/Verify/Decide evidence; do not turn limited checks into an exhaustive no-secrets claim |
-| Delivery | Latest live check, Nov 1 at 19:42 UTC, now offers online text entry, URL, media, or file upload; assignment remains unsubmitted | Use text entry to include the PR and Loom links together after the missing work and DJ's final review are complete |
+| Delivery | Latest check Nov 1 at 22:58 UTC still offers text entry, URL, media, or file upload; assignment remains unsubmitted; DJ accepted the prepared review | DJ chose to prepare the current work for the deadline without waiting for source approval. Exact text includes both links and discloses pending approval and the incomplete baseline |
 
 ## Assignment 1.4: case brief and two replies
 
@@ -60,3 +60,12 @@ page 7, prefers email for direct communication with a descriptive subject. The e
 draft matches the instructor address on page 1 and remains unsent. After an actual approval response,
 its status can be recorded in the README proposal. Neither message sending nor Canvas submission
 was authorized by the review acceptance.
+
+## Deadline delivery decision — November 1
+
+DJ chose to prepare the current work for tonight's deadline without waiting for an instructor reply.
+The Canvas text is ready to copy with the PR/Loom links, written video clarifications, pending source
+approval, and one-entry baseline limitation explicitly stated. The same instructor email draft was
+updated for the deadline context, saved unsent, and fully read back. DJ requested the final text so
+he can send it himself. No approval response, completed No-AI log, email sending, or Canvas submission
+is claimed. The PR remains a draft and can be referenced as the current-work PR without merging.

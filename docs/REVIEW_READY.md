@@ -120,3 +120,11 @@ DJ subsequently accepted the prepared review, saying we had gone through it toge
 resolves the review request above without asserting that every file was read or a pre-code check was
 performed. The remaining unresolved items are the No-AI baseline entries and instructor API approval.
 The syllabus prefers email for direct communication; the prepared approval request remains unsent.
+
+## Deadline handoff requested by DJ
+
+DJ chose to prepare the current work for November 1 delivery while OpenRouter approval remains
+unconfirmed. The Canvas copy explicitly discloses that status and the incomplete No-AI baseline;
+it does not claim all rubric requirements have been met. The instructor email is updated and saved
+unsent for DJ to send. Review acceptance remains recorded. No further waiting for an approval response
+is imposed as a condition of preparing this packet, and no Canvas submission or PR merge was made.

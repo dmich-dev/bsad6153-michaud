@@ -165,3 +165,17 @@ channel. Its linked syllabus, page 7, explicitly prefers email for direct commun
 a descriptive subject. The instructor address on syllabus page 1 matches the saved email draft.
 The draft remains unsent. An assignment comment naming the source does not itself establish an
 instructor approval response.
+
+## Current-work deadline handoff and email draft — November 1
+
+DJ asked to prepare the current work for tonight's deadline without waiting for OpenRouter approval,
+and explicitly invoked his email-draft-review skill to show the message for him to send. The assistant
+verified the current Gmail account, read the existing draft, and checked relevant incoming/outgoing
+mail including Spam and Trash; the targeted search found only the unsent draft. It updated that same
+draft with the deadline context and both review links, then read back the complete saved MIME body
+and headers: correct recipient/subject, no CC/BCC or attachments, no quoted history or duplicate footer.
+No email was sent. Canvas still showed 1.3 unsubmitted in the fresh check.
+
+The desktop Canvas text is now exact copy without a removable preparation note. Pending source
+approval and the one-entry baseline limitation remain explicit. No student events or measurements
+were added, no complete-rubric claim was made, and no Canvas submission or PR merge was performed.
