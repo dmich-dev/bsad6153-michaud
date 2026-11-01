@@ -31,7 +31,7 @@ The technical draft and two assistant-executed runs are ready for review. See [r
 - [x] Fixed the demo's old-model pin: a fresh newest-selection run returned 73 related endpoints; 21 tests passed. [Current verification](latest_selection_verification_2026-11-01.json).
 - [x] Clean-start and rerun evidence; 16 offline tests passed. See [run verification](run_verification_2026-11-01.json).
 - [x] Exact run instructions in README; optional key name only in `.env.example`.
-- [ ] Confirm endpoint identity rules and investigate conflicting output limits in the sample.
+- [x] Assistant checked the composite endpoint key and documented the unresolved output-limit source conflict; DJ still reviews their meaning in the dictionary.
 - [ ] Review the draft dictionary, source terms, and attribution before describing them as final.
 
 ## DJ's remaining evidence
@@ -40,7 +40,8 @@ The technical draft and two assistant-executed runs are ready for review. See [r
   reconstructions. The assignment explicitly applies No AI to the entries themselves.
 - [ ] Complete the five reflection prompts below the existing baseline log.
 - [ ] Revise the proposal's workflow description using that log, and choose/confirm the backup source.
-- [ ] Fill the PR template's Direct, Read, Verify, Decide sections with what actually happened.
+- [x] Assistant filled the PR's Direct, Read, Verify, Decide sections using actual instructions, dry-run feedback, and student screencast evidence; unverified personal attestations remain unchecked.
+- [ ] DJ reviews and corrects those factual notes before final approval.
 
 ## A 3–5 minute screencast outline
 

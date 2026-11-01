@@ -48,9 +48,9 @@ records response hashes. The [small linked sample](../data/sample/openrouter_sam
 3. [Code](../ingest/fetch.py): `load_key` reads the optional local key; `checked_url` limits destinations;
    `get_json` spaces requests; `retry_delay` honors retry hints or uses bounded backoff; `collect` follows
    pages, deduplicates, validates joins, and reports completeness.
-4. [AI review log](ai_review_log.md): assistant checks and student review are distinct. DJ asked the
-   assistant to do the documentation check while busy. No statement that DJ personally performed that
-   pre-code check, read the code, ran tests, or recorded a video has been filled in.
+4. [AI review log](ai_review_log.md): assistant checks and student review are distinct. DJ supplied
+   a real clean-run walkthrough and identified the older-example issue during his dry run. His own
+   pre-code documentation check and review of every PR change are not certified by that evidence.
 
 ## Running it yourself
 
@@ -79,3 +79,21 @@ them in your own words, then show one model and its related endpoint. Use the ou
   [source index](case_source_index.md) and [worksheet](case_brief_plan_2026-10-31.md) are research/planning aids only.
 
 Live Canvas boundaries: 1.3 due November 1 at 11:59:59 p.m. CST; 1.4 discussion locks at the same instant.
+
+## Final preparation review — November 1
+
+The assistant rechecked all 17 original-response hashes from the corrected example-selection run,
+687 distinct catalog IDs, all 73 related joins, unique endpoint keys, and the recording's base-price
+calculation. Ingestion, recording-workspace, and test source is unchanged since the commit with 21
+passing tests; tests were not rerun for these documentation-only updates. The limited file/history
+scan and link checks are recorded separately. See [preparation verification](submission_prep_verification_2026-11-01.json).
+
+No approval was found in the inspected 1.2/1.3 comments, course-filtered Canvas inbox/archive/sent
+conversations, or targeted searches of the connected personal Gmail. That does not cover school email
+or every other communication. An approval request has been saved as an unsent Gmail draft for DJ to
+review; an unsent request is not instructor approval.
+
+The desktop recording folder now includes a blank baseline-input sheet, a Canvas text-entry draft,
+the approval-request draft, and a short final-review checklist. The baseline itself remains unchanged.
+DJ's personal observations and final review are still needed. No Canvas submission, merge, or video
+edit was made.

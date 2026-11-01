@@ -85,3 +85,26 @@ Pending: complete genuine baseline evidence/reflections, verify the proposal and
 milestone changes in draft PR #2, review the supplied screencast and clarifications, and
 obtain DJ's review before turn-in. The working copy already contains the inspected remote Git history
 and a local milestone branch; the excluded Mac-only history has not been imported.
+
+## Additional preparation requested by DJ — November 1
+
+DJ asked the assistant to handle the remaining preparation. The assistant rechecked the saved corrected
+run's 17 original-response hashes, 687 distinct catalog IDs, 73 valid related joins, endpoint-key
+uniqueness, and Terra Pro's base token-price conversion. Code is unchanged since the 21-test passing
+commit; no new test run is claimed. See [preparation verification](submission_prep_verification_2026-11-01.json).
+
+The restored project and a targeted Drive search supplied no additional genuine baseline entries.
+The assistant provided a blank input sheet and asked DJ for four additional real observations and
+five reflection answers. The canonical baseline remains byte-for-byte unchanged, and no personal
+timings, confidence ratings, or reflections were generated.
+
+The assistant found no source approval in the inspected Canvas comments, course-filtered inbox/archive/
+sent conversations, or targeted connected-personal-Gmail searches. The course teacher identity was
+verified through Canvas, and the email address through the University of Kansas consortium listing.
+An approval-request email was saved as an unsent draft and fully read back: correct recipient, one
+PR link, no attachments, no quoted history, and no sending. School email and other communications were
+not covered, so absence in these searches is not a claim that approval was never given elsewhere.
+
+A Canvas text-entry draft contains the PR and Loom links with the retry and price clarifications.
+DJ's final review, personal evidence, and instructor approval remain pending. No student attestations
+were completed on DJ's behalf. No Canvas submission, PR merge, or Loom edit was performed.

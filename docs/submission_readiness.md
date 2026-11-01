@@ -4,8 +4,10 @@ Updated November 1, 2026. **Neither assignment is ready to turn in.** A fresh au
 
 The submitted 1.2 comment explicitly proposes OpenRouter for this model-choice project. On November 1,
 DJ confirmed retaining OpenRouter after discussing alternatives and the difference between catalog data
-and paid inference. Models.dev remains a proposed backup. No instructor approval appears in the
-inspected submission comments; that is not proof that approval was never given elsewhere.
+and paid inference. Models.dev remains a proposed backup. No approval was found in the inspected
+1.2/1.3 comments, course-filtered Canvas inbox/archive/sent conversations, or targeted searches of the
+connected personal Gmail. School email and other communications are not covered. An instructor
+approval request is saved as an unsent Gmail draft for DJ's review; it has not been sent or approved.
 
 ## Assignment 1.3: API Connection & Data Dictionary
 
@@ -37,6 +39,6 @@ inspected submission comments; that is not proof that approval was never given e
 
 ## Assistant work completed so far
 
-Restored and verified archive; preserved original project files and personal baseline; checked official source documentation; compared sources; implemented and tested retrieval; performed two complete live runs; updated the sample, dictionary, and review evidence; staged the recording workspace and verified its fresh-run button; opened the milestone PR as a draft for review. See [technical review](REVIEW_READY.md). Student personal evidence, brief/replies, review of the supplied screencast, and final submission remain outstanding.
+Restored and verified archive; preserved original project files and personal baseline; checked official source documentation; compared sources; implemented and tested retrieval; performed two complete live runs; updated the sample, dictionary, and review evidence; staged the recording workspace and verified its fresh-run button; opened the milestone PR as a draft for review. See [technical review](REVIEW_READY.md). A final assistant evidence review is recorded in [preparation verification](submission_prep_verification_2026-11-01.json). Student personal evidence, brief/replies, review of the supplied screencast, instructor approval, and final submission remain outstanding.
 
 The original unmodified files remain in the restored archive. The working copy now contains the retrieved remote Git history and a local milestone-1 branch. A four-signature scan inspected all 22 reachable remote blob objects without a match; it is not an exhaustive secret detector and does not cover the excluded Mac-only Git history. See [repository review evidence](repository_review_2026-11-01.json).
