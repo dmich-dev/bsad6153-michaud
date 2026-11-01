@@ -38,8 +38,8 @@ The technical draft and two assistant-executed runs are ready for review. See [r
 
 - [ ] At least five genuine baseline entries. Use a timer for live decisions; do not invent timing for
   reconstructions. The assignment explicitly applies No AI to the entries themselves.
-- [ ] Complete the five reflection prompts below the existing baseline log.
-- [ ] Revise the proposal's workflow description using that log, and choose/confirm the backup source.
+- [x] Assistant drafted all five reflection responses from actual context with AI assistance disclosed; DJ reviews the wording and the fifth answer's honest evidence limitation.
+- [x] Assistant updated the proposal workflow from DJ's actual stated criteria and recovered usage evidence; Models.dev remains the proposed backup for final review.
 - [x] Assistant filled the PR's Direct, Read, Verify, Decide sections using actual instructions, dry-run feedback, and student screencast evidence; unverified personal attestations remain unchecked.
 - [ ] DJ reviews and corrects those factual notes before final approval.
 

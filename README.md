@@ -112,10 +112,11 @@ every command before you approve it, and keep auto-approve off.
 workflow evidence remain pending. This proposal describes intended work, not a completed system.
 
 Agent Model Selection supports a daily decision: which AI model to use for coding or agent tasks.
-Frequent releases make consistent selection difficult. The current baseline contains one reconstructed
-report of heavy 6.1 sol use for homelab tasks; timing, comparison sources, and confidence were not
-recorded. Additional genuine entries and reflections are needed before drawing conclusions about the
-workflow or claiming improvement.
+DJ mainly uses OpenAI's 6.1 Sol because he finds it cost-effective and it connects well with HERMES.
+His work includes bot workflows, agent interfaces, security automation, and outage investigation.
+Five historical task/model-use records support that usage history; they do not measure selection time
+or comparative quality. The student-authored decision log remains incomplete. AI-assisted reflections
+are drafted for review, and no measured improvement is claimed.
 
 The primary source is OpenRouter's model catalog, already named in the submitted repository setup.
 It supplies advertised prices, context limits, modalities, and supported request parameters. Related

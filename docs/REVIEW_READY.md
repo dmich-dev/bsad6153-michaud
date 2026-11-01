@@ -68,8 +68,9 @@ them in your own words, then show one model and its related endpoint. Use the ou
 - DJ reviews and records his own understanding/corrections, including documentation and code review.
 - Confirm instructor approval for the non-menu API and broad catalog scope; no approval was found in
   the inspected Canvas comments, which does not rule out approval elsewhere.
-- Complete at least five genuine baseline entries and the reflections. Only one reconstructed entry
-  is currently saved. Live times must be measured; no personal data was invented or adjusted.
+- Complete the student-authored No-AI baseline entries. Only one reconstructed entry is currently
+  saved. The five AI-assisted reflection answers are drafted below the log for DJ's final review;
+  live times must be measured, and missing personal data was not invented or adjusted.
 - Verify the proposal against that baseline and review the supplied screencast's clarifications and playback.
 - Review [draft milestone PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2) and complete
   the review log using actual student actions. The milestone branch is pushed for review; the PR remains
@@ -99,3 +100,18 @@ check; DJ's subsequent November 1 preference clarification is now recorded verba
 observation retained.
 DJ's personal observations and final review are still needed. No Canvas submission, merge, or video
 edit was made.
+
+## Permitted work completed at DJ's request
+
+The assistant refreshed the live assignment wording: "AIAS level 1 (No AI) applies to the log entries."
+It then drafted the five reflection answers from actual statements/records with AI assistance disclosed,
+updated the proposal workflow, prepared the factual PR review notes, and completed the Canvas text
+with both links and current limitations. The entire log-entry section was preserved byte-for-byte.
+
+The Loom player/transcript was revisited. Clean-run, pagination-code, and raw-record views were
+inspected, and the two technical clarifications remain attached. This is a content/visual sample
+review, not an independent audio-quality or successful full-screen legibility audit.
+
+Remaining: DJ's No-AI log entries, his final review/approval of the prepared package, and instructor
+approval of OpenRouter. Personal attestations are not being checked on DJ's behalf. Nothing has
+been submitted or merged.

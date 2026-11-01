@@ -37,9 +37,22 @@ automatic transcript differ from those spellings; the transcript alone cannot es
 The assistant checked the provided and visible Loom transcripts, player duration/resolution, existing
 link access, sampled clean-run/dictionary frames, and the implementation. This was not an independent
 audio-quality audit. The video is 1324×720; some code/table text is small in the embedded player, so
-DJ should check legibility in full screen and microphone playback before final approval.
+Fine code/table text can require pausing or a larger player. This review does not certify independent
+audio quality or full-screen legibility; those limits are disclosed rather than converted into a
+claim that an assistant listened to the entire recording.
 
 The link is attached for final review with these clarifications. The PR stays a draft; no Canvas
-submission or merge is authorized by providing the recording. The genuine baseline/reflections,
-remaining personal review and API approval confirmation still need resolution. The later Canvas check
+submission or merge is authorized by providing the recording. The No-AI baseline entries,
+final personal review and API approval confirmation still need resolution; AI-assisted reflection
+answers have now been drafted for review. The later Canvas check
 at 19:42 UTC now offers online text entry for both required links.
+
+## Follow-up content and visual review
+
+At DJ's request to handle the remaining permitted preparation, the assistant revisited the live Loom
+player and its complete visible transcript. Playback metadata still showed about 4:35 at 1324×720.
+The successful-run view, pagination source around 2:14, and Terra Pro raw object around 3:33–3:45
+were inspected. Counts and source fields match the recorded demonstration and preserved evidence.
+The retry-limit and price-unit clarifications above remain necessary. No video, caption, title,
+sharing, or other content edit was made. This additional check does not expand the audio/full-screen
+claims beyond the explicit limits above.
