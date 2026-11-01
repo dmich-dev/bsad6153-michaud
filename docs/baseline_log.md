@@ -18,6 +18,10 @@ Mark any entry you had to reconstruct from memory as *(reconstructed)*.
 
 > i mainly use openai right now becuase 6.1 sol is a great cost effective option and connects well to HERMES
 
+**DJ's additional description, November 1, 2026 (verbatim):**
+
+> lots of homelab work such as building bots to help with tasks
+
 **Assistant note:** This supplies selection criteria for the existing context. It does not add
 another dated decision event, timed observation, or measured cost comparison.
 

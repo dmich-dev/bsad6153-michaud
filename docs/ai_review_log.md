@@ -116,3 +116,18 @@ with HERMES. His exact wording was added to the baseline as a dated clarificatio
 observation and reflection text are retained. This is one existing reconstructed decision with
 additional student-supplied context, not five distinct observations or a measured price comparison.
 No timings, confidence ratings, additional events, or reflection answers were generated.
+
+## Homelab source lookup requested by DJ — November 1
+
+DJ described building bots for homelab tasks and asked the assistant to check DJ server for examples.
+That additional description was transcribed verbatim into the baseline. The assistant checked saved
+homelab notes and then the live server after its Tailscale sign-in check succeeded. Read-only SQLite
+queries recovered five prior user task requests and their main-work model-usage records. The private
+source notes remain outside this public repository. A session's current model field was not treated
+as its full model history: one outage investigation used 6 Sol first and 6.1 Sol later.
+
+These records support actual task/model use. They do not establish five separate deliberate
+model-selection decisions, time spent choosing, confidence, measured savings, or successful task
+completion. They were not converted into five AI-authored baseline entries or reflection answers.
+The original baseline observation remains intact. No server project/service/configuration changes,
+messages to others, Canvas submission, or PR merge were performed.
