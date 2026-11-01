@@ -73,8 +73,8 @@ them in your own words, then show one model and its related endpoint. Use the ou
 - Verify the proposal against that baseline and review the supplied screencast's clarifications and playback.
 - Review [draft milestone PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2) and complete
   the review log using actual student actions. The milestone branch is pushed for review; the PR remains
-  a draft and nothing has been turned in on Canvas. Student statements remain unmarked. Canvas reports
-  submission type `none` for 1.3, so its delivery location still needs resolving.
+  a draft and nothing has been turned in on Canvas. Unverified student attestations remain unmarked.
+  The latest Canvas check now offers online text entry, which can include both the PR and recording links.
 - For 1.4, DJ writes his own 400–500-word brief and two substantive replies. The
   [source index](case_source_index.md) and [worksheet](case_brief_plan_2026-10-31.md) are research/planning aids only.
 

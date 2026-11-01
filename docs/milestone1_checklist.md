@@ -62,6 +62,6 @@ The [recording workspace and guide](recording_guide.md) put the required materia
 - [ ] Complete the student portions of the PR template and review log before marking the draft ready.
 - [x] [Screencast recorded/provided by DJ](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1), about 4:35, linked for review.
 - [ ] DJ reviews the [technical clarifications and playback notes](screencast_review_2026-11-01.md) before final approval.
-- [ ] Resolve submission location: Canvas currently reports `submission_types=["none"]`, although the
-  assignment text requests a PR URL and screencast. No online Canvas submission is currently offered.
+- [x] Submission route verified again November 1 at 19:42 UTC: Canvas now accepts online text entry,
+  URL, media, or file upload. Text entry can hold both required links. The earlier `none` limitation is resolved.
 - [ ] DJ authorizes final delivery; verify the resulting receipt/state. Nothing has been submitted by this preparation.

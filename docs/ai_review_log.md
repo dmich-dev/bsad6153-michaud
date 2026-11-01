@@ -78,7 +78,10 @@ completion of other personal requirements without evidence.
 
 ## Final review
 
+The live November 1 check at 19:42 UTC confirmed that Canvas now accepts online text entry, URL,
+media, or upload for 1.3, resolving the earlier `none` configuration. No submission has been made.
+
 Pending: complete genuine baseline evidence/reflections, verify the proposal and dictionary, review the
-milestone changes in draft PR #2, review the supplied screencast and clarifications, resolve delivery location, and
+milestone changes in draft PR #2, review the supplied screencast and clarifications, and
 obtain DJ's review before turn-in. The working copy already contains the inspected remote Git history
 and a local milestone branch; the excluded Mac-only history has not been imported.

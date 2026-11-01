@@ -21,7 +21,7 @@ inspected submission comments; that is not proof that approval was never given e
 | Screencast: 10 points | [Student recording](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1) supplied; about 4:35; existing access Public; required topics present in transcript | DJ reviews [retry/price clarifications](screencast_review_2026-11-01.md) and checks full-screen legibility/audio before final approval |
 | Repository practice: 5 points | Milestone branch pushed; draft PR #2 targets main; raw folder ignored; run/test commands and recording link documented | DJ reviews the exact PR and completes personal evidence; PR remains draft |
 | Required review | No credential signatures found in limited copied-file/remote-history checks; assistant work recorded in [AI log](ai_review_log.md) | DJ's actual Read/Verify/Decide evidence; do not turn limited checks into an exhaustive no-secrets claim |
-| Delivery | Nov 1 live assignment still offers submission type `none` although text requests PR/screencast links; no relevant new announcements found in inspected Oct 25–Nov 3 window | Resolve destination; DJ reviews exact final work before delivery |
+| Delivery | Latest live check, Nov 1 at 19:42 UTC, now offers online text entry, URL, media, or file upload; assignment remains unsubmitted | Use text entry to include the PR and Loom links together after the missing work and DJ's final review are complete |
 
 ## Assignment 1.4: case brief and two replies
 

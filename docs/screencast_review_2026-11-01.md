@@ -41,4 +41,5 @@ DJ should check legibility in full screen and microphone playback before final a
 
 The link is attached for final review with these clarifications. The PR stays a draft; no Canvas
 submission or merge is authorized by providing the recording. The genuine baseline/reflections,
-remaining personal review, API approval confirmation, and delivery location still need resolution.
+remaining personal review and API approval confirmation still need resolution. The later Canvas check
+at 19:42 UTC now offers online text entry for both required links.
