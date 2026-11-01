@@ -1,0 +1,47 @@
+{
+  "audit_date_local": "2026-10-31",
+  "source_observation_date": "2026-10-29",
+  "live_api_requests_made": 0,
+  "raw_files": [
+    {
+      "file": "data\\raw\\preflight-2026-10-29\\endpoints-openai-gpt-4.1.json",
+      "sha256": "72f2cbf49e8158269721ce52b8b3c01cdaae6b6e427daded1cd15668b2ab8636",
+      "parent_id": "openai/gpt-4.1",
+      "endpoint_count": 3
+    },
+    {
+      "file": "data\\raw\\preflight-2026-10-29\\models-all-page-0.json",
+      "sha256": "2e907dc50d94d6d720f2c9e4b9a19b2e7575a504e8c4af4ecbb2f11f6579e1af",
+      "records_in_file": 2,
+      "unique_nonempty_ids": 2,
+      "reported_total": 689,
+      "next": "/api/v1/models?output_modalities=all&offset=2&limit=2",
+      "duplicate_ids": []
+    },
+    {
+      "file": "data\\raw\\preflight-2026-10-29\\models-default.json",
+      "sha256": "a86e87ff2858a29327f83418a3decb2ee9210d41d363b805174f8f4c73020520",
+      "records_in_file": 456,
+      "unique_nonempty_ids": 456,
+      "reported_total": 456,
+      "next": null,
+      "duplicate_ids": []
+    }
+  ],
+  "sample_models": 1,
+  "sample_endpoints": 3,
+  "sample_all_joins_valid": true,
+  "proposed_endpoint_key_unique_in_sample": true,
+  "duplicate_endpoint_names": {
+    "Azure | openai/gpt-4.1-2025-04-14": 2
+  },
+  "sample_model_max_output": 32768,
+  "sample_endpoint_max_output": {
+    "azure": 942818,
+    "openai": 32768,
+    "azure/swedencentral": 942818
+  },
+  "sample_prompt_usd_per_million": "2.000000",
+  "sample_completion_usd_per_million": "8.000000",
+  "limitations": "Saved samples only; no completed paginated run, no current availability check, no proven global endpoint key."
+}

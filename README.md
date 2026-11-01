@@ -108,13 +108,52 @@ every command before you approve it, and keep auto-approve off.
 
 ## Project proposal (Week 1)
 
-<!-- About 300 words: data source and backup API, your decision and workflow (from your baseline log),
-     your first agent idea, and risks. See the Week 1 page. -->
+**Assistant-prepared proposal for DJ's review, updated November 1.** Source approval and DJ's own
+workflow evidence remain pending. This proposal describes intended work, not a completed system.
+
+Agent Model Selection supports a daily decision: which AI model to use for coding or agent tasks.
+Frequent releases make consistent selection difficult. The current baseline contains one reconstructed
+report of heavy 6.1 sol use for homelab tasks; timing, comparison sources, and confidence were not
+recorded. Additional genuine entries and reflections are needed before drawing conclusions about the
+workflow or claiming improvement.
+
+The primary source is OpenRouter's model catalog, already named in the submitted repository setup.
+It supplies advertised prices, context limits, modalities, and supported request parameters. Related
+serving-endpoint records describe provider-specific offerings. The importer is planned to collect the
+broader catalog with real pagination, preserve raw responses, and report distinct catalog IDs alongside
+canonical identities. A later coding shortlist would filter suitable text-output and tool capabilities;
+the entire catalog is not a list of equally suitable coding models.
+
+Models.dev is the proposed backup. Its model metadata and provider offerings could support a separate
+adapter, but identifiers, price units, update behavior, and attribution must be checked before use.
+Source labels must remain visible so different providers' prices are not silently treated as identical.
+
+By Week 6, the proposed agent would create a local shortlist and a change report using task constraints
+such as budget, context requirements, and advertised tools. DJ would review its recommendation.
+Purchases, subscription changes, and transmission of task content would require approval. These are
+proposed boundaries for DJ to verify against his actual workflow.
+
+Risks include missing fields, aliases, conflicting endpoint limits, stale pricing, rate limits,
+authentication changes, and public-display terms. The design should retain timestamps and provenance,
+back off on errors, and preserve unknown values. Metadata supports comparison; it does not establish
+measured coding quality, reliability, personal subscription costs, or time savings.
+
+See the [data dictionary](docs/data_dictionary.md), [documentation review](docs/api_check_2026-10-31.md), and
+[remaining milestone checklist](docs/milestone1_checklist.md). The fetch pipeline is not implemented yet.
 
 ## How to run this project
 
-<!-- Keep this current: how to run the sync, the website, and the evaluations. -->
+The Week 1 setup commands above remain the documented setup workflow. The milestone importer is not
+implemented yet, so there is no verified fetch/run command to present. Exact commands and observed
+results will be added after the required API check, code review, and real clean-start/rerun verification.
+
+Current evidence and remaining work are tracked in [submission readiness](docs/submission_readiness.md).
 
 ## Credits
 
-<!-- Your data API's required attribution, plus any open-source code or samples you used. -->
+- Public catalog and serving data: [OpenRouter](https://openrouter.ai/), with [API documentation](https://openrouter.ai/docs/)
+  and [terms](https://openrouter.ai/terms). Public-display permission remains to be confirmed before Week 4.
+- Proposed backup: [Models.dev](https://models.dev/), an open-source model database with an
+  [MIT-licensed repository](https://github.com/anomalyco/models.dev). It has not been integrated.
+- Codex assisted with API research, the small public-data sample, and draft documentation/proposal on
+  October 29, 2026. DJ's review remains pending; the baseline observations were not generated or edited.
