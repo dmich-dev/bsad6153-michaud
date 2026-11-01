@@ -4,6 +4,13 @@ The recording workspace is a local presentation aid. It shows the actual source 
 responses and runs the actual importer into a new folder. It does not record, upload, submit, or
 automatically mark student review complete.
 
+The raw-record view now defaults to the newest catalog addition with collected provider data; its menu
+lets you select another example. Catalog-added and retrieval dates are displayed separately. The source's
+`created` field is not a verified release date or a quality ranking. Empty provider lists are preserved
+and reported as unavailable. The updated [verification](latest_selection_verification_2026-11-01.json)
+records 21 passing tests and a complete fresh run with 73 related endpoints. The older figures below
+describe the original two verification runs.
+
 On this Windows desktop, double-click **Prepare Recording.cmd** in the outputs folder. The browser
 opens the prepared workspace. Keep its helper window open while recording. Alternatively, from the
 repository run `python scripts/recording_room.py`.

@@ -2,6 +2,12 @@
 
 Prepared November 1, 2026. **The technical draft is ready for DJ's review. The assignments are not yet ready to turn in.**
 
+**Latest selection correction:** the demo no longer pins GPT-4.1. It selects the most recently added
+catalog entry with collected provider data, shows catalog-added and retrieval dates separately, and
+offers a model menu. All 21 tests passed; a fresh browser-triggered run returned 687 catalog IDs,
+604 canonical identities, and 73 related endpoints. Two actual empty provider lists were saved and
+reported as unavailable. See [current verification](latest_selection_verification_2026-11-01.json).
+
 **Recording setup is prepared:** use the [recording guide](recording_guide.md), or double-click
 **Prepare Recording.cmd** beside the project folder. A single local browser window contains a fresh-run
 button, readable actual code, a real raw record, the dictionary, and a four-minute outline. Its browser
@@ -10,7 +16,7 @@ button was verified with another complete assistant-run collection; see [recordi
 ## What now works
 
 The [importer](../ingest/fetch.py) retrieves OpenRouter catalog metadata and related serving endpoints.
-Two separate runs each produced:
+The original two verification runs, before the example-selection correction, each produced:
 
 | Evidence | Result |
 |---|---|

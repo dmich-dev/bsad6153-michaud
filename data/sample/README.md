@@ -1,6 +1,10 @@
 Put one small sample of your raw API data here (a few records) so others can see its shape.
 Large raw downloads go in data/raw/, which Git ignores.
 
+This committed GPT-4.1 file is a historical schema example. The live recording page now defaults
+to the most recently added entry with collected provider data and labels its dates. Its current
+run and model-menu checks are in [latest verification](../../docs/latest_selection_verification_2026-11-01.json).
+
 `openrouter_sample.json` contains one model and three related serving endpoints observed on
 November 1, 2026. Its record objects are copied from the complete assistant-executed ingestion;
 the surrounding source URLs, date, and counts are provenance metadata.

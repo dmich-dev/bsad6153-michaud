@@ -184,15 +184,23 @@ class Client:
         raise AssertionError("Unreachable retry state")
 
 
+def newest_catalog_first(row):
+    """Order by catalog addition time, not model release date or quality."""
+    created = row.get("created")
+    created = created if type(created) is int and 0 <= created <= 253402300799 else -1
+    return (-created, row["id"])
+
+
 def collect(client, *, page_size=100, endpoint_models=10, minimum_models=500, max_pages=100):
     models, endpoints, issues, warnings = {}, {}, [], []
     summary = {"started_at": utc_now(), "source": client.base_url, "resource": "catalog metadata",
                "paid_inference_calls": 0, "authentication": "local key" if client.key else "anonymous catalog GET",
                "minimum_main_records": minimum_models, "minimum_request_gap_seconds": client.delay,
+               "related_record_selection": "most_recent_catalog_created_text_with_tools",
                "issues": issues, "warnings": warnings}
     finished, totals, visited, duplicate_models = False, [], set(), 0
     url = client.base_url + "/api/v1/models?" + urlencode({"output_modalities": "all", "limit": page_size, "offset": 0})
-    selected, endpoint_successes = [], 0
+    selected, endpoint_successes, without_providers = [], 0, []
     try:
         for page_number in range(1, max_pages + 1):
             url = client.checked_url(url, catalog=True)
@@ -247,7 +255,7 @@ def collect(client, *, page_size=100, endpoint_models=10, minimum_models=500, ma
         issues.append(str(error))
 
     if finished:
-        candidates = sorted(models.values(), key=lambda row: (row["id"] != "openai/gpt-4.1", row["id"]))
+        candidates = sorted(models.values(), key=newest_catalog_first)
         seen_details = set()
         for row in candidates:
             architecture = row.get("architecture") or {}
@@ -280,8 +288,12 @@ def collect(client, *, page_size=100, endpoint_models=10, minimum_models=500, ma
                 payload = client.get_json(source["url"], f"endpoints/model-{index:04d}.json")
                 data = payload.get("data") if isinstance(payload, dict) else None
                 rows = data.get("endpoints") if isinstance(data, dict) else None
-                if not isinstance(rows, list) or not rows:
-                    raise RetrievalError("Selected model returned no endpoint records")
+                if not isinstance(rows, list):
+                    raise RetrievalError("Selected model returned an invalid endpoint-records array")
+                if not rows:
+                    without_providers.append(source["catalog_id"])
+                    warnings.append(f"Model {source['catalog_id']}: provider list is empty; raw response preserved, no availability assumed")
+                    continue
                 accepted = 0
                 for row in rows:
                     if (not isinstance(row, dict) or not isinstance(row.get("model_id"), str)
@@ -315,9 +327,10 @@ def collect(client, *, page_size=100, endpoint_models=10, minimum_models=500, ma
                    catalog_pages=len(visited), unique_catalog_ids=len(models), unique_canonical_slugs=len(canonical),
                    duplicate_catalog_ids=duplicate_models, related_endpoints=len(endpoints),
                    endpoint_models_selected=len(selected), endpoint_models_succeeded=endpoint_successes,
+                   endpoint_models_without_providers=without_providers,
                    endpoint_sources=selected, requests=client.requests, retry_waits=client.waits,
                    complete=finished and len(models) >= minimum_models and bool(endpoints)
-                   and endpoint_successes == len(selected) and not issues)
+                   and endpoint_successes + len(without_providers) == len(selected) and not issues)
     write_json(client.output / "models.json", {"data": list(models.values())})
     write_json(client.output / "endpoints.json", {"data": list(endpoints.values())})
     write_json(client.output / "summary.json", summary)
@@ -342,7 +355,7 @@ def main(argv=None):
                       endpoint_models=args.endpoint_models)
     print(json.dumps({field: summary[field] for field in (
         "complete", "catalog_pages", "unique_catalog_ids", "unique_canonical_slugs",
-        "related_endpoints", "endpoint_models_succeeded", "issues")}, indent=2))
+        "related_endpoints", "endpoint_models_succeeded", "issues", "warnings")}, indent=2))
     print("Evidence directory:", output.resolve())
     return 0 if summary["complete"] else 2
 

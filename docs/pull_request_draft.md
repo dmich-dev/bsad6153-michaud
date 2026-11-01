@@ -13,12 +13,15 @@ identity, joins, price units, missing values, and source conflicts.
 
 ## Assistant validation
 
-- All 16 offline tests passed, covering paging, retries, timeouts, malformed data, joins, and safe destinations.
-- Two independent live runs each returned 687 catalog IDs, 604 canonical identities, and 15 related endpoints.
+- All 21 tests passed, covering paging, retries, timeouts, malformed data, joins, safe destinations, latest selection, and saved-run restoration.
+- Two initial live runs each returned 687 catalog IDs, 604 canonical identities, and 15 related endpoints. The updated newest-selection run returned 687 catalog IDs and 73 related endpoints; two empty provider lists were preserved as unavailable.
 - Each run used 17 successful metadata requests, no retries, and no paid inference calls.
 - Raw responses remain ignored; the repository includes a small real sample and response hashes.
 
-See [run verification](run_verification_2026-11-01.json) and [AI review log](ai_review_log.md).
+The recording demo now defaults to the most recently added catalog entry with provider data and
+offers a model menu. Source addition time and retrieval time are separate; neither is a quality score.
+See [current verification](latest_selection_verification_2026-11-01.json),
+[initial verification](run_verification_2026-11-01.json), and [AI review log](ai_review_log.md).
 
 ## Student checklist — pending
 

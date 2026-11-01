@@ -73,7 +73,7 @@ class FetchTests(unittest.TestCase):
             waits = []
             client = fetch.Client(directory, base_url=base, key="synthetic-test-key", delay=0.01,
                                   retries=options.pop("retries", 2), sleep=waits.append, allow_local_http=True)
-            result = fetch.collect(client, page_size=2, endpoint_models=1, minimum_models=3, **options)
+            result = fetch.collect(client, page_size=2, endpoint_models=options.pop("endpoint_models", 1), minimum_models=3, **options)
             files = {p.relative_to(directory).as_posix(): p.read_bytes() for p in Path(directory).rglob("*") if p.is_file()}
             return result, seen, waits, files
 
@@ -87,6 +87,45 @@ class FetchTests(unittest.TestCase):
         self.assertTrue(all(item["authorization"] == "Bearer synthetic-test-key" for item in seen))
         self.assertEqual(json.loads(files["catalog/page-0001.json"])["data"][0], model("a"))
         self.assertNotIn(b"synthetic-test-key", b"".join(files.values()))
+
+    def test_newest_catalog_entry_replaces_fixed_gpt41_and_invalid_dates_do_not_win(self):
+        for created, expected in ((300, "lab/c"), ("9999999999", "openai/gpt-4.1"),
+                                  (True, "openai/gpt-4.1"), (-10, "openai/gpt-4.1")):
+            with self.subTest(created=created):
+                def route(path, number):
+                    if path == "/api/v1/models/openai/gpt-4.1/endpoints":
+                        return 200, {"data": {"endpoints": [{"model_id": "openai/gpt-4.1", "provider_name": "Provider", "tag": "old"}]}}, {}
+                    code, payload, headers = self.route(path, number)
+                    if "?" in path:
+                        for row in payload["data"]:
+                            if row["id"] == "lab/a":
+                                row.update(id="openai/gpt-4.1", created=100,
+                                           links={"details": "/api/v1/models/openai/gpt-4.1/endpoints"})
+                            elif row["id"] == "lab/c":
+                                row["created"] = created
+                    return code, payload, headers
+                result, seen, _, _ = self.run_case(route)
+                self.assertTrue(result["complete"])
+                self.assertEqual(result["endpoint_sources"][0]["catalog_id"], expected)
+                self.assertEqual(result["related_record_selection"], "most_recent_catalog_created_text_with_tools")
+
+    def test_empty_provider_list_is_preserved_and_distinguished_from_invalid_response(self):
+        for condition in ("one_empty", "all_empty", "invalid_array"):
+            with self.subTest(condition=condition):
+                def route(path, number):
+                    code, payload, headers = self.route(path, number)
+                    if path.endswith('/endpoints') and (condition == 'all_empty' or '/a/' in path):
+                        payload['data']['endpoints'] = None if condition == 'invalid_array' else []
+                    return code, payload, headers
+                result, _, _, files = self.run_case(route, endpoint_models=2)
+                self.assertEqual(result['complete'], condition == 'one_empty')
+                saved = json.loads(files['endpoints/model-0001.json'])['data']['endpoints']
+                self.assertIsNone(saved) if condition == 'invalid_array' else self.assertEqual(saved, [])
+                if condition == 'one_empty':
+                    self.assertEqual(result['related_endpoints'], 1)
+                    self.assertEqual(result['endpoint_models_without_providers'], ['lab/a'])
+                    self.assertTrue(result['warnings'])
+                    self.assertFalse(result['issues'])
 
     def test_429_retry_after_and_server_error_fallback(self):
         def route(path, number):

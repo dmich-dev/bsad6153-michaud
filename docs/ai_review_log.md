@@ -36,6 +36,14 @@ Canvas authentication/setup helpers are local connection tools, not the assignme
 
 ## Read: DJ's own review
 
+DJ reported completing a recording dry run and noticed that the example stayed on GPT-4.1. The
+assistant found fixed selection in both importer sampling and the demo, replaced it with catalog
+recency ordering, and added a provider-backed model menu with separate catalog-added/retrieval dates.
+All 21 regression tests passed. The fresh browser run had 687 catalog IDs and 73 related endpoints;
+two returned empty provider lists are preserved as unavailable, rather than represented as failures
+or invented records. See [selection verification](latest_selection_verification_2026-11-01.json).
+These assistant corrections do not mark DJ's personal documentation/code review complete.
+
 DJ confirmed on November 1 that Lecture 3 was watched.
 
 Pending. DJ asked the assistant to perform the documentation check while he was busy. His personal

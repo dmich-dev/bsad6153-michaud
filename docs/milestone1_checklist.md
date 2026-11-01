@@ -27,7 +27,8 @@ The technical draft and two assistant-executed runs are ready for review. See [r
 ## Technical work verified by the assistant
 
 - [x] `ingest/fetch.py`: pagination, paced requests, bounded backoff/retries, failure reporting, raw saves.
-- [x] Two runs each retrieved 687 distinct catalog IDs, 604 canonical identities, and 15 valid related endpoints.
+- [x] Two initial runs each retrieved 687 distinct catalog IDs, 604 canonical identities, and 15 valid related endpoints.
+- [x] Fixed the demo's old-model pin: a fresh newest-selection run returned 73 related endpoints; 21 tests passed. [Current verification](latest_selection_verification_2026-11-01.json).
 - [x] Clean-start and rerun evidence; 16 offline tests passed. See [run verification](run_verification_2026-11-01.json).
 - [x] Exact run instructions in README; optional key name only in `.env.example`.
 - [ ] Confirm endpoint identity rules and investigate conflicting output limits in the sample.

@@ -172,7 +172,7 @@ All requests are metadata GETs. There are no inference, credit-purchase, or mode
 
 The November 1 assistant clean run and independent rerun each retrieved **687 catalog IDs, 604 canonical
 identities, and 15 related endpoints**, using seven catalog pages and ten related-resource lookups.
-All **16 offline tests passed**. No real rate limit was deliberately triggered; retries were tested
+The initial **16 offline tests passed**. No real rate limit was deliberately triggered; retries were tested
 against a local server and injected transport failures. See [verification evidence](docs/run_verification_2026-11-01.json).
 
 Current evidence and remaining work are tracked in [submission readiness](docs/submission_readiness.md).
@@ -183,6 +183,17 @@ For the 3–5 minute screencast, `python scripts/recording_room.py` opens a loca
 with the actual source, a fresh-run button, raw-record provenance, and a timed outline. It uses the same
 standard-library environment and does not record or upload anything. See [recording guide](docs/recording_guide.md).
 On the prepared Windows desktop, the separate **Prepare Recording.cmd** launcher opens it directly.
+
+The current importer selects related-resource lookups by the most recent valid catalog `created`
+timestamp among text/tool-capable entries. The recording page defaults to the most recently added
+entry with collected provider data and offers a model menu. This timestamp describes catalog addition,
+not a verified release date or a quality ranking. A restart uses the latest complete saved run with its
+retrieval time labeled. Original raw objects are preserved.
+
+After the fixed-example correction, **21 tests passed** and a fresh browser-triggered run retrieved
+**687 catalog IDs, 604 canonical identities, and 73 related endpoints**. Eight of ten selected models
+returned provider records; two returned actual empty arrays, which were saved and reported as unavailable.
+Malformed responses and request failures still make the run incomplete. See [current verification](docs/latest_selection_verification_2026-11-01.json).
 
 ## Credits
 

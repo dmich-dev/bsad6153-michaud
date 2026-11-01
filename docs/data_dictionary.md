@@ -2,9 +2,13 @@
 
 **Status:** Codex draft for DJ review, updated November 1. The example values below were reconfirmed in
 the November 1 real linked sample. Historical October 29 profiling is explicitly labeled separately.
-The importer and two live runs are now assistant-verified: 687 distinct catalog IDs, 604 canonical
-identities, and 15 related endpoints per run. Instructor source approval, DJ's review, and final
-public-display terms review remain pending. See [run verification](run_verification_2026-11-01.json).
+The initial two assistant-verified runs each had 687 distinct catalog IDs, 604 canonical identities,
+and 15 related endpoints. The field table retains that real GPT-4.1 sample for schema illustration.
+The live demo now selects the most recently added catalog entry with collected provider data; the
+updated complete run has 73 related endpoints, with two empty provider lists preserved and reported.
+See [current verification](latest_selection_verification_2026-11-01.json) and
+[initial verification](run_verification_2026-11-01.json). Instructor source approval, DJ's review,
+and final public-display terms review remain pending.
 
 ## Source and meaning of a record
 
@@ -35,7 +39,7 @@ about future responses. See the [field profile](catalog_profile_2026-10-29.json)
 | `model.id` | string | `openai/gpt-4.1` | Catalog/request identifier | Required; reject a record without it |
 | `model.canonical_slug` | string | `openai/gpt-4.1-2025-04-14` | Canonical version identity | Preserve null if absent; do not substitute for `id` |
 | `model.name` | string | `OpenAI: GPT-4.1` | Human-readable label | Report absent label |
-| `model.created` | integer | `1744651385` | Unix seconds when added to OpenRouter | Unknown if absent; not a modification timestamp |
+| `model.created` | integer | `1744651385` | Unix seconds when added to OpenRouter | Unknown if absent; ordered last for recency selection; not a modification or verified release timestamp |
 | `model.context_length` | integer | `1047576` | Advertised model context in tokens | Unknown if absent; never assume zero |
 | `model.architecture.input_modalities` | array of strings | `["image", "text", "file"]` | Accepted input types | Unknown if absent |
 | `model.architecture.output_modalities` | array of strings | `["text"]` | Produced output types | Unknown if absent; needed for shortlist filtering |
@@ -71,8 +75,8 @@ catalog-ID counts and canonical-identity counts in each run report; retain alias
 as source records, with their identity relationships visible.
 
 The endpoint response supplies no obvious universal record ID. The importer uses a composite of model
-ID, provider name, tag, endpoint name, and service tier. That key is unique across the 15 retrieved related
-records in each verified run. It is not yet established as a permanent global key across all endpoints
+ID, provider name, tag, endpoint name, and service tier. That key was unique across the initial 15 related
+records per run and across the updated 73-record sample. It is not established as a permanent global key across all endpoints
 and time. Model-to-endpoint is one-to-many; a provider can serve many models. Endpoint limits/prices
 remain independent of the catalog summary.
 
