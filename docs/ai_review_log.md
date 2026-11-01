@@ -23,6 +23,11 @@ source choice; it does not assert that DJ has completed the separate documentati
 - Passed all 16 offline tests, including HTTP pagination/retry cases, missing/invalid data, duplicate counts, rejected redirects/origins, retry exhaustion, timeout handling, and credential-echo rejection.
 - Performed a clean live run and an independent rerun. Each has seven catalog pages, 687 catalog IDs, 604 canonical identities, and 15 related endpoints from ten model lookups, with no run issues. Both used anonymous metadata GETs; neither made a paid inference call. Raw response hashes and summaries are in [verification evidence](run_verification_2026-11-01.json).
 - Corrected the proposed endpoint identity to include provider name, preventing provider-name collisions from being silently merged. Verified uniqueness across the 15 collected related records; global/time-stable uniqueness remains unproven.
+- At DJ's request to prepare everything for recording, built a local browser workspace that displays
+  actual source sections and a preserved raw record, runs the real importer into a new output folder,
+  and provides a timed recording outline. Verified the button with another complete assistant run
+  (687 catalog IDs, 604 canonical identities, 15 related endpoints). No recording or student sign-off
+  was created. Local access checks and provenance are recorded in [recording verification](recording_verification_2026-11-01.json).
 
 Canvas authentication/setup helpers are local connection tools, not the assignment's data-ingestion implementation, student screencast, or proof of project retrieval. Credentials remain outside this project folder.
 

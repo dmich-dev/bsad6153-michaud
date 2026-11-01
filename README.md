@@ -177,6 +177,13 @@ against a local server and injected transport failures. See [verification eviden
 
 Current evidence and remaining work are tracked in [submission readiness](docs/submission_readiness.md).
 
+### Recording workspace
+
+For the 3–5 minute screencast, `python scripts/recording_room.py` opens a local browser workspace
+with the actual source, a fresh-run button, raw-record provenance, and a timed outline. It uses the same
+standard-library environment and does not record or upload anything. See [recording guide](docs/recording_guide.md).
+On the prepared Windows desktop, the separate **Prepare Recording.cmd** launcher opens it directly.
+
 ## Credits
 
 - Public catalog and serving data: [OpenRouter](https://openrouter.ai/), with [API documentation](https://openrouter.ai/docs/)

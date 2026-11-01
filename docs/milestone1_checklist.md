@@ -9,7 +9,7 @@ The technical draft and two assistant-executed runs are ready for review. See [r
 
 - [x] Confirm existing project decision and API choice from README.
 - [x] Check public catalog access and real pagination without credentials or inference.
-- [x] Find enough available main records: all-modalities API reported 689; default list contained 456.
+- [x] Find enough available main records: the November 1 full runs retrieved 687 catalog IDs and 604 canonical identities. Earlier 689/456 counts are historical.
 - [x] Save a small real model/endpoint sample.
 - [x] Draft [data dictionary](data_dictionary.md), [API review sheet](api_review.md), and README proposal.
 - [x] Preserve existing [baseline log](baseline_log.md) without adding observations.
@@ -20,7 +20,7 @@ The technical draft and two assistant-executed runs are ready for review. See [r
 - [ ] DJ checks authentication, pagination, and rate-limit explanations in the API review sheet against
   official documentation, and records corrections or verification.
 - [ ] Resolve instructor approval for OpenRouter and the all-modalities collection scope.
-- [ ] Review the proposed fetch implementation and proposed Models.dev backup.
+- [ ] Review the implemented fetch code and proposed Models.dev backup.
 - [x] Assistant completed the documentation check after DJ asked it to do so while he was busy. This
   does not check off DJ's personal documentation review above.
 
@@ -44,11 +44,12 @@ The technical draft and two assistant-executed runs are ready for review. See [r
 ## A 3–5 minute screencast outline
 
 Use this as an outline, not a script to claim understanding or work that has not happened.
+The [recording workspace and guide](recording_guide.md) put the required material in one browser window.
 
 | Approximate time | What to show and explain in your own words |
 |---|---|
 | 0:00–0:35 | The daily model-choice problem; what catalog data can and cannot tell you. |
-| 0:35–1:35 | Run the eventual documented command from a clean output folder. Show counts for models and related endpoints, then the saved JSON. |
+| 0:35–1:35 | Use the recording workspace's fresh-run button or run the documented command. Show actual model/endpoint counts, then the saved JSON. |
 | 1:35–2:40 | Show the exact pagination, delay, 429 backoff, and error-handling code. Explain the effect of `output_modalities=all`. |
 | 2:40–3:35 | Open one real model and a linked endpoint. Explain the join, token-price units, and a null or conflicting field. |
 | 3:35–4:30 | Show the data dictionary and completed review log; state real limitations and remaining questions. |

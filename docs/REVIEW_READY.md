@@ -2,6 +2,11 @@
 
 Prepared November 1, 2026. **The technical draft is ready for DJ's review. The assignments are not yet ready to turn in.**
 
+**Recording setup is prepared:** use the [recording guide](recording_guide.md), or double-click
+**Prepare Recording.cmd** beside the project folder. A single local browser window contains a fresh-run
+button, readable actual code, a real raw record, the dictionary, and a four-minute outline. Its browser
+button was verified with another complete assistant-run collection; see [recording verification](recording_verification_2026-11-01.json).
+
 ## What now works
 
 The [importer](../ingest/fetch.py) retrieves OpenRouter catalog metadata and related serving endpoints.
