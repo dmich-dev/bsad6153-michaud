@@ -29,12 +29,18 @@ source choice; it does not assert that DJ has completed the separate documentati
   (687 catalog IDs, 604 canonical identities, 15 related endpoints). No recording or student sign-off
   was created. Local access checks and provenance are recorded in [recording verification](recording_verification_2026-11-01.json).
 - Pushed the milestone branch and opened [draft PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2)
-  for review. Its student checklist remains unmarked and the PR remains a draft. No Canvas submission,
-  merge, student recording, or student-authored baseline entries were performed.
+  for review. The PR remains a draft. DJ's subsequently supplied recording is linked below; final student
+  review remains pending. No Canvas submission, merge, or generated baseline entries were performed.
 
 Canvas authentication/setup helpers are local connection tools, not the assignment's data-ingestion implementation, student screencast, or proof of project retrieval. Credentials remain outside this project folder.
 
 ## Read: DJ's own review
+
+DJ then provided [a recorded walkthrough](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1)
+and its transcript. It covers authentication at 1:32, pagination at 1:58, pacing/retries at 2:34–3:18,
+and raw-record relationships/units at 3:18–4:11. This records an actual student explanation, with
+[two technical clarifications](screencast_review_2026-11-01.md) identified for final review. It does
+not certify that every PR change was read or retroactively complete the pre-code documentation check.
 
 DJ reported completing a recording dry run and noticed that the example stayed on GPT-4.1. The
 assistant found fixed selection in both importer sampling and the demo, replaced it with catalog
@@ -50,23 +56,29 @@ Pending. DJ asked the assistant to perform the documentation check while he was 
 pre-code check was not recorded as completed before implementation, and this log does not claim it was.
 He still needs to review the sources/explanations and record his own verification or corrections.
 
-Before DJ runs the script himself, he reads it and identifies where credentials are read, where requests
-wait, and how 429 responses are handled. The recorded live runs above were performed by the assistant.
+The student recording now demonstrates the run and identifies credential reading, request waits,
+and 429 handling. The earlier assistant runs remain separately attributed. DJ's own official-documentation
+verification and full PR review still need to be recorded honestly.
 
 ## Verify: project execution
 
-Assistant verification is recorded in [the run report](run_verification_2026-11-01.json). Student execution
-and interpretation remain pending. The exact commands are in the README. No live 429 was deliberately
+Assistant verification is recorded in [the run report](run_verification_2026-11-01.json). DJ's supplied
+screencast shows and narrates successful execution with 687 catalog IDs, 604 canonical identities,
+73 related endpoints, and seven pages. Its retry-limit and pricing-unit wording need the linked clarifications.
+The exact commands are in the README. No live 429 was deliberately
 provoked; error behavior was verified offline. The two live runs each made 17 successful HTTP requests,
 with no retries, and produced identical model-ID sets. That does not guarantee future source stability.
 
 ## Decide: DJ's decisions
 
-Pending. Record the choices DJ actually makes after review, including accepted/rejected/corrected assistant suggestions. Instructor approval status remains unverified outside the inspected Canvas comments. Do not claim approval, personal understanding, tests, or a recording without evidence.
+DJ confirmed retaining OpenRouter and requested recent examples after his dry run exposed the fixed
+GPT-4.1 choice. Final acceptance of the PR and the screencast clarifications remains pending. Instructor
+approval status remains unverified outside the inspected Canvas comments. Do not claim approval or
+completion of other personal requirements without evidence.
 
 ## Final review
 
 Pending: complete genuine baseline evidence/reflections, verify the proposal and dictionary, review the
-milestone changes in draft PR #2, record the student screencast, resolve delivery location, and
+milestone changes in draft PR #2, review the supplied screencast and clarifications, resolve delivery location, and
 obtain DJ's review before turn-in. The working copy already contains the inspected remote Git history
 and a local milestone branch; the excluded Mac-only history has not been imported.

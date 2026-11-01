@@ -2,6 +2,10 @@
 
 Prepared November 1, 2026. **The technical draft is ready for DJ's review. The assignments are not yet ready to turn in.**
 
+**Student recording received:** [Loom screencast, about 4:35](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1).
+The [review note](screencast_review_2026-11-01.md) records topic coverage, two technical clarifications,
+existing public link access, and the remaining playback/final-review checks.
+
 **Latest selection correction:** the demo no longer pins GPT-4.1. It selects the most recently added
 catalog entry with collected provider data, shows catalog-added and retrieval dates separately, and
 offers a model menu. All 21 tests passed; a fresh browser-triggered run returned 687 catalog IDs,
@@ -66,7 +70,7 @@ them in your own words, then show one model and its related endpoint. Use the ou
   the inspected Canvas comments, which does not rule out approval elsewhere.
 - Complete at least five genuine baseline entries and the reflections. Only one reconstructed entry
   is currently saved. Live times must be measured; no personal data was invented or adjusted.
-- Verify the proposal against that baseline and record the screencast.
+- Verify the proposal against that baseline and review the supplied screencast's clarifications and playback.
 - Review [draft milestone PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2) and complete
   the review log using actual student actions. The milestone branch is pushed for review; the PR remains
   a draft and nothing has been turned in on Canvas. Student statements remain unmarked. Canvas reports

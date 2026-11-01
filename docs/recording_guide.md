@@ -4,6 +4,10 @@ The recording workspace is a local presentation aid. It shows the actual source 
 responses and runs the actual importer into a new folder. It does not record, upload, submit, or
 automatically mark student review complete.
 
+DJ has now provided [the recording, about 4:35](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1).
+See [review notes and technical clarifications](screencast_review_2026-11-01.md). The steps below
+remain a reference if another take is needed.
+
 The raw-record view now defaults to the newest catalog addition with collected provider data; its menu
 lets you select another example. Catalog-added and retrieval dates are displayed separately. The source's
 `created` field is not a verified release date or a quality ranking. Empty provider lists are preserved
@@ -46,8 +50,8 @@ explanation. Save/upload using the recorder and provide the resulting link for t
 still requires your review and authorization.
 
 Recording is not the only outstanding assignment requirement: the saved personal baseline has one
-reconstructed entry, and your own review, reflections, API approval confirmation, and eventual screencast
-link remain outstanding. See [submission readiness](submission_readiness.md). Assignment 1.4 is separate.
+reconstructed entry, and your own review, reflections, and API approval confirmation remain outstanding.
+See [submission readiness](submission_readiness.md). Assignment 1.4 is separate.
 
 The review copy is [draft PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2), targeting `main`.
 It remains a draft until the missing student evidence and final review are complete.

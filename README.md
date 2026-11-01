@@ -179,6 +179,9 @@ Current evidence and remaining work are tracked in [submission readiness](docs/s
 
 ### Recording workspace
 
+**Student screencast:** [DJ's Milestone 1 recording — about 4:35](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1).
+See [review notes and technical clarifications](docs/screencast_review_2026-11-01.md) before final turn-in.
+
 For the 3–5 minute screencast, `python scripts/recording_room.py` opens a local browser workspace
 with the actual source, a fresh-run button, raw-record provenance, and a timed outline. It uses the same
 standard-library environment and does not record or upload anything. See [recording guide](docs/recording_guide.md).
