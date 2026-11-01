@@ -61,9 +61,10 @@ them in your own words, then show one model and its related endpoint. Use the ou
 - Complete at least five genuine baseline entries and the reflections. Only one reconstructed entry
   is currently saved. Live times must be measured; no personal data was invented or adjusted.
 - Verify the proposal against that baseline and record the screencast.
-- Review the exact milestone PR and completed review log. The branch is local; nothing has been pushed
-  or submitted. An [unsent PR description](pull_request_draft.md) is prepared with student statements left
-  unmarked. Canvas still reports submission type `none` for 1.3, so its delivery location needs resolving.
+- Review [draft milestone PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2) and complete
+  the review log using actual student actions. The milestone branch is pushed for review; the PR remains
+  a draft and nothing has been turned in on Canvas. Student statements remain unmarked. Canvas reports
+  submission type `none` for 1.3, so its delivery location still needs resolving.
 - For 1.4, DJ writes his own 400–500-word brief and two substantive replies. The
   [source index](case_source_index.md) and [worksheet](case_brief_plan_2026-10-31.md) are research/planning aids only.
 

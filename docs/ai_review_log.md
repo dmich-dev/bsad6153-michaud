@@ -28,6 +28,9 @@ source choice; it does not assert that DJ has completed the separate documentati
   and provides a timed recording outline. Verified the button with another complete assistant run
   (687 catalog IDs, 604 canonical identities, 15 related endpoints). No recording or student sign-off
   was created. Local access checks and provenance are recorded in [recording verification](recording_verification_2026-11-01.json).
+- Pushed the milestone branch and opened [draft PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2)
+  for review. Its student checklist remains unmarked and the PR remains a draft. No Canvas submission,
+  merge, student recording, or student-authored baseline entries were performed.
 
 Canvas authentication/setup helpers are local connection tools, not the assignment's data-ingestion implementation, student screencast, or proof of project retrieval. Credentials remain outside this project folder.
 
@@ -56,6 +59,6 @@ Pending. Record the choices DJ actually makes after review, including accepted/r
 ## Final review
 
 Pending: complete genuine baseline evidence/reflections, verify the proposal and dictionary, review the
-local milestone changes and eventual PR, record the student screencast, resolve delivery location, and
+milestone changes in draft PR #2, record the student screencast, resolve delivery location, and
 obtain DJ's review before turn-in. The working copy already contains the inspected remote Git history
 and a local milestone branch; the excluded Mac-only history has not been imported.

@@ -1,6 +1,7 @@
 # Draft PR: Milestone 1 — OpenRouter metadata retrieval and dictionary
 
-Assistant-prepared draft for DJ's review. No PR has been created. The first-person checklist and
+Assistant-prepared text for DJ's review. [Draft PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2)
+now contains this preparation and the AI review stages. The first-person checklist and
 Read/Verify/Decide statements must be completed from DJ's actual actions before submission.
 
 ## What this change does

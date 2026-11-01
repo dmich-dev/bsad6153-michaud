@@ -41,3 +41,6 @@ still requires your review and authorization.
 Recording is not the only outstanding assignment requirement: the saved personal baseline has one
 reconstructed entry, and your own review, reflections, API approval confirmation, and eventual screencast
 link remain outstanding. See [submission readiness](submission_readiness.md). Assignment 1.4 is separate.
+
+The review copy is [draft PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2), targeting `main`.
+It remains a draft until the missing student evidence and final review are complete.

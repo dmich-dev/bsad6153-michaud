@@ -57,7 +57,8 @@ The [recording workspace and guide](recording_guide.md) put the required materia
 ## Final review and submission
 
 - [ ] Local changes reviewed by DJ; no secrets in files, screenshots, or Git history.
-- [ ] `milestone-1` pull request targets `main`; completed PR template and review log included.
+- [x] [Draft PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2) targets `main` from `milestone-1` for review.
+- [ ] Complete the student portions of the PR template and review log before marking the draft ready.
 - [ ] Screencast recorded by DJ, uploaded, and linked.
 - [ ] Resolve submission location: Canvas currently reports `submission_types=["none"]`, although the
   assignment text requests a PR URL and screencast. No online Canvas submission is currently offered.
