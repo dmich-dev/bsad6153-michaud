@@ -108,3 +108,11 @@ not covered, so absence in these searches is not a claim that approval was never
 A Canvas text-entry draft contains the PR and Loom links with the retry and price clarifications.
 DJ's final review, personal evidence, and instructor approval remain pending. No student attestations
 were completed on DJ's behalf. No Canvas submission, PR merge, or Loom edit was performed.
+
+## Student baseline clarification — November 1
+
+DJ explained that he mainly uses OpenAI because he finds 6.1 Sol cost-effective and it connects well
+with HERMES. His exact wording was added to the baseline as a dated clarification. The original
+observation and reflection text are retained. This is one existing reconstructed decision with
+additional student-supplied context, not five distinct observations or a measured price comparison.
+No timings, confidence ratings, additional events, or reflection answers were generated.

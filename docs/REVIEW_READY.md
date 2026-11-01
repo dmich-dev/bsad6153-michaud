@@ -94,6 +94,8 @@ or every other communication. An approval request has been saved as an unsent Gm
 review; an unsent request is not instructor approval.
 
 The desktop recording folder now includes a blank baseline-input sheet, a Canvas text-entry draft,
-the approval-request draft, and a short final-review checklist. The baseline itself remains unchanged.
+the approval-request draft, and a short final-review checklist. The baseline was unchanged at that
+check; DJ's subsequent November 1 preference clarification is now recorded verbatim, with the original
+observation retained.
 DJ's personal observations and final review are still needed. No Canvas submission, merge, or video
 edit was made.

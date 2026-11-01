@@ -14,6 +14,13 @@ Mark any entry you had to reconstruct from memory as *(reconstructed)*.
 |---|---|---|---|---|---|
 | Date unknown; reported October 22, 2026 *(reconstructed)* | Model for homelab tasks; recently using 6.1 sol heavily | Not recorded | Not measured | Not recorded | Not recorded |
 
+**DJ's current preference, reported November 1, 2026 (verbatim):**
+
+> i mainly use openai right now becuase 6.1 sol is a great cost effective option and connects well to HERMES
+
+**Assistant note:** This supplies selection criteria for the existing context. It does not add
+another dated decision event, timed observation, or measured cost comparison.
+
 ## Reflection
 
 1. **The three most frustrating or time-consuming parts:** Frequent model releases make it hard for me
