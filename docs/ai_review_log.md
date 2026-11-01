@@ -151,3 +151,17 @@ DJ's recorded walkthrough, older-example challenge, source decision, and delegat
 evidence; the assistant does not check an attestation that DJ read every change or personally
 performed the pre-code documentation check. The Canvas text is prepared with its current limitations
 stated. Final student approval, the No-AI entries, and instructor API approval remain unresolved.
+
+## DJ accepted the prepared review — November 1
+
+DJ said the review was fine and that we had gone through it together. This records acceptance of
+the prepared review, not an assertion that every repository change was personally read or that a
+pre-code documentation check happened retroactively. The same prepared review need not be approved
+again. No-AI baseline entries and instructor API approval remain unresolved; no Canvas submission
+or sending of the approval-request email was authorized by that acceptance.
+
+The live assignment says non-menu APIs need approval in the proposal without naming a request
+channel. Its linked syllabus, page 7, explicitly prefers email for direct communication and asks for
+a descriptive subject. The instructor address on syllabus page 1 matches the saved email draft.
+The draft remains unsent. An assignment comment naming the source does not itself establish an
+instructor approval response.

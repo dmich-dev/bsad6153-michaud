@@ -50,3 +50,13 @@ clarifications, and Canvas text preparation have been handled. The live assignme
 is specific to log entries; it is not being applied as a blanket prohibition on reflection assistance.
 The remaining student-authored log entries and final package review cannot be replaced by fabricated
 events or attestations. OpenRouter approval remains unconfirmed and its email draft remains unsent.
+
+## Review acceptance and approval channel — November 1
+
+DJ accepted the prepared review based on our walkthrough together. This resolves the pending
+acceptance of that review; personal every-file/pre-code attestations are not inferred. The No-AI
+baseline entries and instructor OpenRouter approval remain unresolved. The [linked course syllabus](https://newmanu.instructure.com/courses/14628/files/1981473),
+page 7, prefers email for direct communication with a descriptive subject. The existing approval-request
+draft matches the instructor address on page 1 and remains unsent. After an actual approval response,
+its status can be recorded in the README proposal. Neither message sending nor Canvas submission
+was authorized by the review acceptance.

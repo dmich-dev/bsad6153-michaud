@@ -115,3 +115,8 @@ review, not an independent audio-quality or successful full-screen legibility au
 Remaining: DJ's No-AI log entries, his final review/approval of the prepared package, and instructor
 approval of OpenRouter. Personal attestations are not being checked on DJ's behalf. Nothing has
 been submitted or merged.
+
+DJ subsequently accepted the prepared review, saying we had gone through it together. That acceptance
+resolves the review request above without asserting that every file was read or a pre-code check was
+performed. The remaining unresolved items are the No-AI baseline entries and instructor API approval.
+The syllabus prefers email for direct communication; the prepared approval request remains unsent.
