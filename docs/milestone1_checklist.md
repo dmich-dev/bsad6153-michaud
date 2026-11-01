@@ -1,7 +1,9 @@
 # Assignment 1.3 preparation and recording checklist
 
 [Canvas assignment](https://newmanu.instructure.com/courses/14628/assignments/241963)
-was refreshed October 29, 2026. Due Sunday, November 1, 2026 at 11:59 p.m. America/Chicago (CST).
+was refreshed live November 1, 2026. Due that night at 11:59:59 p.m. America/Chicago (CST).
+
+The technical draft and two assistant-executed runs are ready for review. See [review packet](REVIEW_READY.md).
 
 ## Prepared for review
 
@@ -12,20 +14,22 @@ was refreshed October 29, 2026. Due Sunday, November 1, 2026 at 11:59 p.m. Ameri
 - [x] Draft [data dictionary](data_dictionary.md), [API review sheet](api_review.md), and README proposal.
 - [x] Preserve existing [baseline log](baseline_log.md) without adding observations.
 
-## Before fetch-code implementation
+## Human review and source scope
 
 - [x] DJ watches [Lecture 3](https://www.loom.com/share/8804dcb379a8408d8ae3c1300e182b78). DJ confirmed this on November 1.
 - [ ] DJ checks authentication, pagination, and rate-limit explanations in the API review sheet against
   official documentation, and records corrections or verification.
 - [ ] Resolve instructor approval for OpenRouter and the all-modalities collection scope.
 - [ ] Review the proposed fetch implementation and proposed Models.dev backup.
+- [x] Assistant completed the documentation check after DJ asked it to do so while he was busy. This
+  does not check off DJ's personal documentation review above.
 
-## Technical work still to implement and verify
+## Technical work verified by the assistant
 
-- [ ] `ingest/fetch.py`: pagination, paced requests, bounded backoff/retries, failure reporting, raw saves.
-- [ ] At least 500 unique main records actually downloaded, with related endpoint records and valid joins.
-- [ ] Clean-start and rerun evidence, plus tests for errors, missing fields, pagination, and 429 behavior.
-- [ ] Exact run instructions in README; optional key name only in `.env.example` if used.
+- [x] `ingest/fetch.py`: pagination, paced requests, bounded backoff/retries, failure reporting, raw saves.
+- [x] Two runs each retrieved 687 distinct catalog IDs, 604 canonical identities, and 15 valid related endpoints.
+- [x] Clean-start and rerun evidence; 16 offline tests passed. See [run verification](run_verification_2026-11-01.json).
+- [x] Exact run instructions in README; optional key name only in `.env.example`.
 - [ ] Confirm endpoint identity rules and investigate conflicting output limits in the sample.
 - [ ] Review the draft dictionary, source terms, and attribution before describing them as final.
 

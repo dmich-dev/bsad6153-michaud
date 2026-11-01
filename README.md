@@ -119,8 +119,8 @@ workflow or claiming improvement.
 
 The primary source is OpenRouter's model catalog, already named in the submitted repository setup.
 It supplies advertised prices, context limits, modalities, and supported request parameters. Related
-serving-endpoint records describe provider-specific offerings. The importer is planned to collect the
-broader catalog with real pagination, preserve raw responses, and report distinct catalog IDs alongside
+serving-endpoint records describe provider-specific offerings. The assistant-built importer collects the
+broader catalog with real pagination, preserves raw responses, and reports distinct catalog IDs alongside
 canonical identities. A later coding shortlist would filter suitable text-output and tool capabilities;
 the entire catalog is not a list of equally suitable coding models.
 
@@ -139,13 +139,41 @@ back off on errors, and preserve unknown values. Metadata supports comparison; i
 measured coding quality, reliability, personal subscription costs, or time savings.
 
 See the [data dictionary](docs/data_dictionary.md), [documentation review](docs/api_check_2026-10-31.md), and
-[remaining milestone checklist](docs/milestone1_checklist.md). The fetch pipeline is not implemented yet.
+[remaining milestone checklist](docs/milestone1_checklist.md). The technical draft is implemented and
+assistant-tested; DJ's review and remaining personal evidence are still pending.
 
 ## How to run this project
 
-The Week 1 setup commands above remain the documented setup workflow. The milestone importer is not
-implemented yet, so there is no verified fetch/run command to present. Exact commands and observed
-results will be added after the required API check, code review, and real clean-start/rerun verification.
+The metadata importer needs **Python 3.12 and its standard library only**. The other pinned packages
+remain relevant to the later website/database; this script does not require installing them.
+
+From the repository directory:
+
+```console
+python ingest/fetch.py
+python -m unittest discover -s tests -v
+```
+
+If this desktop has no `python` or `py` command, the installed Codex runtime can run it from PowerShell:
+
+```powershell
+$python = "$env:USERPROFILE\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
+& $python ingest/fetch.py
+& $python -m unittest discover -s tests -v
+```
+
+The default output is a new timestamped directory inside ignored `data/raw/`. To choose a name, use
+`--output-dir data/raw/my-new-run`; it must be new or empty. Successful run: exit 0. Incomplete retrieval
+or invalid arguments: exit 2. Local configuration/file error: exit 1. Read `summary.json` even after a failure.
+
+The importer reads an optional literal `OPENROUTER_API_KEY` from the environment or repository `.env`.
+The verified catalog runs needed no key. Only the name is present in `.env.example`; values must stay local.
+All requests are metadata GETs. There are no inference, credit-purchase, or model-generation calls.
+
+The November 1 assistant clean run and independent rerun each retrieved **687 catalog IDs, 604 canonical
+identities, and 15 related endpoints**, using seven catalog pages and ten related-resource lookups.
+All **16 offline tests passed**. No real rate limit was deliberately triggered; retries were tested
+against a local server and injected transport failures. See [verification evidence](docs/run_verification_2026-11-01.json).
 
 Current evidence and remaining work are tracked in [submission readiness](docs/submission_readiness.md).
 
@@ -157,3 +185,5 @@ Current evidence and remaining work are tracked in [submission readiness](docs/s
   [MIT-licensed repository](https://github.com/anomalyco/models.dev). It has not been integrated.
 - Codex assisted with API research, the small public-data sample, and draft documentation/proposal on
   October 29, 2026. DJ's review remains pending; the baseline observations were not generated or edited.
+- On November 1, at DJ's request, Codex checked the API documentation, implemented and tested the
+  importer, and performed both live metadata runs. These are assistant checks, not claims of DJ's own review.

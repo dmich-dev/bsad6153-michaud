@@ -2,6 +2,10 @@
 
 Your project's written evidence. Each file is described on its week's Canvas page.
 
+For the current Milestone 1 draft, start with [technical review](REVIEW_READY.md) and
+[submission readiness](submission_readiness.md). Files dated October 29–31 retain earlier observations;
+their historical counts and implementation plans do not replace the November 1 run evidence.
+
 | Week | File |
 |---|---|
 | 1 | `data_dictionary.md`, `baseline_log.md` (template provided) |

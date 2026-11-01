@@ -11,16 +11,16 @@ inspected submission comments; that is not proof that approval was never given e
 
 | Requirement | Current evidence | What is still required |
 |---|---|---|
-| Lecture and pre-code review | DJ confirmed Lecture 3 watched; API explanation and fetch plan prepared | Chosen source's documentation check recorded in DJ's words |
+| Lecture and pre-code review | DJ confirmed Lecture 3 watched; at his request the assistant checked the documentation, then implemented/tested the importer | DJ's personal pre-code check was not recorded before implementation; review honestly without backdating or claiming that sequence occurred |
 | API fit and approval | Submitted 1.2 explicitly names OpenRouter; [source comparison](data_source_options_2026-10-31.md) retained for review | Confirm non-menu approval and broad catalog scope; a source switch would require updating its explanation and documentation |
-| Working retrieval: 20 points | Archived preflight and manual source evaluation | Actual fetch script; at least 500 unique main records plus a related type; clean start and rerun |
-| Pagination/rate limits: 15 points | Proposed behavior only | Correct source behavior; paced requests; tested 429 backoff and bounded retries |
-| Error handling: 10 points | Failure plan only | Tested timeout, 5xx, malformed/missing data, and truthful partial-run reporting |
-| Dictionary: 25 points | 20 field entries; complete historical 456-record [profile](catalog_profile_2026-10-29.json); alias/null/rate and endpoint findings documented | DJ reviews observed quirks; align examples to eventual run; source approval and public-display question remain unresolved |
+| Working retrieval: 20 points | [Importer](../ingest/fetch.py); assistant clean run and rerun each produced 687 distinct catalog IDs, 604 canonical identities, and 15 related endpoints | DJ reads the code before his own execution and reviews the run evidence |
+| Pagination/rate limits: 15 points | Seven real catalog pages per run; sequential pacing; offline 429/Retry-After and bounded-retry checks passed | DJ reviews/explains behavior; no actual provider rate limit was deliberately triggered |
+| Error handling: 10 points | 16 passing offline tests cover timeout, 5xx, malformed/missing data, incomplete runs, redirects, and related joins | DJ reviews the tests and limitations; all live requests succeeded so live failure recovery is not claimed |
+| Dictionary: 25 points | 20 field entries; November 1 sample aligned to full retrieval; historical 456-record [profile](catalog_profile_2026-10-29.json) retained with its date | DJ reviews observed quirks; source approval and public-display question remain unresolved |
 | Baseline/proposal: 15 points | One reconstructed baseline entry; draft proposal | DJ supplies at least five honest entries, measured live timing, labeled reconstructions, five reflections, and verifies proposal workflow |
 | Screencast: 10 points | Recording outline prepared | DJ records 3–5 minutes showing clean run, code behavior, and a raw record in his own words |
-| Repository practice: 5 points | Current remote main reconciled; local milestone-1 branch based on 3fc374c; raw folder ignored; working changes preserved | Actual importer commands documented; meaningful commits and user review; milestone-1 PR into main |
-| Required gate | No credential signatures found in limited copied-file check | Full relevant file/history review; truthful completed AI review log, including DJ's Read/Verify/Decide evidence |
+| Repository practice: 5 points | Current remote main reconciled; local milestone-1 branch based on 3fc374c; raw folder ignored; exact run/test commands documented | DJ reviews the local changes; milestone-1 PR into main and screencast link remain outstanding |
+| Required review | No credential signatures found in limited copied-file/remote-history checks; assistant work recorded in [AI log](ai_review_log.md) | DJ's actual Read/Verify/Decide evidence; do not turn limited checks into an exhaustive no-secrets claim |
 | Delivery | Nov 1 live assignment still offers submission type `none` although text requests PR/screencast links; no relevant new announcements found in inspected Oct 25–Nov 3 window | Resolve destination; DJ reviews exact final work before delivery |
 
 ## Assignment 1.4: case brief and two replies
@@ -37,6 +37,6 @@ inspected submission comments; that is not proof that approval was never given e
 
 ## Assistant work completed so far
 
-Restored and verified archive; preserved original project files and personal baseline; checked official source documentation; compared live source structures/counts; audited archived samples; prepared review and recording/planning checklists. No fetch script, milestone PR, student brief, student replies, screencast, or submission has been completed by this preparation.
+Restored and verified archive; preserved original project files and personal baseline; checked official source documentation; compared sources; implemented and tested retrieval; performed two complete live runs; updated the sample, dictionary, run evidence, and review packet. See [technical review](REVIEW_READY.md). The milestone PR, student brief/replies, screencast, and submission remain outstanding.
 
 The original unmodified files remain in the restored archive. The working copy now contains the retrieved remote Git history and a local milestone-1 branch. A four-signature scan inspected all 22 reachable remote blob objects without a match; it is not an exhaustive secret detector and does not cover the excluded Mac-only Git history. See [repository review evidence](repository_review_2026-11-01.json).

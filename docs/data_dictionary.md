@@ -1,8 +1,10 @@
 # Data dictionary: Agent Model Selection
 
-**Status:** Codex draft for DJ review, initially October 29, 2026; saved-data quality annotations added November 1. Examples below remain dated October 29 public API preflight observations.
-The fetch pipeline and 500-record ingestion have not yet been implemented. Instructor approval for
-this API and final public-display terms review remain pending.
+**Status:** Codex draft for DJ review, updated November 1. The example values below were reconfirmed in
+the November 1 real linked sample. Historical October 29 profiling is explicitly labeled separately.
+The importer and two live runs are now assistant-verified: 687 distinct catalog IDs, 604 canonical
+identities, and 15 related endpoints per run. Instructor source approval, DJ's review, and final
+public-display terms review remain pending. See [run verification](run_verification_2026-11-01.json).
 
 ## Source and meaning of a record
 
@@ -24,7 +26,7 @@ three returned endpoint records. Sample values below are observations, not curre
 ## Important fields
 
 `model.` and `endpoint.` indicate the source resource; they are not literal prefixes in the JSON.
-Null/missing policy below is the proposed importer policy. The saved default-filter response was also
+Null/missing policy below describes the implemented handling. The saved default-filter response was also
 profiled across all 456 records; its observations are evidence for that dated snapshot, not guarantees
 about future responses. See the [field profile](catalog_profile_2026-10-29.json).
 
@@ -65,17 +67,19 @@ The model author prefix (`openai`) is not necessarily the host (`Azure`).
 In the saved 456-record default response, 320 records have an `id` different from their
 `canonical_slug`, and 79 canonical slugs are shared by multiple IDs. A count of distinct catalog IDs
 therefore must not be described as a count of distinct underlying model architectures. Record both
-catalog-ID counts and canonical-identity counts in the eventual run report; retain aliases/variants
+catalog-ID counts and canonical-identity counts in each run report; retain aliases/variants
 as source records, with their identity relationships visible.
 
-The endpoint response supplies no obvious universal record ID. Before Week 2, test a proposed composite
-key using model ID, tag, endpoint name, and service tier across the complete fetched related data.
-Do not treat that proposed key as verified unique yet. Model-to-endpoint is one-to-many; a provider can
-serve many models. Store endpoint limits/prices independently of the catalog's summary fields.
+The endpoint response supplies no obvious universal record ID. The importer uses a composite of model
+ID, provider name, tag, endpoint name, and service tier. That key is unique across the 15 retrieved related
+records in each verified run. It is not yet established as a permanent global key across all endpoints
+and time. Model-to-endpoint is one-to-many; a provider can serve many models. Endpoint limits/prices
+remain independent of the catalog summary.
 
 The saved sample already demonstrates why endpoint name alone is unsafe: two Azure offerings have the
-same name but distinct tags (`azure` and `azure/swedencentral`). The proposed composite key is unique
-across the three sampled endpoints only. See the [saved-data quality audit](preflight_quality_notes_2026-10-31.md).
+same name but distinct tags (`azure` and `azure/swedencentral`). The earlier proposed four-field key was
+expanded to include provider name during implementation. See the
+[saved-data quality audit](preflight_quality_notes_2026-10-31.md) for the historical finding.
 
 ## Update behavior
 
@@ -89,7 +93,8 @@ a removed record from one absent because a fetch failed, and retain last-known d
 These are Codex's observations, not claims about what surprised DJ personally.
 
 1. The default response contained 456 model records; `output_modalities=all` reported 689. Default
-   filters can make a source appear too small. The full 689-record ingestion still needs to be run.
+   filters can make a source appear too small. Those October 29 counts are historical: the complete
+   November 1 all-modalities run actually retrieved 687 catalog IDs and 604 canonical identities.
 2. Prices are decimal strings. Convert with decimal arithmetic; a missing rate is different from `"0"`.
 3. `id`, `canonical_slug`, and the slug in `links.details` can differ. The sample's endpoint `model_id`
    still joins to the unversioned model ID.
@@ -126,6 +131,7 @@ DJ's review, corrections, and understanding must be recorded before submission.
 
 ## Review status
 
-Assistant source checks and historical field profiling are complete for this draft. DJ confirmed on
-November 1 that Lecture 3 was watched. DJ's own documentation check, review of these observations,
-instructor source approval, complete ingestion evidence, and final public-display decision remain pending.
+Assistant source checks, field profiling, implementation, tests, and full ingestion evidence are complete
+for this technical draft. DJ confirmed Lecture 3 was watched and later asked the assistant to perform
+the documentation checks while he was busy. His own review is not marked complete. Instructor source
+approval and the final public-display decision also remain pending.

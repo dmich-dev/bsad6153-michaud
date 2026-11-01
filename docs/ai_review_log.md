@@ -14,10 +14,15 @@ source choice; it does not assert that DJ has completed the separate documentati
 
 - Restored the school archive and verified its recorded SHA-256 and ZIP integrity. Preserved all 26 original project files in the source archive; later working-copy dictionary annotations are identified as assistant work.
 - Preserved the personal baseline log byte-for-byte. No observations, timings, confidence ratings, or student reflections were invented.
-- Compared documented APIs and live source metadata, labeling discovery counts separately from reproducible project ingestion. No project fetch script or 500-main-record ingestion run exists yet.
+- Compared documented APIs and live source metadata, labeling discovery counts separately from reproducible project ingestion.
 - Audited the saved sample: one model and three related endpoints, with valid sample joins; duplicate endpoint names and conflicting output limits are documented with evidence.
 - Prepared the API explanation, fetch/test plan, source comparison, case reading/planning worksheet, and readiness matrix. Case-brief text and replies were not generated.
 - Verified the live Canvas account/course and current assignments on November 1. 1.3 and the substantive 1.4 discussion remain unsubmitted; deadline/lock boundary is November 1 at 11:59:59 p.m. CST. 1.0–1.2 are already submitted.
+- At DJ's subsequent request to do the documentation check while he was busy, checked official authentication, catalog pagination, and rate-limit references. Bearer authentication is documented; anonymous catalog success is an observation, not a universal guarantee. Offset/limit, all-modalities filtering, and Retry-After/backoff behavior were checked. This is assistant verification.
+- Implemented `ingest/fetch.py` using Python 3.12's standard library, avoiding extra installation requirements for retrieval. The existing requests-based proposal was changed for that reason; full website dependencies remain unchanged.
+- Passed all 16 offline tests, including HTTP pagination/retry cases, missing/invalid data, duplicate counts, rejected redirects/origins, retry exhaustion, timeout handling, and credential-echo rejection.
+- Performed a clean live run and an independent rerun. Each has seven catalog pages, 687 catalog IDs, 604 canonical identities, and 15 related endpoints from ten model lookups, with no run issues. Both used anonymous metadata GETs; neither made a paid inference call. Raw response hashes and summaries are in [verification evidence](run_verification_2026-11-01.json).
+- Corrected the proposed endpoint identity to include provider name, preventing provider-name collisions from being silently merged. Verified uniqueness across the 15 collected related records; global/time-stable uniqueness remains unproven.
 
 Canvas authentication/setup helpers are local connection tools, not the assignment's data-ingestion implementation, student screencast, or proof of project retrieval. Credentials remain outside this project folder.
 
@@ -25,13 +30,19 @@ Canvas authentication/setup helpers are local connection tools, not the assignme
 
 DJ confirmed on November 1 that Lecture 3 was watched.
 
-Pending. DJ needs to record the official documentation checked for authentication, pagination, and rate limits, and any correction or how each explanation was verified. The assistant must not fill this in as if DJ had performed it.
+Pending. DJ asked the assistant to perform the documentation check while he was busy. His personal
+pre-code check was not recorded as completed before implementation, and this log does not claim it was.
+He still needs to review the sources/explanations and record his own verification or corrections.
 
-After the fetch script is written, DJ reads it before its first run and identifies where credentials are read, where requests wait, and how 429 responses are handled.
+Before DJ runs the script himself, he reads it and identifies where credentials are read, where requests
+wait, and how 429 responses are handled. The recorded live runs above were performed by the assistant.
 
 ## Verify: project execution
 
-Pending. Record real clean-start/rerun commands, actual unique model and related-record counts, relationship checks, failure-test outcomes, and limitations after they occur. Source discovery and archived samples are not substitutes for these runs.
+Assistant verification is recorded in [the run report](run_verification_2026-11-01.json). Student execution
+and interpretation remain pending. The exact commands are in the README. No live 429 was deliberately
+provoked; error behavior was verified offline. The two live runs each made 17 successful HTTP requests,
+with no retries, and produced identical model-ID sets. That does not guarantee future source stability.
 
 ## Decide: DJ's decisions
 
@@ -39,4 +50,7 @@ Pending. Record the choices DJ actually makes after review, including accepted/r
 
 ## Final review
 
-Pending: complete genuine baseline evidence/reflections, verify the proposal and dictionary, reconcile the real Git repository/history, review the milestone PR, record the student screencast, resolve delivery location, and obtain DJ's review before turn-in.
+Pending: complete genuine baseline evidence/reflections, verify the proposal and dictionary, review the
+local milestone changes and eventual PR, record the student screencast, resolve delivery location, and
+obtain DJ's review before turn-in. The working copy already contains the inspected remote Git history
+and a local milestone branch; the excluded Mac-only history has not been imported.

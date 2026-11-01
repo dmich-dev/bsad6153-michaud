@@ -1,8 +1,14 @@
 # OpenRouter API review before implementation
 
 Prepared by Codex on October 29, 2026 for [Assignment 1.3](https://newmanu.instructure.com/courses/14628/assignments/241963).
+
+**Historical October 29 preflight:** counts, proposed dependencies, and implementation status below
+refer to that date. The November 1 implementation uses Python's standard library and has passed 16
+offline tests and two complete live runs. See [current technical review](REVIEW_READY.md) and
+[AI review log](ai_review_log.md). DJ's personal review is still not marked complete.
+
 This is an assistant research sheet. DJ's documentation check and decisions are still pending.
-No reusable fetch script has been written or run.
+At the time of this preflight, no reusable fetch script had been written or run.
 
 ## Three claims for DJ to check
 

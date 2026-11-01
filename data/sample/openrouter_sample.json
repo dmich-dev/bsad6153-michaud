@@ -1,8 +1,9 @@
 {
-  "observed_on": "2026-10-29",
-  "status": "Preflight sample only; not a completed 500-record ingestion run",
-  "model_source_url": "https://openrouter.ai/api/v1/models",
-  "endpoint_source_url": "https://openrouter.ai/api/v1/models/openai/gpt-4.1/endpoints",
+  "observed_on": "2026-11-01",
+  "observed_at": "2026-11-01T06:41:30.014957+00:00",
+  "status": "Real sample from an assistant-executed complete run; independent rerun verified",
+  "model_source_url": "https://openrouter.ai/api/v1/models?output_modalities=all&limit=100&offset=0",
+  "endpoint_source_url": "https://openrouter.ai/api/v1/models/openai/gpt-4.1-2025-04-14/endpoints",
   "models": [
     {
       "id": "openai/gpt-4.1",
@@ -55,6 +56,12 @@
       "links": {
         "details": "/api/v1/models/openai/gpt-4.1-2025-04-14/endpoints"
       },
+      "endpoints": [
+        "/api/v1/chat/completions",
+        "/api/v1/completions",
+        "/api/v1/messages",
+        "/api/v1/responses"
+      ],
       "benchmarks": {
         "design_arena": [
           {
@@ -238,7 +245,7 @@
       },
       "status": 0,
       "uptime_last_30m": 100,
-      "uptime_last_5m": 100,
+      "uptime_last_5m": null,
       "uptime_last_1d": 100,
       "supports_implicit_caching": true,
       "native_tools": {},
@@ -251,8 +258,8 @@
     }
   ],
   "observed_counts": {
-    "default_catalog": 456,
-    "all_modalities_total": 689,
-    "all_modalities_page_downloaded": 2
+    "unique_catalog_ids": 687,
+    "unique_canonical_slugs": 604,
+    "related_endpoints": 15
   }
 }

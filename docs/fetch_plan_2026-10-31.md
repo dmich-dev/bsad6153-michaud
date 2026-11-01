@@ -1,14 +1,16 @@
 # Fetch implementation plan for review
 
-Status: proposed October 31, 2026; no fetch code written. Implement only after DJ completes the required documentation check. Read the resulting script before its first run.
+Status: proposed October 31; implemented and assistant-verified November 1 after DJ asked the assistant
+to perform the documentation check. DJ's personal check/review is not marked complete. Read the
+resulting script before student execution. Current results: [verification report](run_verification_2026-11-01.json).
 
 November 1: DJ explicitly confirmed retaining OpenRouter after clarifying that the project uses catalog
 metadata. The plan makes no paid inference calls. Lecture 3 is confirmed watched; the documentation
-check above remains DJ's next pre-code step.
+check remains pending as DJ's own work. The assistant's later check and implementation are recorded honestly.
 
 ## Collection and outputs
 
-Use the existing Python/requests project. Planned script location: `ingest/fetch.py`.
+Implemented in `ingest/fetch.py` with Python 3.12's standard library, so retrieval needs no additional packages.
 
 1. Collect the broad model catalog in explicit pages. Retain each original JSON response under a new, timestamped directory inside ignored `data/raw/`.
 2. Validate each model's ID, retain optional fields without inventing defaults, and deduplicate IDs. Report invalid rows and conflicting duplicates. Require at least 500 unique main records; fewer is an incomplete milestone, not a reason to repeat records. Report canonical-identity counts separately from catalog-ID counts so aliases are visible.
@@ -37,7 +39,8 @@ Use the existing Python/requests project. Planned script location: `ingest/fetch
 | Clean start and rerun | Two independent real runs produce raw responses and truthful summaries, with at least 500 unique models and valid related records each |
 | Documentation | README commands match actual usage; dictionary examples match saved data; unresolved source conflicts are labeled |
 
-The test implementation and real runs are still pending. Offline test evidence must never be described as a real provider run.
+All 16 offline tests passed. Two separate real runs each retrieved 687 catalog IDs and 15 related
+endpoints. Offline retry/error tests and live retrieval evidence are distinguished in the report.
 
 ## Human evidence and delivery
 

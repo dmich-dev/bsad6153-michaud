@@ -2,11 +2,15 @@ Put one small sample of your raw API data here (a few records) so others can see
 Large raw downloads go in data/raw/, which Git ignores.
 
 `openrouter_sample.json` contains one model and three related serving endpoints observed on
-October 29, 2026. The record objects are copied unchanged from public API preflight responses;
-the surrounding source URLs, date, and counts are sample metadata.
+November 1, 2026. Its record objects are copied from the complete assistant-executed ingestion;
+the surrounding source URLs, date, and counts are provenance metadata.
 
-This is a shape/relationship example, not evidence of a completed 500-record ingestion run.
-The all-modalities total of 689 came from a two-record paginated response. Full preflight
-responses are local under ignored `data/raw/preflight-2026-10-29/`.
+The verified full run has 687 distinct catalog IDs, 604 canonical identities, and 15 related endpoint
+records. An independent rerun produced the same ID set and counts. This committed file is deliberately
+small; full original response pages and summaries stay under ignored `data/raw/`.
+
+The earlier October 29 sample remains in Git history and in the preserved handoff. It must not be
+confused with the November 1 run. [Run verification](../../docs/run_verification_2026-11-01.json)
+records hashes of the current full-run responses.
 
 See the [data dictionary](../../docs/data_dictionary.md) and [API review sheet](../../docs/api_review.md).
