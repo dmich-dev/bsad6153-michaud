@@ -6,8 +6,10 @@ The submitted 1.2 comment explicitly proposes OpenRouter for this model-choice p
 DJ confirmed retaining OpenRouter after discussing alternatives and the difference between catalog data
 and paid inference. Models.dev remains a proposed backup. No approval was found in the inspected
 1.2/1.3 comments, course-filtered Canvas inbox/archive/sent conversations, or targeted searches of the
-connected personal Gmail. School email and other communications are not covered. An instructor
-approval request is saved as an unsent Gmail draft for DJ's review; it has not been sent or approved.
+connected personal Gmail. DJ subsequently reported sending the request from his school account;
+the separate personal-account request has a verified Sent record, and DJ reported the duplicate
+clarification sent. No instructor approval response is established. No further email will be sent
+under this Canvas-submission instruction.
 
 ## Assignment 1.3: API Connection & Data Dictionary
 
@@ -69,3 +71,11 @@ approval, and one-entry baseline limitation explicitly stated. The same instruct
 updated for the deadline context, saved unsent, and fully read back. DJ requested the final text so
 he can send it himself. No approval response, completed No-AI log, email sending, or Canvas submission
 is claimed. The PR remains a draft and can be referenced as the current-work PR without merging.
+
+## Explicit Canvas submission authorization — November 1
+
+DJ reported the email sent and explicitly authorized submitting Assignment 1.3 after checking
+alignment. The current-work text includes the PR and Loom links, technical video clarifications,
+pending API approval, and the incomplete No-AI baseline. This authorization is for the current
+work with those disclosures; no additional log entries or personal attestations are inferred.
+The final check still shows the assignment unsubmitted before the separately recorded POST.

@@ -179,3 +179,17 @@ No email was sent. Canvas still showed 1.3 unsubmitted in the fresh check.
 The desktop Canvas text is now exact copy without a removable preparation note. Pending source
 approval and the one-entry baseline limitation remain explicit. No student events or measurements
 were added, no complete-rubric claim was made, and no Canvas submission or PR merge was performed.
+
+## Authorized Canvas turn-in — November 1
+
+DJ reported the duplicate clarification sent and asked the assistant to ensure alignment and turn
+in Assignment 1.3. The assistant checked the live assignment/submission route, correct milestone
+branch/PR, exact prepared text, local documentation links, unchanged baseline, and limited current-file/
+reachable-history credential signatures. Forty-eight project files and 125 reachable Git blobs were
+checked without a match in that limited scan. The 20-field dictionary and 355-word proposal were
+confirmed. Code remains unchanged since the 21 passing tests, so no test rerun is claimed.
+
+Stale current-status wording that the approval request was unsent was corrected. Approval has been
+requested; no instructor confirmation is established. The submitted work will keep the one-entry
+baseline limitation and AI-assisted reflection disclosure. No further email, PR merge, invented
+student entry, or unchecked personal attestation is authorized or performed by this step.
