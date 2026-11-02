@@ -1,0 +1,132 @@
+# Milestone 1 technical review
+
+**Submitted on time:** Assignment 1.3, November 1, 2026 at 7:14:18 p.m. CST, attempt 1, Online Text Entry. Canvas independently confirms Submitted, not late, not missing. Both links, video clarifications, and the unresolved baseline/API-approval disclosures were included.
+
+Prepared November 1, 2026. **The technical draft is ready for DJ's review. The assignments are not yet ready to turn in.**
+
+**Student recording received:** [Loom screencast, about 4:35](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1).
+The [review note](screencast_review_2026-11-01.md) records topic coverage, two technical clarifications,
+existing public link access, and the remaining playback/final-review checks.
+
+**Latest selection correction:** the demo no longer pins GPT-4.1. It selects the most recently added
+catalog entry with collected provider data, shows catalog-added and retrieval dates separately, and
+offers a model menu. All 21 tests passed; a fresh browser-triggered run returned 687 catalog IDs,
+604 canonical identities, and 73 related endpoints. Two actual empty provider lists were saved and
+reported as unavailable. See [current verification](latest_selection_verification_2026-11-01.json).
+
+**Recording setup is prepared:** use the [recording guide](recording_guide.md), or double-click
+**Prepare Recording.cmd** beside the project folder. A single local browser window contains a fresh-run
+button, readable actual code, a real raw record, the dictionary, and a four-minute outline. Its browser
+button was verified with another complete assistant-run collection; see [recording verification](recording_verification_2026-11-01.json).
+
+## What now works
+
+The [importer](../ingest/fetch.py) retrieves OpenRouter catalog metadata and related serving endpoints.
+The original two verification runs, before the example-selection correction, each produced:
+
+| Evidence | Result |
+|---|---|
+| Catalog pages | 7 |
+| Distinct catalog IDs | 687 |
+| Distinct canonical model identities | 604 |
+| Related serving endpoints | 15 |
+| Model endpoint lookups completed | 10 of 10 |
+| HTTP requests per run | 17, all successful |
+| Run issues | None |
+| Offline tests | 16 passed |
+| Paid inference/model-generation calls | 0 |
+
+The two model-ID sets match. Counts and source contents can change later. Retry behavior was tested
+with a local HTTP server and injected failures; a real provider rate limit was not deliberately triggered.
+Full raw responses remain outside Git under `data/raw/`. [Machine-readable verification](run_verification_2026-11-01.json)
+records response hashes. The [small linked sample](../data/sample/openrouter_sample.json) is safe to review in the repository.
+
+## Read these pieces
+
+1. [Project proposal](../README.md#project-proposal-week-1): check that the decision and proposed agent
+   match what you actually want, and that the workflow description accurately acknowledges the incomplete baseline.
+2. [Data dictionary](data_dictionary.md): review field meanings, price units, aliases, missing values,
+   relationships, source conflict, and the unresolved public-display question.
+3. [Code](../ingest/fetch.py): `load_key` reads the optional local key; `checked_url` limits destinations;
+   `get_json` spaces requests; `retry_delay` honors retry hints or uses bounded backoff; `collect` follows
+   pages, deduplicates, validates joins, and reports completeness.
+4. [AI review log](ai_review_log.md): assistant checks and student review are distinct. DJ supplied
+   a real clean-run walkthrough and identified the older-example issue during his dry run. His own
+   pre-code documentation check and review of every PR change are not certified by that evidence.
+
+## Running it yourself
+
+Read the code first. From the repository folder, `python ingest/fetch.py` writes a fresh timestamped run.
+The [README](../README.md#how-to-run-this-project) includes the exact PowerShell command for this
+desktop's installed Python if `python` is unavailable. Tests: `python -m unittest discover -s tests -v`.
+An existing nonempty output directory is refused, preserving earlier evidence.
+
+For the 3–5 minute screencast: show your own clean run, point to paging/waiting/429 handling and explain
+them in your own words, then show one model and its related endpoint. Use the outline in the
+[milestone checklist](milestone1_checklist.md). This packet is an outline, not a fabricated student recording.
+
+## Before turn-in
+
+- DJ reviews and records his own understanding/corrections, including documentation and code review.
+- Confirm instructor approval for the non-menu API and broad catalog scope; no approval was found in
+  the inspected Canvas comments, which does not rule out approval elsewhere.
+- Complete the student-authored No-AI baseline entries. Only one reconstructed entry is currently
+  saved. The five AI-assisted reflection answers are drafted below the log for DJ's final review;
+  live times must be measured, and missing personal data was not invented or adjusted.
+- Verify the proposal against that baseline and review the supplied screencast's clarifications and playback.
+- Review [draft milestone PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2) and complete
+  the review log using actual student actions. The milestone branch is pushed for review; the PR remains
+  a draft and nothing has been turned in on Canvas. Unverified student attestations remain unmarked.
+  The latest Canvas check now offers online text entry, which can include both the PR and recording links.
+- For 1.4, DJ writes his own 400–500-word brief and two substantive replies. The
+  [source index](case_source_index.md) and [worksheet](case_brief_plan_2026-10-31.md) are research/planning aids only.
+
+Live Canvas boundaries: 1.3 due November 1 at 11:59:59 p.m. CST; 1.4 discussion locks at the same instant.
+
+## Final preparation review — November 1
+
+The assistant rechecked all 17 original-response hashes from the corrected example-selection run,
+687 distinct catalog IDs, all 73 related joins, unique endpoint keys, and the recording's base-price
+calculation. Ingestion, recording-workspace, and test source is unchanged since the commit with 21
+passing tests; tests were not rerun for these documentation-only updates. The limited file/history
+scan and link checks are recorded separately. See [preparation verification](submission_prep_verification_2026-11-01.json).
+
+No approval was found in the inspected 1.2/1.3 comments, course-filtered Canvas inbox/archive/sent
+conversations, or targeted searches of the connected personal Gmail. That does not cover school email
+or every other communication. An approval request has been saved as an unsent Gmail draft for DJ to
+review; an unsent request is not instructor approval.
+
+The desktop recording folder now includes a blank baseline-input sheet, a Canvas text-entry draft,
+the approval-request draft, and a short final-review checklist. The baseline was unchanged at that
+check; DJ's subsequent November 1 preference clarification is now recorded verbatim, with the original
+observation retained.
+DJ's personal observations and final review are still needed. No Canvas submission, merge, or video
+edit was made.
+
+## Permitted work completed at DJ's request
+
+The assistant refreshed the live assignment wording: "AIAS level 1 (No AI) applies to the log entries."
+It then drafted the five reflection answers from actual statements/records with AI assistance disclosed,
+updated the proposal workflow, prepared the factual PR review notes, and completed the Canvas text
+with both links and current limitations. The entire log-entry section was preserved byte-for-byte.
+
+The Loom player/transcript was revisited. Clean-run, pagination-code, and raw-record views were
+inspected, and the two technical clarifications remain attached. This is a content/visual sample
+review, not an independent audio-quality or successful full-screen legibility audit.
+
+Remaining: DJ's No-AI log entries, his final review/approval of the prepared package, and instructor
+approval of OpenRouter. Personal attestations are not being checked on DJ's behalf. Nothing has
+been submitted or merged.
+
+DJ subsequently accepted the prepared review, saying we had gone through it together. That acceptance
+resolves the review request above without asserting that every file was read or a pre-code check was
+performed. The remaining unresolved items are the No-AI baseline entries and instructor API approval.
+The syllabus prefers email for direct communication; the prepared approval request remains unsent.
+
+## Deadline handoff requested by DJ
+
+DJ chose to prepare the current work for November 1 delivery while OpenRouter approval remains
+unconfirmed. The Canvas copy explicitly discloses that status and the incomplete No-AI baseline;
+it does not claim all rubric requirements have been met. The instructor email is updated and saved
+unsent for DJ to send. Review acceptance remains recorded. No further waiting for an approval response
+is imposed as a condition of preparing this packet, and no Canvas submission or PR merge was made.

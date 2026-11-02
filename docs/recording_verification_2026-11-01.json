@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-11-01T08:03:27.073166+00:00",
+  "performed_by": "assistant",
+  "student_review": "Not claimed",
+  "checks": {
+    "local_page_loads": true,
+    "four_actual_source_sections": true,
+    "real_raw_example": true,
+    "env_path_not_served": true,
+    "foreign_host_refused": true,
+    "run_without_same_origin_refused": true,
+    "fresh_live_run_through_browser_button": true,
+    "baseline_unchanged": true
+  },
+  "browser_run": {
+    "complete": true,
+    "catalog_pages": 7,
+    "unique_catalog_ids": 687,
+    "unique_canonical_slugs": 604,
+    "related_endpoints": 15,
+    "issues": [],
+    "warnings": [],
+    "paid_inference_calls": 0
+  },
+  "run_directory": "data/raw/recording-20261101T080232195243Z",
+  "summary_sha256": "24aa50770f0e2bdb164c1d7783c525fc1f749ae8897f3731a69f4f1a6e7b421d"
+}

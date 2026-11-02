@@ -1,0 +1,57 @@
+# Assignment 1.3 recording guide
+
+The recording workspace is a local presentation aid. It shows the actual source code and real API
+responses and runs the actual importer into a new folder. It does not record, upload, submit, or
+automatically mark student review complete.
+
+DJ has now provided [the recording, about 4:35](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1).
+See [review notes and technical clarifications](screencast_review_2026-11-01.md). The steps below
+remain a reference if another take is needed.
+
+The raw-record view now defaults to the newest catalog addition with collected provider data; its menu
+lets you select another example. Catalog-added and retrieval dates are displayed separately. The source's
+`created` field is not a verified release date or a quality ranking. Empty provider lists are preserved
+and reported as unavailable. The updated [verification](latest_selection_verification_2026-11-01.json)
+records 21 passing tests and a complete fresh run with 73 related endpoints. The older figures below
+describe the original two verification runs.
+
+On this Windows desktop, double-click **Prepare Recording.cmd** in the outputs folder. The browser
+opens the prepared workspace. Keep its helper window open while recording. Alternatively, from the
+repository run `python scripts/recording_room.py`.
+
+## Set up once
+
+1. Read the authentication, pacing, retry, and pagination sections under **Code**. Follow the official
+   documentation links and record your actual review/corrections in the AI log; do not backdate anything.
+2. Open your recorder (Loom is recommended by the assignment). Choose the prepared browser window
+   or its tab, enable your microphone, and check the input. A camera image is not listed in the assignment.
+3. Start recording, then use **Clean run → Run a fresh live collection**. New run counts are displayed
+   dynamically; use the actual results instead of memorizing historical counts.
+
+## Four-minute outline
+
+| Time | Show | Explain in your own words |
+|---|---|---|
+| 0:00–0:25 | Opening/project title | The daily decision and what catalog metadata can help compare |
+| 0:25–1:20 | Clean run, command, and result | Fresh destination, real requests, model/endpoint counts, completeness |
+| 1:20–2:45 | Actual Code sections | Optional bearer key; next-page links and all-modalities filter; one-second pacing; Retry-After or bounded backoff on 429 |
+| 2:45–3:45 | Raw record and related provider | What one row means; model ID join; USD per token; one null, alias, or source conflict |
+| 3:45–4:15 | Dictionary | One genuine limitation: metadata does not establish coding quality, and endpoint limits can disagree |
+
+The baseline of two assistant runs was 687 catalog IDs, 604 canonical identities, and 15 related
+endpoints, with 16 offline tests passed. These are historical assistant results. The recording room's
+own latest run replaces its example view after completion. The original raw JSON object is read from
+a preserved response page; the displayed provenance names that file. Related records are shown separately.
+
+## After recording
+
+Check the recording's duration, microphone audio, legible code, fresh-run completion, and raw-record
+explanation. Save/upload using the recorder and provide the resulting link for the PR. Final turn-in
+still requires your review and authorization.
+
+Recording is not the only outstanding assignment requirement: the saved personal baseline has one
+reconstructed entry, and your own review, reflections, and API approval confirmation remain outstanding.
+See [submission readiness](submission_readiness.md). Assignment 1.4 is separate.
+
+The review copy is [draft PR #2](https://github.com/dmich-dev/bsad6153-michaud/pull/2), targeting `main`.
+It remains a draft until the missing student evidence and final review are complete.

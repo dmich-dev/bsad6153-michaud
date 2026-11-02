@@ -1,0 +1,20 @@
+{
+  "observedAtUtc": "2026-11-01T04:36:22.581Z",
+  "source": "https://models.dev/catalog.json",
+  "httpStatus": 200,
+  "distinctModels": 607,
+  "textOutputModels": 574,
+  "toolCallingModels": 472,
+  "providers": 235,
+  "providerModelOfferings": 8940,
+  "offeringsWithExplicitCanonicalModelId": 7631,
+  "offeringsWithExplicitValidJoin": 7562,
+  "missingCanonicalLinks": 1309,
+  "unmatchedExplicitLinks": 69,
+  "sampleVerifiedJoin": {
+    "provider": "alibaba-token-plan",
+    "providerModelId": "deepseek-v4.1-flash",
+    "canonicalModelId": "deepseek/deepseek-v4.1-flash"
+  },
+  "notes": "Source evaluation only; not the assignment ingestion implementation or completed milestone evidence. Unlinked offerings must not be joined by name guesses. Single-snapshot API; pagination acceptance needs instructor clarification."
+}

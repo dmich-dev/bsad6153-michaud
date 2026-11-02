@@ -108,13 +108,104 @@ every command before you approve it, and keep auto-approve off.
 
 ## Project proposal (Week 1)
 
-<!-- About 300 words: data source and backup API, your decision and workflow (from your baseline log),
-     your first agent idea, and risks. See the Week 1 page. -->
+**Assistant-prepared proposal for DJ's review, updated November 1.** Source approval and DJ's own
+workflow evidence remain pending. This proposal describes intended work, not a completed system.
+
+Agent Model Selection supports a daily decision: which AI model to use for coding or agent tasks.
+DJ mainly uses OpenAI's 6.1 Sol because he finds it cost-effective and it connects well with HERMES.
+His work includes bot workflows, agent interfaces, security automation, and outage investigation.
+Five historical task/model-use records support that usage history; they do not measure selection time
+or comparative quality. The student-authored decision log remains incomplete. AI-assisted reflections
+are drafted for review, and no measured improvement is claimed.
+
+The primary source is OpenRouter's model catalog, already named in the submitted repository setup.
+It supplies advertised prices, context limits, modalities, and supported request parameters. Related
+serving-endpoint records describe provider-specific offerings. The assistant-built importer collects the
+broader catalog with real pagination, preserves raw responses, and reports distinct catalog IDs alongside
+canonical identities. A later coding shortlist would filter suitable text-output and tool capabilities;
+the entire catalog is not a list of equally suitable coding models.
+
+Models.dev is the proposed backup. Its model metadata and provider offerings could support a separate
+adapter, but identifiers, price units, update behavior, and attribution must be checked before use.
+Source labels must remain visible so different providers' prices are not silently treated as identical.
+
+By Week 6, the proposed agent would create a local shortlist and a change report using task constraints
+such as budget, context requirements, and advertised tools. DJ would review its recommendation.
+Purchases, subscription changes, and transmission of task content would require approval. These are
+proposed boundaries for DJ to verify against his actual workflow.
+
+Risks include missing fields, aliases, conflicting endpoint limits, stale pricing, rate limits,
+authentication changes, and public-display terms. The design should retain timestamps and provenance,
+back off on errors, and preserve unknown values. Metadata supports comparison; it does not establish
+measured coding quality, reliability, personal subscription costs, or time savings.
+
+See the [data dictionary](docs/data_dictionary.md), [documentation review](docs/api_check_2026-10-31.md), and
+[remaining milestone checklist](docs/milestone1_checklist.md). The technical draft is implemented and
+assistant-tested; DJ's review and remaining personal evidence are still pending.
 
 ## How to run this project
 
-<!-- Keep this current: how to run the sync, the website, and the evaluations. -->
+The metadata importer needs **Python 3.12 and its standard library only**. The other pinned packages
+remain relevant to the later website/database; this script does not require installing them.
+
+From the repository directory:
+
+```console
+python ingest/fetch.py
+python -m unittest discover -s tests -v
+```
+
+If this desktop has no `python` or `py` command, the installed Codex runtime can run it from PowerShell:
+
+```powershell
+$python = "$env:USERPROFILE\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
+& $python ingest/fetch.py
+& $python -m unittest discover -s tests -v
+```
+
+The default output is a new timestamped directory inside ignored `data/raw/`. To choose a name, use
+`--output-dir data/raw/my-new-run`; it must be new or empty. Successful run: exit 0. Incomplete retrieval
+or invalid arguments: exit 2. Local configuration/file error: exit 1. Read `summary.json` even after a failure.
+
+The importer reads an optional literal `OPENROUTER_API_KEY` from the environment or repository `.env`.
+The verified catalog runs needed no key. Only the name is present in `.env.example`; values must stay local.
+All requests are metadata GETs. There are no inference, credit-purchase, or model-generation calls.
+
+The November 1 assistant clean run and independent rerun each retrieved **687 catalog IDs, 604 canonical
+identities, and 15 related endpoints**, using seven catalog pages and ten related-resource lookups.
+The initial **16 offline tests passed**. No real rate limit was deliberately triggered; retries were tested
+against a local server and injected transport failures. See [verification evidence](docs/run_verification_2026-11-01.json).
+
+Current evidence and remaining work are tracked in [submission readiness](docs/submission_readiness.md).
+
+### Recording workspace
+
+**Student screencast:** [DJ's Milestone 1 recording — about 4:35](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1).
+See [review notes and technical clarifications](docs/screencast_review_2026-11-01.md) before final turn-in.
+
+For the 3–5 minute screencast, `python scripts/recording_room.py` opens a local browser workspace
+with the actual source, a fresh-run button, raw-record provenance, and a timed outline. It uses the same
+standard-library environment and does not record or upload anything. See [recording guide](docs/recording_guide.md).
+On the prepared Windows desktop, the separate **Prepare Recording.cmd** launcher opens it directly.
+
+The current importer selects related-resource lookups by the most recent valid catalog `created`
+timestamp among text/tool-capable entries. The recording page defaults to the most recently added
+entry with collected provider data and offers a model menu. This timestamp describes catalog addition,
+not a verified release date or a quality ranking. A restart uses the latest complete saved run with its
+retrieval time labeled. Original raw objects are preserved.
+
+After the fixed-example correction, **21 tests passed** and a fresh browser-triggered run retrieved
+**687 catalog IDs, 604 canonical identities, and 73 related endpoints**. Eight of ten selected models
+returned provider records; two returned actual empty arrays, which were saved and reported as unavailable.
+Malformed responses and request failures still make the run incomplete. See [current verification](docs/latest_selection_verification_2026-11-01.json).
 
 ## Credits
 
-<!-- Your data API's required attribution, plus any open-source code or samples you used. -->
+- Public catalog and serving data: [OpenRouter](https://openrouter.ai/), with [API documentation](https://openrouter.ai/docs/)
+  and [terms](https://openrouter.ai/terms). Public-display permission remains to be confirmed before Week 4.
+- Proposed backup: [Models.dev](https://models.dev/), an open-source model database with an
+  [MIT-licensed repository](https://github.com/anomalyco/models.dev). It has not been integrated.
+- Codex assisted with API research, the small public-data sample, and draft documentation/proposal on
+  October 29, 2026. DJ's review remains pending; the baseline observations were not generated or edited.
+- On November 1, at DJ's request, Codex checked the API documentation, implemented and tested the
+  importer, and performed both live metadata runs. These are assistant checks, not claims of DJ's own review.

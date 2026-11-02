@@ -1,0 +1,102 @@
+{
+  "source_observed_date": "2026-10-29",
+  "analyzed_date": "2026-11-01",
+  "source_url": "https://openrouter.ai/api/v1/models",
+  "source_file_sha256": "a86e87ff2858a29327f83418a3decb2ee9210d41d363b805174f8f4c73020520",
+  "record_count": 456,
+  "unique_model_ids": 456,
+  "fields": {
+    "id": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "str": 456
+      }
+    },
+    "canonical_slug": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "str": 456
+      }
+    },
+    "created": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "int": 456
+      }
+    },
+    "context_length": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "int": 456
+      }
+    },
+    "architecture.input_modalities": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "list": 456
+      }
+    },
+    "architecture.output_modalities": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "list": 456
+      }
+    },
+    "pricing.prompt": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "str": 456
+      }
+    },
+    "pricing.completion": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "str": 456
+      }
+    },
+    "supported_parameters": {
+      "missing": 0,
+      "null": 0,
+      "present": 456,
+      "observed_types": {
+        "list": 456
+      }
+    },
+    "top_provider.max_completion_tokens": {
+      "missing": 0,
+      "null": 6,
+      "present": 450,
+      "observed_types": {
+        "int": 450
+      }
+    },
+    "per_request_limits": {
+      "missing": 0,
+      "null": 456,
+      "present": 0,
+      "observed_types": {}
+    }
+  },
+  "rows_where_id_differs_from_canonical_slug": 320,
+  "canonical_slugs_shared_by_multiple_ids": 79,
+  "rows_advertising_tools": 390,
+  "zero_prompt_rates": 19,
+  "zero_completion_rates": 21,
+  "limit": "Historical default-filter response only; not the planned all-modalities ingestion or a current coding benchmark."
+}

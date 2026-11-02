@@ -1,0 +1,134 @@
+{
+  "checkedAtUtc": "2026-11-01T06:02:44.513545+00:00",
+  "repository": "https://github.com/dmich-dev/bsad6153-michaud",
+  "remote_main_commit": "3fc374cb05a3c4f07eb125e84791ec2a31c5698c",
+  "remote_branches": [
+    "origin/HEAD -> origin/main",
+    "  origin/main",
+    "  origin/week1-setup"
+  ],
+  "working_branch": "milestone-1",
+  "working_base_commit": "3fc374cb05a3c4f07eb125e84791ec2a31c5698c",
+  "remote_files_compared": [
+    {
+      "path": ".env.example",
+      "remote_bytes": 878,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "remote_bytes": 1192,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": ".gitignore",
+      "remote_bytes": 461,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "README.md",
+      "remote_bytes": 6204,
+      "working_copy_exists": true,
+      "same_bytes": false
+    },
+    {
+      "path": "app/streamlit_app.py",
+      "remote_bytes": 4979,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "data/sample/README.md",
+      "remote_bytes": 148,
+      "working_copy_exists": true,
+      "same_bytes": false
+    },
+    {
+      "path": "db/queries.sql",
+      "remote_bytes": 394,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "db/roles.sql",
+      "remote_bytes": 1330,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "db/schema.sql",
+      "remote_bytes": 1161,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "docs/README.md",
+      "remote_bytes": 715,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "docs/baseline_log.md",
+      "remote_bytes": 1470,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "docs/usage_log.md",
+      "remote_bytes": 513,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "evals/README.md",
+      "remote_bytes": 643,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "examples/tool_use_example.py",
+      "remote_bytes": 7477,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "ingest/README.md",
+      "remote_bytes": 672,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "render.yaml",
+      "remote_bytes": 855,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "requirements.txt",
+      "remote_bytes": 281,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "scripts/check_db.py",
+      "remote_bytes": 1383,
+      "working_copy_exists": true,
+      "same_bytes": true
+    },
+    {
+      "path": "scripts/check_setup.py",
+      "remote_bytes": 4352,
+      "working_copy_exists": true,
+      "same_bytes": true
+    }
+  ],
+  "history_blob_objects_checked": 22,
+  "matched_checked_credential_signatures": 0,
+  "scan_scope": "Four known token/key signature families in all reachable remote Git blobs; not an exhaustive secret detector or audit of excluded Mac-only history",
+  "remote_writes": false,
+  "commits_created": false,
+  "baseline_unchanged": true
+}

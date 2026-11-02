@@ -1,0 +1,71 @@
+{
+  "verified_at": "2026-11-01T18:47:22.573606+00:00",
+  "performed_by": "assistant",
+  "student_review": "Not certified by these checks; DJ reported a dry run that exposed the fixed-example issue",
+  "offline_tests_passed": 21,
+  "live_run": "data/raw/recording-20261101T184436909990Z",
+  "run_summary": {
+    "complete": true,
+    "finished_at": "2026-11-01T18:44:55.238989+00:00",
+    "unique_catalog_ids": 687,
+    "unique_canonical_slugs": 604,
+    "related_endpoints": 73,
+    "endpoint_models_selected": 10,
+    "endpoint_models_succeeded": 8,
+    "endpoint_models_without_providers": [
+      "recursive/flint-v1.0:free",
+      "xingchen-agi/xing4.0-29b-a4b:free"
+    ],
+    "issues": [],
+    "warnings": [
+      "Model recursive/flint-v1.0:free: provider list is empty; raw response preserved, no availability assumed",
+      "Model xingchen-agi/xing4.0-29b-a4b:free: provider list is empty; raw response preserved, no availability assumed"
+    ]
+  },
+  "default_example": {
+    "id": "particle-ai/particle-1",
+    "catalog_added_at": "2026-10-28T17:18:13+00:00",
+    "retrieved_at": "2026-11-01T18:44:55.238989+00:00",
+    "raw_file": "data/raw/recording-20261101T184436909990Z/catalog/page-0001.json"
+  },
+  "example_choices": [
+    "particle-ai/particle-1",
+    "openai/gpt-6.1-terra-pro",
+    "openai/gpt-6.1-terra",
+    "moonshotai/kimi-k3.1-pro",
+    "minimax/minimax-m3.1-flash",
+    "deepseek/deepseek-v4.1-flash-1017",
+    "elorian/glimpse",
+    "reflection/beam-1.0-501b-a23b"
+  ],
+  "checks": {
+    "raw_examples_unchanged": true,
+    "examples_sorted_by_catalog_added_time": true,
+    "all_endpoint_joins_valid": true,
+    "endpoint_keys_unique": true,
+    "baseline_unchanged": true,
+    "manual_browser_selection_verified": "openai/gpt-6.1-terra with 4 matching provider records",
+    "saved_run_restore_by_completion_timestamp_tested": true
+  },
+  "original_response_sha256": {
+    "data/raw/recording-20261101T184436909990Z/catalog/page-0001.json": "c768557bf8c7b68a4e3b63e1af006f58e31c3f1f01ea0b4ac00107ff1fd5201d",
+    "data/raw/recording-20261101T184436909990Z/catalog/page-0002.json": "c19b941048f077ee90524fca543d77d0fa653bc7a81ab9b66612e9a574ba85f6",
+    "data/raw/recording-20261101T184436909990Z/catalog/page-0003.json": "0cf859f2bdac98cfd8c17e7e92c68f3180259f280a37492739e9dba1360ff6de",
+    "data/raw/recording-20261101T184436909990Z/catalog/page-0004.json": "39da7cb732919dbc3867a3bd93cb630988549f1f63c125effd74226eb6b6fe59",
+    "data/raw/recording-20261101T184436909990Z/catalog/page-0005.json": "a9c03fc03febaeace976a3f42376517faf193ba5a1ca788444d44d7466879d37",
+    "data/raw/recording-20261101T184436909990Z/catalog/page-0006.json": "c4eba3d9166d48902f5103098d4dcdcc57650079737613154123d7eeaa7d7c94",
+    "data/raw/recording-20261101T184436909990Z/catalog/page-0007.json": "8ec59239f661b7d756d7be3d6d15599ea7a8dec74640c4d43e202f5773fc234b",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0001.json": "a3e63ef2da88a462f4afe15fbac6bec410f413ab9dc12b1bc3056ca0aca9b8e9",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0002.json": "fd304629feeeec4730b91f26d10db93067abe4dfbe415cda9a1b08c6c772d0eb",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0003.json": "eb50eb5b21bcf52f9bdcc190c26fab104ebd53f087c2cbab0888bd87909784a6",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0004.json": "ec1014fd389ea069e845b431a14dbb9debf0e9bf97df28780a4af64cbd568a5c",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0005.json": "8ad78c3f848d98187d94bac79175d6066c999b4ab96f01cad49498da8573ac5e",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0006.json": "7ef0f2ccf75da106ea3d62731975eb6a7337c60b33d4d98571aaf92c5ebedbd8",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0007.json": "d7a4d5894192ca49a6d92bf3d4c8378193733c452fcb129078701bd1ab9c6bb3",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0008.json": "2cb880b8282ea6b9fec8a8ded0fcb0d43d2917d1f089dcbf02e8c2f89dfb795b",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0009.json": "950083e4e2ae7b99fb9d5e0f6d5eef9911311d9dfef38940842513289dd51a7f",
+    "data/raw/recording-20261101T184436909990Z/endpoints/model-0010.json": "28b8a880ff499316fc97dab77814190c29fc38598fee1917a15696700f6563eb"
+  },
+  "earlier_incomplete_probe_preserved": "data/raw/newest-example-2026-11-01",
+  "empty_provider_policy": "An actual empty array is preserved and reported as unavailable. Invalid responses and request failures remain issues. At least one valid related record is required."
+}
