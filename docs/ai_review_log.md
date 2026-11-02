@@ -193,3 +193,17 @@ Stale current-status wording that the approval request was unsent was corrected.
 requested; no instructor confirmation is established. The submitted work will keep the one-entry
 baseline limitation and AI-assisted reflection disclosure. No further email, PR merge, invented
 student entry, or unchecked personal attestation is authorized or performed by this step.
+
+## Canvas submission independently verified
+
+Under DJ's explicit authorization, the assistant made one POST for Assignment 1.3, using only the
+prepared Online Text Entry body. The live student/course/assignment identity and allowed route were
+verified first. Canvas accepted attempt 1 on November 1, 2026 at 7:14:18 p.m. CST. A separate fresh GET confirmed Submitted,
+Late false, Missing false, matching request/readback body hashes, both required links, and the exact
+approved visible text. No automatic POST retry was made. The local request, response, readback,
+and receipt were preserved outside this public repository. The PR head at submission was
+5502d9a9ab7027d01d63a850b368399ad38a220c; subsequent changes only record the receipt/status.
+
+The submitted body explicitly disclosed pending instructor OpenRouter confirmation and the incomplete
+No-AI baseline. Student log entries and personal attestations were not manufactured. No additional
+email, PR merge, or separate discussion submission was performed.

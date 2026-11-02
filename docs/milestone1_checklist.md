@@ -65,4 +65,4 @@ The [recording workspace and guide](recording_guide.md) put the required materia
 - [ ] DJ reviews the [technical clarifications and playback notes](screencast_review_2026-11-01.md) before final approval.
 - [x] Submission route verified again November 1 at 19:42 UTC: Canvas now accepts online text entry,
   URL, media, or file upload. Text entry can hold both required links. The earlier `none` limitation is resolved.
-- [ ] DJ authorizes final delivery; verify the resulting receipt/state. Nothing has been submitted by this preparation.
+- [x] DJ authorized final delivery. Canvas independently confirms attempt 1 submitted November 1 at 7:14:18 p.m. CST, Online Text Entry, not late, not missing, with both links and exact text.

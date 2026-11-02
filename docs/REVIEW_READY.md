@@ -1,5 +1,7 @@
 # Milestone 1 technical review
 
+**Submitted on time:** Assignment 1.3, November 1, 2026 at 7:14:18 p.m. CST, attempt 1, Online Text Entry. Canvas independently confirms Submitted, not late, not missing. Both links, video clarifications, and the unresolved baseline/API-approval disclosures were included.
+
 Prepared November 1, 2026. **The technical draft is ready for DJ's review. The assignments are not yet ready to turn in.**
 
 **Student recording received:** [Loom screencast, about 4:35](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1).

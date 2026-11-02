@@ -1,6 +1,6 @@
 # Submission readiness — current work
 
-Updated November 1, 2026. **The 1.3 current-work delivery text is prepared for the deadline, with pending API approval and the incomplete baseline disclosed. This does not certify every rubric requirement complete. Assignment 1.4 remains outstanding.** A fresh authenticated Canvas API check confirmed David Michaud, user 11643, and AI Implementations, course 14628. The assignment list was paginated to completion (six assignments, one page); modules, relevant announcements, calendar, and the 1.2/1.3 self-submissions were checked. 1.3 remains due November 1 at 11:59:59 p.m. CST, and 1.4 remains locked after the same instant. Both are unsubmitted.
+Updated November 1, 2026. **Assignment 1.3 was submitted on time November 1 at 7:14:18 p.m. CST (attempt 1, Online Text Entry), with pending API approval and the incomplete baseline disclosed. Canvas confirms Submitted, Late: No, Missing: No. Assignment 1.4 was not submitted by this action.** A fresh authenticated Canvas API check confirmed David Michaud, user 11643, and AI Implementations, course 14628. The assignment list was paginated to completion (six assignments, one page); modules, relevant announcements, calendar, and the 1.2/1.3 self-submissions were checked. 1.3 remains due November 1 at 11:59:59 p.m. CST, and 1.4 remains locked after the same instant. Assignment 1.3 is now submitted; the separate discussion is outside this submission.
 
 The submitted 1.2 comment explicitly proposes OpenRouter for this model-choice project. On November 1,
 DJ confirmed retaining OpenRouter after discussing alternatives and the difference between catalog data
@@ -25,7 +25,7 @@ under this Canvas-submission instruction.
 | Screencast: 10 points | [Student recording](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1) supplied; about 4:35; existing access Public; required topics present in transcript | DJ reviews [retry/price clarifications](screencast_review_2026-11-01.md) and checks full-screen legibility/audio before final approval |
 | Repository practice: 5 points | Milestone branch pushed; draft PR #2 targets main; raw folder ignored; run/test commands and recording link documented | DJ reviews the exact PR and completes personal evidence; PR remains draft |
 | Required review | No credential signatures found in limited copied-file/remote-history checks; assistant work recorded in [AI log](ai_review_log.md) | DJ's actual Read/Verify/Decide evidence; do not turn limited checks into an exhaustive no-secrets claim |
-| Delivery | Latest check Nov 1 at 22:58 UTC still offers text entry, URL, media, or file upload; assignment remains unsubmitted; DJ accepted the prepared review | DJ chose to prepare the current work for the deadline without waiting for source approval. Exact text includes both links and discloses pending approval and the incomplete baseline |
+| Delivery | Submitted November 1 at 7:14:18 p.m. CST, attempt 1, Online Text Entry; independently read back with exact text and both links | No further turn-in action needed for this attempt. Instructor API approval and the student-authored baseline remain unresolved and were disclosed |
 
 ## Assignment 1.4: case brief and two replies
 
@@ -79,3 +79,11 @@ alignment. The current-work text includes the PR and Loom links, technical video
 pending API approval, and the incomplete No-AI baseline. This authorization is for the current
 work with those disclosures; no additional log entries or personal attestations are inferred.
 The final check still shows the assignment unsubmitted before the separately recorded POST.
+
+## Verified submission receipt
+
+Canvas accepted Assignment 1.3 on November 1, 2026 at 7:14:18 p.m. CST, attempt 1, Online Text Entry. A fresh independent GET
+confirmed Submitted, not late, not missing, with both exact PR/Loom URLs and the complete approved
+visible text. The request and saved-body SHA-256 hashes match. The private local receipt and submitted
+text are saved in the workspace's Canvas Submission folder and the desktop recording folder's file 15.
+The PR was not merged. Submission does not resolve the disclosed baseline or instructor-approval gaps.
