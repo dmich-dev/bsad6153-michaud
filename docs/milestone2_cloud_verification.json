@@ -1,0 +1,138 @@
+{
+  "project_ref": "kzituurwslaqzehlrxte",
+  "verified_at_utc": "2026-11-12T23:50:33.690843+00:00",
+  "method": "Actual project checker and two loader CLI processes through privately configured Supabase Session pooler; TLS observed. Read-only PostgreSQL query resume and independent Management API count/quality readback.",
+  "actor": "Assistant-run technical preparation, not student review or recording.",
+  "historical_schema_deployment": {
+    "project_ref": "kzituurwslaqzehlrxte",
+    "verified_at_utc": "2026-11-11T02:06:17.953167+00:00",
+    "method": "Supabase Management API through discovered connector SQL tools; no database password used",
+    "write_tool": "connectors__supabase__BETA_RUN_SQL_QUERY",
+    "readback_tool": "connectors__supabase__RUN_READ_ONLY_QUERY",
+    "source_schema_sha256": "3ab540450c2684a5ee866b32eadfceab12af717fbcb19c3e85d50ae3ae160e54",
+    "precondition": {
+      "public_base_table_count": 0,
+      "server_version_num": 170011,
+      "execution_role": "postgres",
+      "can_create_in_public": true
+    },
+    "operation": "Applied the four-table source schema inside BEGIN/COMMIT with an explicit public search_path and bounded statement/lock timeouts. No drops, role creation, API grants or extensions.",
+    "schema_applied_and_read_back": true,
+    "server_version_read_back": "17.11",
+    "tables": [
+      {
+        "table_name": "canonical_models",
+        "column_count": 4,
+        "primary_keys": 1,
+        "foreign_keys": 0,
+        "unique_constraints": 1,
+        "check_constraints": 2,
+        "required_timestamptz_audit_columns": 2,
+        "row_count": 0
+      },
+      {
+        "table_name": "catalog_entries",
+        "column_count": 18,
+        "primary_keys": 1,
+        "foreign_keys": 1,
+        "unique_constraints": 1,
+        "check_constraints": 9,
+        "required_timestamptz_audit_columns": 2,
+        "row_count": 0
+      },
+      {
+        "table_name": "providers",
+        "column_count": 4,
+        "primary_keys": 1,
+        "foreign_keys": 0,
+        "unique_constraints": 1,
+        "check_constraints": 2,
+        "required_timestamptz_audit_columns": 2,
+        "row_count": 0
+      },
+      {
+        "table_name": "serving_endpoints",
+        "column_count": 17,
+        "primary_keys": 1,
+        "foreign_keys": 2,
+        "unique_constraints": 1,
+        "check_constraints": 9,
+        "required_timestamptz_audit_columns": 2,
+        "row_count": 0
+      }
+    ],
+    "constraint_readback_note": "information_schema.table_constraints returned zero counts for the read-only query role. pg_catalog.pg_constraint subsequently read back the actual PK/FK/UNIQUE/CHECK definitions/counts; no missing-constraint repair was attempted.",
+    "database_rows_loaded": false,
+    "session_pooler_cli_verified": false,
+    "load_py_cloud_execution_verified": false,
+    "cloud_business_query_results_verified": false,
+    "data_api_setting_changed_by_this_operation": false,
+    "github_publication_performed": false,
+    "canvas_submission_performed": false
+  },
+  "schema_applied_and_read_back": true,
+  "schema_reapplied_in_this_iteration": false,
+  "server_version_read_back": "17.11",
+  "session_pooler_cli_verified": true,
+  "tls_in_use": true,
+  "database_rows_loaded": true,
+  "load_py_cloud_execution_verified": true,
+  "same_input_loader_runs": 2,
+  "row_counts_after_both_runs": {
+    "canonical_models": 616,
+    "catalog_entries": 705,
+    "providers": 9,
+    "serving_endpoints": 19
+  },
+  "complete_rows_and_audit_fingerprints_unchanged_on_replay": true,
+  "cloud_business_query_results_verified": true,
+  "query_row_counts": {
+    "Q1": 20,
+    "Q2": 19,
+    "Q3": 89,
+    "Q4": 32,
+    "Q5": 12
+  },
+  "source_hashes_match_historical_tested_revision": {
+    "db/schema.sql": true,
+    "db/queries.sql": true,
+    "ingest/load.py": true,
+    "tests/test_database.py": true,
+    "scripts/check_db.py": true,
+    "tests/test_check_db.py": true,
+    "docs/baseline_log.md": true
+  },
+  "saved_input_files_hash_verified": 21,
+  "input_observation": "Saved November 7 public metadata; not current price guarantees.",
+  "independent_readback": {
+    "source_tool": "connectors__supabase__RUN_READ_ONLY_QUERY",
+    "project_ref": "kzituurwslaqzehlrxte",
+    "measured_at": "2026-11-12 23:55:59.039669+00",
+    "scope": "Actual Supabase pre-Milestone-3 snapshot; not automated-sync evidence.",
+    "row_counts": {
+      "canonical_models": 616,
+      "catalog_entries": 705,
+      "providers": 9,
+      "serving_endpoints": 19
+    },
+    "null_canonical_parent": 0,
+    "null_completion_rates": 8,
+    "null_context_lengths": 0,
+    "null_prompt_rates": 8,
+    "negative_usable_catalog_rates": 0,
+    "duplicate_catalog_id_groups": 0,
+    "duplicate_canonical_slug_groups": 0,
+    "orphan_catalog_parents": 0,
+    "orphan_endpoints": 0,
+    "catalog_entries_with_collected_endpoints": 8
+  },
+  "verification_harness_note": "Assistant harness stripped SQL comment headers; canonical SQL was unchanged. Fixed extraction and resumed SELECTs only.",
+  "historical_local_test_scope": "48 tests passed with zero skips on November 8 disposable PostgreSQL; source hashes match, not a new full test run. No destructive integration tests were pointed at Supabase.",
+  "student_decisions_verified": false,
+  "student_recording_verified": false,
+  "table_editor_visual_evidence_verified": false,
+  "data_api_setting_changed_by_this_operation": false,
+  "data_api_note": "Data API OFF was observed during the November 10 setup. This loading operation did not change that setting; no fresh visual settings inspection is claimed.",
+  "github_publication_performed": false,
+  "canvas_submission_performed": false
+}

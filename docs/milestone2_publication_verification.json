@@ -1,0 +1,40 @@
+{
+  "verification_stage": "pre-publication",
+  "checked_at_utc": "2026-11-13T06:37:26.211223+00:00",
+  "authorized_repository": "dmich-dev/bsad6153-michaud",
+  "base_branch": "milestone-1",
+  "head_branch": "milestone-2",
+  "base_commit": "7b29be8fb505142158a542b5497a8809a6b6d8ab",
+  "fresh_disposable_postgresql_tests": {
+    "started_at_utc": "2026-11-13T06:37:10.255975+00:00",
+    "scope": "Owned socket-only expendable PostgreSQL; no Supabase or private dotenv",
+    "source_hashes": {
+      "db/schema.sql": "3ab540450c2684a5ee866b32eadfceab12af717fbcb19c3e85d50ae3ae160e54",
+      "db/queries.sql": "da0d954c7783dfa03ba184d6545335e7ad02793207bf3dcc3d9a84dcd4be45e9",
+      "ingest/load.py": "ea816846890a249dcb0439de4354dd4c8b235cdfe8742b84fd8cbb8322d6c618",
+      "scripts/check_db.py": "4f23c099326883dab8ac028924401da006bf077f3b90758aa21dabf7b3467caf",
+      "tests/test_database.py": "c701f166c9c9f82bbaa90b3ddf7a9c6a24270a959fe8a25af6e8a6f897e9bfb0",
+      "tests/test_check_db.py": "d68002f5c69e945c4a9f68b5fc92a78fe37a870ff6d5cf3c238e1da75ce0d1ec",
+      "docs/baseline_log.md": "602b4bd6edaf29ee93c91e6ee809ec3d4c0888f89643c8e506dafc512902bcc0"
+    },
+    "library_path_scoped_to_child_processes": true,
+    "test_exit_code": 0,
+    "tests_run": 48,
+    "skips": 0,
+    "output_file": "full-tests-prepublication.log",
+    "status": "PASS",
+    "cleanup": {
+      "stop_exit_code": 0,
+      "status_exit_code": 3,
+      "postmaster_pid_absent": true,
+      "socket_absent": true
+    },
+    "finished_at_utc": "2026-11-13T06:37:26.211223+00:00"
+  },
+  "independently_reviewed_runtime_code_reused": true,
+  "subsequent_runtime_changes": "None; Q1 comments gained the authentic student reaction, executable SQL unchanged",
+  "cloud_execution_is_separate_dated_evidence": "Actual Supabase checker, first load, replay and queries on November 12; not rerun during publication",
+  "student_recording_completed": false,
+  "historical_question_origins_established": false,
+  "merge_or_canvas_submission_authorized": false
+}
