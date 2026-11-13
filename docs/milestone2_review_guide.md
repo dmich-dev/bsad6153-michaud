@@ -6,21 +6,18 @@ DRAFT / FOR REVIEW. Updated November 13, 2026. Assignment 3.2 requires the Merma
 
 1. Open [schema.md](schema.md) on the Milestone 2 GitHub branch. Use its rendered Mermaid diagram for the relationship explanation. Supabase's visualizer is useful, but does not replace the repository diagram and written row meanings.
 2. Sign into Supabase privately. Open its actual Table Editor and SQL Editor. Show the four populated tables. Keep credentials and connection dialogs offscreen.
-3. Prepare the count SELECT and Q1/Q2 from [queries.sql](../db/queries.sql). Run counts before replay, start the loader, explain Q1 and Q2 while it runs, then show its successful completion and run counts again.
-4. Use your existing server terminal as `hermes-worker`. No new installation, schema application, table clearing or refetch is needed.
+3. Prepare the count SELECT and Q1/Q2 from [queries.sql](../db/queries.sql). Run counts before replay, start the real replay at step 3, show its result, explain Q1/Q2 and then run counts again.
+4. Open a **new local Mac Terminal tab** and run the single command below. The Linux paths are on djserver, not the Mac. No new installation, schema application, table clearing or refetch is needed.
 
 ```console
-cd /home/hermes-worker/repos/bsad6153-michaud-review-20261107
-unset DATABASE_URL
-.venv/bin/python -I scripts/check_db.py
-.venv/bin/python -I ingest/load.py --run-dir data/raw/milestone2-verified-20261107
+ssh -t root@djserver 'bash /home/hermes-worker/repos/bsad6153-michaud-review-20261107/scripts/record_milestone2.sh'
 ```
 
-Only start the replay after the checker succeeds. The previous real replay took about 97 seconds; do not promise a shorter duration or substitute saved output for live execution. [The recording outline](milestone2_screencast_outline.md) gives the order.
+Complete SSH login privately. Wait for **READY FOR RECORDING**, leave that terminal open and **press Enter once at step 3**. No multiline command is pasted into remote zsh. The actual loader now has flushed progress, batches, bounded waits and a real exit-code gate; the terminal holds its result visible. The original replay measured 97.714 seconds; the current direct replay measured 1.386 seconds, not a duration guarantee. [Current readiness and limits](milestone2_recording_ready.md) and [the recording outline](milestone2_screencast_outline.md) supersede older instructions.
 
 ## Verified technical evidence
 
-The historical November 8 disposable PostgreSQL suite passed 48 tests with no skips. Runtime code, original tests and baseline match that independently reviewed source; SQL comments later gained the student's actual reaction while executable statements stayed identical. The [current publication verification](milestone2_publication_verification.json) records a fresh **48/48, zero-skip** disposable PostgreSQL run and verified shutdown; the historical receipt is not rewritten.
+The earlier November 8 and initial-publication 48-test receipts are retained as dated history, not checks of the optimized revision. The [current overnight verification](milestone2_overnight_verification.json) records a fresh **94/94, zero-skip** integrated run with real disposable PostgreSQL and verified shutdown, plus actual final cloud checker/recording-entrypoint/replay execution. The original baseline is unchanged; runtime hardening and Q4's explicit 720-hour window are disclosed in the AI log.
 
 The actual November 12 Supabase Session-pooler checker and two loader CLIs exited 0 with TLS observed. Stored counts were **705 catalog entries, 616 canonical identities, 9 providers and 19 endpoints**. Complete stored rows and audit fingerprints matched after replay; sequences may advance. All five real SELECTs returned **20 / 19 / 89 / 32 / 12 rows**. See [cloud verification](milestone2_cloud_verification.json), [actual acceptance](milestone2_live_acceptance.json) and [cloud results](milestone2_cloud_query_results.json).
 
@@ -35,7 +32,7 @@ The November 7 source metadata is not a current price check, coding benchmark or
 
 ## Test safety
 
-Database tests require `MILESTONE2_TEST_DSN` pointing only to an expendable local database. Never point tests at Supabase or valuable data. Running discovery without that variable skips 17 database tests and is not full PostgreSQL verification.
+Database tests require `MILESTONE2_TEST_DSN` pointing only to an expendable local database. Never point tests at Supabase or valuable data. Running discovery without that variable skips the database-opt-in cases and is not full PostgreSQL verification.
 
 ```console
 python -m unittest discover -s tests -v

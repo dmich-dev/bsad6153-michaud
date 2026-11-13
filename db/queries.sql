@@ -59,14 +59,18 @@ GROUP BY m.canonical_model_id, m.canonical_slug
 HAVING count(*) > 1
 ORDER BY catalog_id_count DESC, m.canonical_slug;
 
--- Q4: PROPOSED - Which text/tool entries were added to the catalog in the 30 days
--- ending at the latest stored observation? NOT model release dates or price changes.
--- Snapshot-relative anchor keeps this dated draft reproducible after November 2026.
+-- Q4: PROPOSED - Which text/tool entries were added to the catalog in the 720
+-- elapsed hours (30 x 24 hours) ending at the latest stored observation?
+-- Both start and end are inclusive. NOT model release dates or price changes.
+-- Use hours, not calendar days: timestamptz day arithmetic follows the session
+-- timezone across DST, while 720 elapsed hours has a session-independent boundary.
+-- The saved-observation anchor, not current_date, keeps this dated draft
+-- reproducible after November 2026 without changing source IDs or timestamps.
 SELECT c.catalog_id, c.catalog_created_at, c.context_length,
        c.prompt_usd_per_token * 1000000 AS prompt_usd_per_million,
        c.source_observed_at
 FROM catalog_entries c
-WHERE c.catalog_created_at >= (SELECT max(source_observed_at) FROM catalog_entries) - interval '30 days'
+WHERE c.catalog_created_at >= (SELECT max(source_observed_at) FROM catalog_entries) - interval '720 hours'
   AND c.catalog_created_at <= (SELECT max(source_observed_at) FROM catalog_entries)
   AND 'text' = ANY(c.output_modalities)
   AND 'tools' = ANY(c.supported_parameters)

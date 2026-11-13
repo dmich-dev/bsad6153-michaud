@@ -7,7 +7,9 @@ from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 import hashlib
 import json
+import math
 import os
+import sys
 from pathlib import Path
 
 import psycopg
@@ -33,11 +35,40 @@ def token_rate(pricing, field):
         raise LoadError('Invalid decimal token rate') from None
     if not rate.is_finite():
         raise LoadError('Non-finite token rate')
-    return rate if rate >= 0 else None
+    if rate < 0:
+        return None
+    # PostgreSQL numeric: 131072 integer digits, 16383 fractional digits.
+    # Inspect the exact tuple, not normalize()/quantize() (context rounding),
+    # float conversion, or fixed-point formatting of enormous exponents.
+    exponent = int(rate.as_tuple().exponent)
+    if (exponent < -16383 or (rate and rate.adjusted() >= 131072)
+            or (not rate and exponent > (2**31 - 1) // 2)):
+        # Even zero's scientific exponent must fit PostgreSQL's text parser.
+        raise LoadError('Token rate exceeds PostgreSQL numeric range')
+    return rate
+
+
+def _validate_json_strings(value):
+    """Reject text PostgreSQL cannot store, without changing source content."""
+    if isinstance(value, str):
+        if '\x00' in value or any('\ud800' <= char <= '\udfff' for char in value):
+            raise LoadError('JSON text contains NUL or invalid Unicode')
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            _validate_json_strings(key)
+            _validate_json_strings(item)
+    elif isinstance(value, (list, tuple)):
+        for item in value:
+            _validate_json_strings(item)
 
 
 def validate_metadata(row):
     """Reject wrong shapes; absent optional metadata remains SQL NULL."""
+    try:
+        json.dumps(row, allow_nan=False)
+    except (TypeError, ValueError):
+        raise LoadError('Invalid or non-finite raw JSON metadata') from None
+    _validate_json_strings(row)
     for field in ('pricing', 'architecture', 'top_provider'):
         if row.get(field) is not None and not isinstance(row[field], dict):
             raise LoadError('Invalid metadata object')
@@ -65,15 +96,27 @@ def validate_metadata(row):
     token_rate(row.get('pricing'), 'completion')
 
 
+def _finite_json_number(text):
+    """Keep normal JSON float semantics, but reject constants and overflow."""
+    value = float(text)
+    if not math.isfinite(value):
+        raise LoadError('Non-finite JSON number')
+    return value
+
+
 def read_run(run_dir, minimum_models):
     """Validate manifest, exact identities and relationships before any writes."""
     try:
         folder = Path(run_dir)
-        models = json.loads((folder / 'models.json').read_text())['data']
-        endpoints = json.loads((folder / 'endpoints.json').read_text())['data']
-        summary = json.loads((folder / 'summary.json').read_text())
+        models = json.loads((folder / 'models.json').read_text(encoding='utf-8'),
+                            parse_constant=_finite_json_number, parse_float=_finite_json_number)['data']
+        endpoints = json.loads((folder / 'endpoints.json').read_text(encoding='utf-8'),
+                               parse_constant=_finite_json_number, parse_float=_finite_json_number)['data']
+        summary = json.loads((folder / 'summary.json').read_text(encoding='utf-8'),
+                             parse_constant=_finite_json_number, parse_float=_finite_json_number)
         if not isinstance(summary, dict):
             raise LoadError('Fetch summary must be an object')
+        _validate_json_strings(summary)
         if any(type(summary.get(k)) is not int or summary[k] < 0 for k in
                ('unique_catalog_ids', 'unique_canonical_slugs', 'related_endpoints')):
             raise LoadError('Fetch summary counts must be nonnegative integers')
@@ -105,7 +148,7 @@ def read_run(run_dir, minimum_models):
             for field in ('tag', 'name', 'service_tier'):
                 if row.get(field) is not None and not isinstance(row[field], str):
                     raise LoadError('Invalid endpoint identity component')
-            if not (row.get('tag') or row.get('name')):
+            if not any((row.get(field) or '').strip() for field in ('tag', 'name')):
                 raise LoadError('Endpoint needs a routing tag or name')
             identity = tuple(row.get(k) for k in ('model_id', 'provider_name', 'tag', 'name', 'service_tier'))
             if identity in unique_endpoints and unique_endpoints[identity] != row:
@@ -126,66 +169,97 @@ def read_run(run_dir, minimum_models):
         raise LoadError('Unreadable or malformed fetch output; no data loaded') from None
 
 
-def load_run(conn, run_dir, *, minimum_models=500):
-    """Validate then atomically insert. Caller owns the connection, not secrets."""
+def _report(progress, message):
+    if progress is not None:
+        progress(message)
+
+
+def load_run(conn, run_dir, *, minimum_models=500, progress=None):
+    """Validate then atomically insert. Progress reports stages, never a commit."""
+    _report(progress, 'Validating saved input...')
     models, endpoints, observed = read_run(run_dir, minimum_models)
     with conn.transaction():
-        return _insert_rows(conn, models, endpoints, observed)
+        conn.execute("SELECT set_config('statement_timeout', %s, true)", ('30000',))
+        conn.execute("SELECT set_config('lock_timeout', %s, true)", ('5000',))
+        return _insert_rows(conn, models, endpoints, observed, progress=progress)
 
 
-def _insert_rows(conn, models, endpoints, observed):
+def _insert_rows(conn, models, endpoints, observed, *, progress=None):
+    # executemany uses Psycopg's pipeline support: bind every value, but avoid
+    # one synchronous WAN round trip per INSERT and per natural-ID lookup.
+    slugs = list(dict.fromkeys(row['canonical_slug'] for row in models if row.get('canonical_slug')))
     canonical = {}
-    for row in models:
-        slug = row.get('canonical_slug')
-        if slug and slug not in canonical:
-            conn.execute('INSERT INTO canonical_models(canonical_slug) VALUES (%s) ON CONFLICT (canonical_slug) DO NOTHING', (slug,))
-            canonical[slug] = conn.execute('SELECT canonical_model_id FROM canonical_models WHERE canonical_slug=%s', (slug,)).fetchone()[0]
-    entries = {}
+    _report(progress, f'Loading canonical_models ({len(slugs)} source identities)...')
+    if slugs:
+        with conn.cursor() as cursor:
+            cursor.executemany(
+                'INSERT INTO canonical_models(canonical_slug) VALUES (%s) ON CONFLICT (canonical_slug) DO NOTHING',
+                [(slug,) for slug in slugs])
+        canonical = dict(conn.execute(
+            'SELECT canonical_slug, canonical_model_id FROM canonical_models WHERE canonical_slug = ANY(%s::text[])',
+            (slugs,)).fetchall())
+
+    _report(progress, f'Loading catalog_entries ({len(models)} source records)...')
+    catalog_values = []
     for row in models:
         pricing = row.get('pricing')
         architecture = row.get('architecture') or {}
         payload_hash = hashlib.sha256(json.dumps(row, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
-        conn.execute('''
-            INSERT INTO catalog_entries(catalog_id, canonical_model_id, name, catalog_created_at,
-                context_length, max_completion_tokens, prompt_usd_per_token, completion_usd_per_token,
-                input_modalities, output_modalities, supported_parameters, pricing, raw_payload,
-                payload_sha256, source_observed_at)
+        catalog_values.append((row['id'], canonical.get(row.get('canonical_slug')), row.get('name'),
+            datetime.fromtimestamp(row['created'], timezone.utc) if row.get('created') is not None else None,
+            row.get('context_length'), (row.get('top_provider') or {}).get('max_completion_tokens'),
+            token_rate(pricing, 'prompt'), token_rate(pricing, 'completion'),
+            architecture.get('input_modalities'), architecture.get('output_modalities'),
+            row.get('supported_parameters'), Jsonb(pricing) if pricing is not None else None,
+            Jsonb(row), payload_hash, observed))
+    with conn.cursor() as cursor:
+        cursor.executemany('''INSERT INTO catalog_entries(
+            catalog_id, canonical_model_id, name, catalog_created_at,
+            context_length, max_completion_tokens, prompt_usd_per_token, completion_usd_per_token,
+            input_modalities, output_modalities, supported_parameters, pricing, raw_payload,
+            payload_sha256, source_observed_at)
             VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-            ON CONFLICT (catalog_id) DO NOTHING
-        ''', (row['id'], canonical.get(row.get('canonical_slug')), row.get('name'),
-              datetime.fromtimestamp(row['created'], timezone.utc) if row.get('created') is not None else None,
-              row.get('context_length'), (row.get('top_provider') or {}).get('max_completion_tokens'),
-              token_rate(pricing, 'prompt'), token_rate(pricing, 'completion'),
-              architecture.get('input_modalities'), architecture.get('output_modalities'),
-              row.get('supported_parameters'), Jsonb(pricing) if pricing is not None else None,
-              Jsonb(row), payload_hash, observed))
-        entries[row['id']] = conn.execute('SELECT catalog_entry_id FROM catalog_entries WHERE catalog_id=%s', (row['id'],)).fetchone()[0]
+            ON CONFLICT (catalog_id) DO NOTHING''', catalog_values)
+    entries = dict(conn.execute(
+        'SELECT catalog_id, catalog_entry_id FROM catalog_entries WHERE catalog_id = ANY(%s::text[])',
+        ([row['id'] for row in models],)).fetchall())
+
+    provider_names = list(dict.fromkeys(row['provider_name'] for row in endpoints))
     providers = {}
-    for row in endpoints:
-        provider = row['provider_name']
-        if provider not in providers:
-            conn.execute('INSERT INTO providers(provider_name) VALUES (%s) ON CONFLICT (provider_name) DO NOTHING', (provider,))
-            providers[provider] = conn.execute('SELECT provider_id FROM providers WHERE provider_name=%s', (provider,)).fetchone()[0]
+    _report(progress, f'Loading providers ({len(provider_names)} source providers)...')
+    if provider_names:
+        with conn.cursor() as cursor:
+            cursor.executemany(
+                'INSERT INTO providers(provider_name) VALUES (%s) ON CONFLICT (provider_name) DO NOTHING',
+                [(name,) for name in provider_names])
+        providers = dict(conn.execute(
+            'SELECT provider_name, provider_id FROM providers WHERE provider_name = ANY(%s::text[])',
+            (provider_names,)).fetchall())
+    _report(progress, f'Loading serving_endpoints ({len(endpoints)} source offerings)...')
+    endpoint_values = []
     for row in endpoints:
         pricing = row.get('pricing')
         payload_hash = hashlib.sha256(json.dumps(row, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
-        conn.execute('''
-            INSERT INTO serving_endpoints(catalog_entry_id, provider_id, tag, name, service_tier,
+        endpoint_values.append((entries[row['model_id']], providers[row['provider_name']], row.get('tag'), row.get('name'), row.get('service_tier'),
+            row.get('context_length'), row.get('max_completion_tokens'),
+            token_rate(pricing, 'prompt'), token_rate(pricing, 'completion'),
+            row.get('supported_parameters'), Jsonb(pricing) if pricing is not None else None,
+            Jsonb(row), payload_hash, observed))
+    if endpoint_values:
+        with conn.cursor() as cursor:
+            cursor.executemany('''INSERT INTO serving_endpoints(
+                catalog_entry_id, provider_id, tag, name, service_tier,
                 context_length, max_completion_tokens, prompt_usd_per_token, completion_usd_per_token,
                 supported_parameters, pricing, raw_payload, payload_sha256, source_observed_at)
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-            ON CONFLICT (catalog_entry_id, provider_id, tag, name, service_tier) DO NOTHING
-        ''', (entries[row['model_id']], providers[row['provider_name']], row.get('tag'), row.get('name'),
-              row.get('service_tier'), row.get('context_length'), row.get('max_completion_tokens'),
-              token_rate(pricing, 'prompt'), token_rate(pricing, 'completion'),
-              row.get('supported_parameters'), Jsonb(pricing) if pricing is not None else None,
-              Jsonb(row), payload_hash, observed))
-    counts = {
-        'canonical_models': conn.execute('SELECT count(*) FROM canonical_models').fetchone()[0],
-        'catalog_entries': conn.execute('SELECT count(*) FROM catalog_entries').fetchone()[0],
-        'providers': conn.execute('SELECT count(*) FROM providers').fetchone()[0],
-        'serving_endpoints': conn.execute('SELECT count(*) FROM serving_endpoints').fetchone()[0],
-    }
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                ON CONFLICT (catalog_entry_id, provider_id, tag, name, service_tier) DO NOTHING''', endpoint_values)
+    _report(progress, 'Checking resulting table counts...')
+    counts = dict(conn.execute('''
+        SELECT 'canonical_models', count(*) FROM canonical_models
+        UNION ALL SELECT 'catalog_entries', count(*) FROM catalog_entries
+        UNION ALL SELECT 'providers', count(*) FROM providers
+        UNION ALL SELECT 'serving_endpoints', count(*) FROM serving_endpoints
+    ''').fetchall())
     return {'counts': counts}
 
 
@@ -201,9 +275,13 @@ def main(argv=None):
             print('Load failed: DATABASE_URL is not configured privately.')
             return 2
         with psycopg.connect(url, connect_timeout=10, autocommit=True) as conn:
-            result = load_run(conn, args.run_dir)
+            result = load_run(conn, args.run_dir,
+                progress=lambda message: print('[load] ' + message, file=sys.stderr, flush=True))
         print(json.dumps(result, indent=2))
         return 0
+    except KeyboardInterrupt:
+        print('Load interrupted; completion was not confirmed. Check database counts before retrying.')
+        return 130
     except LoadError as error:
         print('Load failed:', error)
         return 2

@@ -57,6 +57,54 @@ class CheckDbTests(unittest.TestCase):
         assert module is not None
         self.assertTrue(callable(module.main))
 
+    def test_project_dotenv_encoding_or_io_error_is_sanitized_before_connect(self):
+        module = load_script()
+        errors = (
+            UnicodeDecodeError("utf-8", b"\xff", 0, 1, PRIVATE),
+            PermissionError(PRIVATE),
+        )
+        for error in errors:
+            with self.subTest(error=type(error).__name__):
+                stdout, stderr = io.StringIO(), io.StringIO()
+                with (
+                    patch.dict(os.environ, {}, clear=True),
+                    patch.object(module, "load_dotenv", side_effect=error) as dotenv,
+                    patch.object(module.psycopg, "connect") as connect,
+                    redirect_stdout(stdout), redirect_stderr(stderr),
+                ):
+                    status = module.main([])
+                self.assertEqual(status, 1)
+                dotenv.assert_called_once_with(SCRIPT.resolve().parents[1] / ".env")
+                connect.assert_not_called()
+                self.assertEqual(stderr.getvalue(), "")
+                self.assertEqual(
+                    stdout.getvalue(), "[FAIL] Could not read project .env configuration.\n"
+                )
+                self.assertNotIn(PRIVATE, stdout.getvalue())
+
+    def test_interrupt_and_unexpected_errors_are_not_hidden(self):
+        module = load_script()
+        for stage in ("dotenv", "connect", "execute"):
+            for error in (KeyboardInterrupt(), RuntimeError("synthetic implementation bug")):
+                with self.subTest(stage=stage, error=type(error).__name__):
+                    stdout, stderr = io.StringIO(), io.StringIO()
+                    with (
+                        patch.dict(os.environ, {"DATABASE_URL": PRIVATE}, clear=True),
+                        patch.object(module, "load_dotenv") as dotenv,
+                        patch.object(module.psycopg, "connect") as connect,
+                        redirect_stdout(stdout), redirect_stderr(stderr),
+                    ):
+                        if stage == "dotenv":
+                            dotenv.side_effect = error
+                        elif stage == "connect":
+                            connect.side_effect = error
+                        else:
+                            connection = connect.return_value.__enter__.return_value
+                            connection.execute.side_effect = error
+                        with self.assertRaises(type(error)):
+                            module.main([])
+                    self.assertEqual(stdout.getvalue() + stderr.getvalue(), "")
+
     def test_whitespace_configuration_is_rejected_before_connect(self):
         module = load_script()
         for argv, variable in (([], "DATABASE_URL"), (["--app"], "APP_DATABASE_URL")):
@@ -111,13 +159,41 @@ class CheckDbTests(unittest.TestCase):
         self.assertNotIn("Traceback", output)
 
     def test_malformed_password_uri_cli_is_sanitized_for_owner_and_app(self):
+        import psycopg
+        from psycopg.conninfo import conninfo_to_dict
+
         password = "SYNTHETIC_OWNER_PASSWORD_DO_NOT_LOG"
-        uri = f"postgresql://synthetic_owner:{password}%invalid@127.0.0.1:1/synthetic_db"
+        uri = f"postgresql://synthetic_owner:{password}%ZZ@127.0.0.1:1/synthetic_db"
+        self.assertIn(password, uri)
+        # Real libpq rejects the password escape, not a refused connection.
+        with self.assertRaises(psycopg.ProgrammingError) as error:
+            conninfo_to_dict(uri)
+        self.assertIn("invalid percent-encoded token", str(error.exception))
+        self.assertIn(password, str(error.exception))
+        guard = """
+import runpy
+import sys
+from unittest.mock import patch
+script, *args = sys.argv[1:]
+sys.argv = [script, *args]
+def forbid_network(event, arguments):
+    if event.startswith('socket.'):
+        raise AssertionError('unexpected test network operation')
+sys.addaudithook(forbid_network)
+with patch('socket.getaddrinfo',
+           side_effect=AssertionError('unexpected hostname resolution')) as resolve, \\
+     patch('psycopg.Connection._connect_gen',
+           side_effect=AssertionError('unexpected libpq connection')) as connect:
+    try:
+        runpy.run_path(script, run_name='__main__')
+    finally:
+        resolve.assert_not_called()
+        connect.assert_not_called()
+"""
         for args, variable in (([], "DATABASE_URL"), (["--app"], "APP_DATABASE_URL")):
             with self.subTest(variable=variable):
-                # The malformed escape is rejected by real libpq before networking.
                 result = subprocess.run(
-                    [sys.executable, "-B", str(SCRIPT), *args],
+                    [sys.executable, "-B", "-c", guard, str(SCRIPT), *args],
                     env=clean_environment(**{variable: uri}),
                     capture_output=True, text=True, timeout=10,
                 )
@@ -128,6 +204,48 @@ class CheckDbTests(unittest.TestCase):
                 self.assertNotIn("Traceback", output)
                 self.assertIn(f"[FAIL] Could not connect using {variable}.", output)
                 self.assertNotIn("[ok]", output)
+                self.assertEqual(result.stderr, "")
+                self.assertEqual(
+                    result.stdout,
+                    f"[FAIL] Could not connect using {variable}.\n"
+                    "       Check: Supabase Session pooler string? Correct password? Project paused?\n",
+                )
+
+    def test_invalid_idna_host_cli_is_sanitized_without_network(self):
+        guard = """
+import runpy
+import sys
+from unittest.mock import patch
+script, *args = sys.argv[1:]
+sys.argv = [script, *args]
+def forbid_network(event, arguments):
+    if event.startswith('socket.'):
+        raise AssertionError('unexpected test network operation')
+sys.addaudithook(forbid_network)
+with patch('psycopg.Connection._connect_gen',
+           side_effect=AssertionError('unexpected libpq connection')) as connect:
+    try:
+        runpy.run_path(script, run_name='__main__')
+    finally:
+        connect.assert_not_called()
+"""
+        dsn = f"host=. user=synthetic_user password={PRIVATE} dbname=synthetic_db"
+        for args, variable in (([], "DATABASE_URL"), (["--app"], "APP_DATABASE_URL")):
+            with self.subTest(variable=variable):
+                result = subprocess.run(
+                    [sys.executable, "-B", "-c", guard, str(SCRIPT), *args],
+                    env=clean_environment(**{variable: dsn}),
+                    capture_output=True, text=True, timeout=10,
+                )
+                self.assertEqual(result.returncode, 1)
+                self.assertEqual(result.stderr, "", result.stderr)
+                self.assertEqual(
+                    result.stdout,
+                    f"[FAIL] Could not connect using {variable}.\n"
+                    "       Check: Supabase Session pooler string? Correct password? Project paused?\n",
+                )
+                self.assertNotIn(PRIVATE, result.stdout + result.stderr)
+                self.assertNotIn(dsn, result.stdout + result.stderr)
 
     def test_operational_error_cli_never_prints_driver_text(self):
         guard = """

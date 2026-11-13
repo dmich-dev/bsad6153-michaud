@@ -8,9 +8,9 @@ Code that moves data from your API into your database. You build it with your AI
 | 2 | `load.py` | Turns the raw JSON into rows in your tables, using parameterized queries. Running it twice must not create duplicates. |
 | 3 | `sync.py` | Combines fetch and load into one incremental, idempotent sync that GitHub Actions runs on a schedule and records in `sync_runs`. |
 
-Only the sync connects as the database owner (`DATABASE_URL`). Everything else uses a limited role.
+Milestone 2 `load.py` connects through the private owner `DATABASE_URL` and Supabase Session pooler to insert the dataset. Later sync uses that owner connection too; other applications should use a separately configured limited role. This milestone does not claim a cloud app role has been activated.
 
-## Current milestone: metadata retrieval
+## Milestone 1: metadata retrieval
 
 `fetch.py` now retrieves OpenRouter's all-modalities catalog and related serving endpoints using
 Python 3.12's standard library. It makes metadata GET requests only and does not connect to a database.

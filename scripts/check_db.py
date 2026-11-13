@@ -19,7 +19,11 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv[1:]
     # Bind dotenv to this project; never search parent directories.
-    load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+    try:
+        load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+    except (OSError, UnicodeError):
+        print("[FAIL] Could not read project .env configuration.")
+        return 1
 
     variable = "APP_DATABASE_URL" if "--app" in argv else "DATABASE_URL"
     url = os.environ.get(variable)
@@ -32,7 +36,7 @@ def main(argv=None):
         # connect_timeout keeps a wrong address from hanging forever.
         with psycopg.connect(url, connect_timeout=10) as conn:
             version, user = conn.execute("select version(), current_user").fetchone()
-    except psycopg.Error:
+    except (psycopg.Error, UnicodeError):
         # Driver diagnostics can contain the connection string or password.
         print(f"[FAIL] Could not connect using {variable}.")
         print("       Check: Supabase Session pooler string? Correct password? Project paused?")

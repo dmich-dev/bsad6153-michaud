@@ -1,0 +1,321 @@
+{
+  "verification_stage": "November13 overnight technical release candidate; not assignment completion",
+  "verified_at_utc": "2026-11-13T09:52:55.381725+00:00",
+  "full_local_suite": {
+    "label": "postfix-full-integrated",
+    "started_at_utc": "2026-11-13T09:52:04.493723+00:00",
+    "scope": "Owned socket-only local PostgreSQL; no actual cloud credentials",
+    "source_sha256": {
+      "ingest/load.py": "3d93463d5d9760be33140c35ab44fc2d4372f6fabefd3d48dad36e30d98548e8",
+      "db/schema.sql": "3ab540450c2684a5ee866b32eadfceab12af717fbcb19c3e85d50ae3ae160e54",
+      "db/queries.sql": "35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1",
+      "tests/test_loader_runtime.py": "1a7e9f203d54124adce835225c243e3f1ad0b278106c3a01e86e05f3511298c7"
+    },
+    "exit_code": 0,
+    "tests_run": 94,
+    "skips": 0,
+    "status": "PASS",
+    "cleanup": {
+      "stop_exit": 0,
+      "status_exit": 3,
+      "pid_absent": true,
+      "socket_absent": true
+    },
+    "finished_at_utc": "2026-11-13T09:52:47.527384+00:00"
+  },
+  "actual_cloud": {
+    "status": "PASS",
+    "started_at_utc": "2026-11-13T09:52:47.923457+00:00",
+    "runs": [
+      {
+        "label": "actual-postfix-checker",
+        "started_at_utc": "2026-11-13T09:52:48.871317+00:00",
+        "state": "PASS",
+        "exit_code": 0,
+        "elapsed_seconds": 0.508
+      },
+      {
+        "label": "actual-postfix-entrypoint",
+        "started_at_utc": "2026-11-13T09:52:49.380331+00:00",
+        "state": "PASS",
+        "exit_code": 0,
+        "elapsed_seconds": 2.099
+      },
+      {
+        "label": "actual-postfix-replay-2",
+        "started_at_utc": "2026-11-13T09:52:52.302715+00:00",
+        "state": "PASS",
+        "exit_code": 0,
+        "elapsed_seconds": 1.386
+      }
+    ],
+    "scope": "Actual authorized Supabase Session-pooler M2 only; no schema change; assistant evidence not student recording",
+    "current_runtime_source_sha256": "3d93463d5d9760be33140c35ab44fc2d4372f6fabefd3d48dad36e30d98548e8",
+    "final_execution_source_sha256": {
+      "ingest/load.py": "3d93463d5d9760be33140c35ab44fc2d4372f6fabefd3d48dad36e30d98548e8",
+      "db/schema.sql": "3ab540450c2684a5ee866b32eadfceab12af717fbcb19c3e85d50ae3ae160e54",
+      "db/queries.sql": "35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1",
+      "scripts/check_db.py": "c1a834219f057e1a2e1733637b899d9c7e34bc0494f5aec2a29674d491591d1a",
+      "scripts/check_setup.py": "4c41b37d5361b852f36154b514852920852b652ab32bd4cb8aa28c617a963605",
+      "scripts/record_milestone2.sh": "e7c6d795592a0747674e39915e354d443951343c7ddb1a56c9feb33e38ef2d4b"
+    },
+    "baseline_runtime_source_sha256": "ea816846890a249dcb0439de4354dd4c8b235cdfe8742b84fd8cbb8322d6c618",
+    "input_sha256": {
+      "endpoints.json": "561ee65b8e1b02c0670af2be4c52775a32d711b82aebdc70d51207077eb70f59",
+      "models.json": "9365d9b355dc88cf9b0eee0d39fa8a7fcbf9365c7c176524e316a57e5d41300b",
+      "summary.json": "559d052558faec0de438d1dca296dfbe24fb3fa3c9f3d8510940c1aeefad6f7d"
+    },
+    "before": {
+      "canonical_models": {
+        "count": 616,
+        "complete_stored_rows_and_audits_sha256": "ae342c2309237e78e464f5859725b9eddde7276812eede21f77cd25c0d45eb84"
+      },
+      "catalog_entries": {
+        "count": 705,
+        "complete_stored_rows_and_audits_sha256": "ed20a104ac4635f0d74509e5837b1a5178e2167a341b74d272e43e5791347fe7"
+      },
+      "providers": {
+        "count": 9,
+        "complete_stored_rows_and_audits_sha256": "6943978f462b6e5bfdd70dfecb1324a980a6f9bf8a4cda92dfb6f8dc5289b74c"
+      },
+      "serving_endpoints": {
+        "count": 19,
+        "complete_stored_rows_and_audits_sha256": "a10850116b1d81c6eb69eb743e66fc0ac6027ab4ed5dde6326f8444b8bc0b7b6"
+      }
+    },
+    "prior_successful_A_B_receipt_sha256": "916f85e4f8788a841e103e2bc9965c38a50f7e27b13b56a2085bf4ec3409e573",
+    "after_actual_recording_entrypoint": {
+      "canonical_models": {
+        "count": 616,
+        "complete_stored_rows_and_audits_sha256": "ae342c2309237e78e464f5859725b9eddde7276812eede21f77cd25c0d45eb84"
+      },
+      "catalog_entries": {
+        "count": 705,
+        "complete_stored_rows_and_audits_sha256": "ed20a104ac4635f0d74509e5837b1a5178e2167a341b74d272e43e5791347fe7"
+      },
+      "providers": {
+        "count": 9,
+        "complete_stored_rows_and_audits_sha256": "6943978f462b6e5bfdd70dfecb1324a980a6f9bf8a4cda92dfb6f8dc5289b74c"
+      },
+      "serving_endpoints": {
+        "count": 19,
+        "complete_stored_rows_and_audits_sha256": "a10850116b1d81c6eb69eb743e66fc0ac6027ab4ed5dde6326f8444b8bc0b7b6"
+      }
+    },
+    "actual-postfix-replay-2-snapshot": {
+      "canonical_models": {
+        "count": 616,
+        "complete_stored_rows_and_audits_sha256": "ae342c2309237e78e464f5859725b9eddde7276812eede21f77cd25c0d45eb84"
+      },
+      "catalog_entries": {
+        "count": 705,
+        "complete_stored_rows_and_audits_sha256": "ed20a104ac4635f0d74509e5837b1a5178e2167a341b74d272e43e5791347fe7"
+      },
+      "providers": {
+        "count": 9,
+        "complete_stored_rows_and_audits_sha256": "6943978f462b6e5bfdd70dfecb1324a980a6f9bf8a4cda92dfb6f8dc5289b74c"
+      },
+      "serving_endpoints": {
+        "count": 19,
+        "complete_stored_rows_and_audits_sha256": "a10850116b1d81c6eb69eb743e66fc0ac6027ab4ed5dde6326f8444b8bc0b7b6"
+      }
+    },
+    "queries": {
+      "Q1": {
+        "columns": [
+          "catalog_id",
+          "canonical_slug",
+          "prompt_usd_per_million",
+          "completion_usd_per_million",
+          "example_base_usd",
+          "context_length"
+        ],
+        "row_count": 20
+      },
+      "Q2": {
+        "columns": [
+          "catalog_id",
+          "provider_name",
+          "tag",
+          "service_tier",
+          "endpoint_prompt_usd_per_million",
+          "endpoint_completion_usd_per_million",
+          "context_length",
+          "max_completion_tokens",
+          "endpoint_name"
+        ],
+        "row_count": 19
+      },
+      "Q3": {
+        "columns": [
+          "canonical_slug",
+          "catalog_id_count",
+          "catalog_ids"
+        ],
+        "row_count": 89
+      },
+      "Q4": {
+        "columns": [
+          "catalog_id",
+          "catalog_created_at",
+          "context_length",
+          "prompt_usd_per_million",
+          "source_observed_at"
+        ],
+        "row_count": 32
+      },
+      "Q5": {
+        "columns": [
+          "output_modalities",
+          "catalog_entries",
+          "entries_with_collected_endpoints",
+          "endpoint_coverage_percent"
+        ],
+        "row_count": 12
+      }
+    },
+    "stored_rows_and_audits_unchanged": true,
+    "sequences_not_claimed_unchanged": true,
+    "TLS_verified": true,
+    "query_execution_read_only": true,
+    "finished_at_utc": "2026-11-13T09:52:55.381725+00:00"
+  },
+  "scope": "M2 only, no DDL/role/workflow/submission",
+  "runtime_source_sha256": {
+    "ingest/load.py": "3d93463d5d9760be33140c35ab44fc2d4372f6fabefd3d48dad36e30d98548e8",
+    "db/schema.sql": "3ab540450c2684a5ee866b32eadfceab12af717fbcb19c3e85d50ae3ae160e54",
+    "db/queries.sql": "35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1",
+    "scripts/check_db.py": "c1a834219f057e1a2e1733637b899d9c7e34bc0494f5aec2a29674d491591d1a",
+    "scripts/check_setup.py": "4c41b37d5361b852f36154b514852920852b652ab32bd4cb8aa28c617a963605",
+    "scripts/record_milestone2.sh": "e7c6d795592a0747674e39915e354d443951343c7ddb1a56c9feb33e38ef2d4b"
+  },
+  "recording_guide": {
+    "single_line_START_command": "ssh -t root@djserver 'bash /home/hermes-worker/repos/bsad6153-michaud-review-20261107/scripts/record_milestone2.sh'",
+    "copy_controls": 4,
+    "six_spoken_blocks": 6,
+    "five_spoken_blocks_identical": true,
+    "only_Q2_NULL_tier_wording_corrected": true,
+    "primary_remote_multiline_pasting_removed": true,
+    "own_words_requirement_explicit": true,
+    "script_sha256": "b1e2324657a8993240bfb445a07e7726571b7bbf98ef4e030eb537e5502f33bc",
+    "stale_footer_timing_and_two_line_replay_instructions_removed": true
+  },
+  "recording_browser": {
+    "copy_readbacks": [
+      {
+        "field": "prep",
+        "exact_clipboard_match": true,
+        "newlines": 0,
+        "sha256": "e02b40751bb19f6ebd9fb9cd0c9e0c4d3400eed7793dd7e7352a4f140248f454"
+      },
+      {
+        "field": "counts",
+        "exact_clipboard_match": true,
+        "newlines": 7,
+        "sha256": "7ff0f54d53d29d19e3412f9417449590f68b581e4f533a631f462c6da6adfdd6"
+      },
+      {
+        "field": "q1",
+        "exact_clipboard_match": true,
+        "newlines": 24,
+        "sha256": "14733e467479142a8db4496872a0ac6b5f3b342fda6bae9939d2aa9a5bfb2537"
+      },
+      {
+        "field": "q2",
+        "exact_clipboard_match": true,
+        "newlines": 15,
+        "sha256": "bae90ef88de6dc5f346ae8f6c1cf8b7760a77070010e18c8be1ba93ad1f13548"
+      }
+    ],
+    "footer_visible": true,
+    "clipboard_read_permission_granted_only_in_fresh_test_browser": true,
+    "not_actual_Mac_browser_or_authenticated_Supabase": true
+  },
+  "student_terminal_evidence": {
+    "evidence_type": "User-provided terminal transcript, not a video or newly timed run",
+    "reported_success": {
+      "counts": {
+        "canonical_models": 616,
+        "catalog_entries": 705,
+        "providers": 9,
+        "serving_endpoints": 19
+      },
+      "loader_exit_code": 0
+    },
+    "earlier_attempts": [
+      "KeyboardInterrupt/exit130",
+      "terminal bracketed-paste/control artifacts with200~ and zsh bad-pattern errors"
+    ],
+    "exact_start_and_finish_times_not_established": true,
+    "not_claimed_as_student_execution_of_optimized_version": true,
+    "no_recording_claim": true
+  },
+  "baseline_original_sha256": "602b4bd6edaf29ee93c91e6ee809ec3d4c0888f89643c8e506dafc512902bcc0",
+  "historical_question_origins_established": false,
+  "student_recording_completed": false,
+  "merge_or_submission_authorized": false,
+  "academic_and_platform_limits": "See milestone2_recording_ready.md; no blanket rubric pass",
+  "independent_final_review": {
+    "passed": true,
+    "security_concerns": [],
+    "logic_errors": [],
+    "reviewed_manifest_sha256": "8990410e45fe5cc2c3f9410f157eb6b2036b36ddae0fe981250914db512a81b9",
+    "review_report_sha256": "a8bc44599e049e35cb9c7e2a6d9cca1403d81e3e52d88e755d02b692fe58a091",
+    "independent_tests_run": 94,
+    "independent_skips": 0,
+    "healthy_domain_fixtures": 7,
+    "invalid_string_cases_rejected_before_transaction": 81,
+    "scope": "Fix-cycle1 technical review only; not academic, cloud, Mac or student-recording approval",
+    "summary": "Pass for the fix-cycle1 changed contracts: the escaped-string preflight gap is closed without healthy-content mutation, checker deadline/kill gates work, and the fresh frozen 94-test suite passes with zero skips. Seven healthy fixtures and 81 independent invalid cases passed their assertions. Only evidence/harness artifacts were created under final-review/code-postfix; source snapshots were not edited, staged, committed or pushed, and nothing was installed. Both owned PostgreSQL servers are stopped. This is technical review approval, not cloud revalidation or assignment/recording completion.",
+    "owned_test_clusters_stopped": true,
+    "metadata_note": "Only this derived review field changed after the reviewed manifest; execution source, other documentation and guide remain exactly reviewed bytes."
+  },
+  "guide_footer_correction": {
+    "original_frozen_guide_sha256": "9f45c15c435626ee0be03c4d21373af4b16f728181f7a0f42ce7886fb83f4984",
+    "corrected_guide_sha256": "b1e2324657a8993240bfb445a07e7726571b7bbf98ef4e030eb537e5502f33bc",
+    "only_change": {
+      "from": "Start replay at script step 3 and leave it running while you show Q1 and Q2. The two replay lines run in sequence; the exit code prints after completion. The previous replay took about 97 seconds, but the next run may take longer. Do not rerun the schema, clear tables, or substitute saved results for the on-camera execution.",
+      "to": "At script step 3, press Enter once in the terminal opened by START. The optimized loader prints progress and its actual exit code; it usually finishes quickly, but timing can vary. Leave that terminal open while you show Q1 and Q2. Claim success only after exit code 0 and matching before/after counts. Do not rerun the schema, clear tables, or substitute saved results for the on-camera execution."
+    },
+    "six_narration_blocks_commands_CSS_JS_and_embedded_diagrams_unchanged": true,
+    "F1_F2_resolved_in_preferred_guide": true,
+    "native_browser_copy_controls_verified": {
+      "copy_readbacks": [
+        {
+          "field": "prep",
+          "exact_clipboard_match": true,
+          "newlines": 0,
+          "sha256": "e02b40751bb19f6ebd9fb9cd0c9e0c4d3400eed7793dd7e7352a4f140248f454"
+        },
+        {
+          "field": "counts",
+          "exact_clipboard_match": true,
+          "newlines": 7,
+          "sha256": "7ff0f54d53d29d19e3412f9417449590f68b581e4f533a631f462c6da6adfdd6"
+        },
+        {
+          "field": "q1",
+          "exact_clipboard_match": true,
+          "newlines": 24,
+          "sha256": "14733e467479142a8db4496872a0ac6b5f3b342fda6bae9939d2aa9a5bfb2537"
+        },
+        {
+          "field": "q2",
+          "exact_clipboard_match": true,
+          "newlines": 15,
+          "sha256": "bae90ef88de6dc5f346ae8f6c1cf8b7760a77070010e18c8be1ba93ad1f13548"
+        }
+      ],
+      "footer_visible": true,
+      "clipboard_read_permission_granted_only_in_fresh_test_browser": true,
+      "not_actual_Mac_browser_or_authenticated_Supabase": true
+    },
+    "actual_Mac_or_authenticated_Supabase_UI_test": false
+  },
+  "historical_earlier_candidate_tests": {
+    "tests": 86,
+    "skips": 0,
+    "source_sha256": "5d17d0f76365a481cc6a2b8716ed22bcd793fe8364b7807591874f2b8376459e",
+    "full_review_found_preexisting_string_gap": true
+  }
+}

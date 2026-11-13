@@ -213,6 +213,8 @@ Malformed responses and request failures still make the run incomplete. See [cur
 
 ## Milestone 2: database design and SQL
 
+**Current recording path:** [one-command server terminal, verified checks and remaining limits](docs/milestone2_recording_ready.md). The original raw inputs stay on the prepared server; no Mac Python setup is needed.
+
 The Milestone 2 draft adds the relational database, insert-only loader and five SQL queries on top of Milestone 1. Start with the [GitHub-rendered Mermaid ER diagram and row meanings](docs/schema.md), then the [short recording checklist](docs/milestone2_screencast_outline.md).
 
 - [Schema SQL](db/schema.sql) and [parameterized loader](ingest/load.py)

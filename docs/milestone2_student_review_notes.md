@@ -29,9 +29,9 @@ Design-review occurrence is student-confirmed. Do not require another walkthroug
 ## Still to collect or review
 
 - Any additional prior expectation or practical interpretation the student wishes to state in their own words is optional; no numerical prior expectation is required or invented.
-- Carry forward the previously completed design review into the final AI log without repeating it; do not invent specific past decisions.
+- The previously completed design review is carried forward in the AI log. Specific earlier decisions/reasons were not recovered and are not invented; no repeat walkthrough is requested.
 - Authentic historical question origins or an instructor-approved transparently dated alternative.
 - The student's own 4–6-minute recording.
-- Final review, exact publication approval and separate submission approval.
+- Final review and separate submission approval. M2 draft publication was authorized November 13 and completed as PR #3; that is not merge or Canvas turn-in approval.
 
 Do not infer resolution of those remaining items from the Q1 reaction above. Integrate reviewed student input into the final AI review log and recording notes before an approved final publication; this separate note does not update the sealed review packages.
