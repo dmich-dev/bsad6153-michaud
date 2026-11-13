@@ -207,3 +207,20 @@ and receipt were preserved outside this public repository. The PR head at submis
 The submitted body explicitly disclosed pending instructor OpenRouter confirmation and the incomplete
 No-AI baseline. Student log entries and personal attestations were not manufactured. No additional
 email, PR merge, or separate discussion submission was performed.
+
+## Milestone 2 review-only local draft — November 7, 2026
+
+**DRAFT / FOR REVIEW.** See the separate [factual Milestone 2 AI review log](milestone2_ai_review.md)
+for Hermes assistant instructions, implementation, actual PostgreSQL/TDD evidence and unresolved
+student/external gates. The preceding Milestone 1 record is preserved. No new student reading,
+acceptance, schema rejection, baseline question or surprise is asserted by this addition.
+
+## Milestone 2 student review update: November 12, 2026
+
+The student confirmed that the design review already occurred in a previous conversation and declined repeating it. After seeing the actual Supabase results, the student identified the number of previously unknown free model options as the biggest surprise. The exact student statements are retained in [Milestone 2 student review notes](milestone2_student_review_notes.md) and the current [Milestone 2 AI review log](milestone2_ai_review.md). This is contemporaneous input, not a backdated Milestone 1 baseline entry or an invented schema rejection.
+
+At the student's request to handle pre-recording preparation, the assistant added the genuine reaction to Q1's SQL comments and prepared a Q1/Q2 recording outline. Executable SELECTs remain unchanged. The original student baseline, historical execution receipts and earlier sealed recording kits are preserved. Specific prior design reasons and historical question provenance are not fabricated. That November 12 step did not publish, merge, upload, send an instructor message or submit coursework.
+
+## Milestone 2 publication authorization: November 13, 2026
+
+After the live 3.2 requirement recheck, the student authorized publishing the prepared Milestone 2 files and opening a draft PR. See [the Milestone 2 AI review log](milestone2_ai_review.md) for the exact instruction, verified evidence and remaining limitations. This approval is separate from merge or Canvas turn-in, neither of which is authorized by the publication request. The student's new 4–6-minute recording and unresolved historical-question provenance are not inferred from publishing the source.

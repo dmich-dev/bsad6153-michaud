@@ -1,0 +1,185 @@
+{
+  "status": "PASS",
+  "started_at_utc": "2026-11-12T23:34:45.803526+00:00",
+  "project_ref": "kzituurwslaqzehlrxte",
+  "platform": "Supabase",
+  "transport": "Session pooler, port 5432",
+  "actor": "assistant-run technical verification",
+  "credentials_printed": false,
+  "schema_reapplied": false,
+  "student_review_or_recording_claimed": false,
+  "steps": [
+    {
+      "label": "check_db",
+      "command": [
+        "/home/hermes-worker/repos/bsad6153-michaud-review-20261107/.venv/bin/python",
+        "-I",
+        "-B",
+        "scripts/check_db.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.608,
+      "safe_output": "[ok] Connected using DATABASE_URL\n     Database user: postgres\n     Server: PostgreSQL 17.11 on aarch64-unknown-linux-gnu"
+    },
+    {
+      "label": "first_loader_cli",
+      "command": [
+        "/home/hermes-worker/repos/bsad6153-michaud-review-20261107/.venv/bin/python",
+        "-I",
+        "-B",
+        "ingest/load.py",
+        "--run-dir",
+        "data/raw/milestone2-verified-20261107"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 96.75,
+      "counts": {
+        "canonical_models": 616,
+        "catalog_entries": 705,
+        "providers": 9,
+        "serving_endpoints": 19
+      }
+    },
+    {
+      "label": "second_loader_cli",
+      "command": [
+        "/home/hermes-worker/repos/bsad6153-michaud-review-20261107/.venv/bin/python",
+        "-I",
+        "-B",
+        "ingest/load.py",
+        "--run-dir",
+        "data/raw/milestone2-verified-20261107"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 97.027,
+      "counts": {
+        "canonical_models": 616,
+        "catalog_entries": 705,
+        "providers": 9,
+        "serving_endpoints": 19
+      }
+    }
+  ],
+  "phase": "complete",
+  "updated_at_utc": "2026-11-12T23:38:01.152890+00:00",
+  "historical_source_hash_matches": {
+    "db/schema.sql": true,
+    "db/queries.sql": true,
+    "ingest/load.py": true,
+    "tests/test_database.py": true,
+    "scripts/check_db.py": true,
+    "tests/test_check_db.py": true,
+    "docs/baseline_log.md": true
+  },
+  "saved_input_hashes_checked": 21,
+  "connection": {
+    "user": "postgres",
+    "database": "postgres",
+    "server_version": "17.11",
+    "tls_in_use": true
+  },
+  "before_first_load": {
+    "canonical_models": {
+      "rows": 0,
+      "all_columns_including_audits_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "catalog_entries": {
+      "rows": 0,
+      "all_columns_including_audits_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "providers": {
+      "rows": 0,
+      "all_columns_including_audits_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "serving_endpoints": {
+      "rows": 0,
+      "all_columns_including_audits_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+  },
+  "after_first_load": {
+    "canonical_models": {
+      "rows": 616,
+      "all_columns_including_audits_md5": "8936ff098136114ab7ca4f17914dcae3"
+    },
+    "catalog_entries": {
+      "rows": 705,
+      "all_columns_including_audits_md5": "7270daa5815afac91fb4edefe51cb132"
+    },
+    "providers": {
+      "rows": 9,
+      "all_columns_including_audits_md5": "bb6515b1655af29a4138345a9b49ca64"
+    },
+    "serving_endpoints": {
+      "rows": 19,
+      "all_columns_including_audits_md5": "75a93a234bec5b64727fdd3da8fbe852"
+    }
+  },
+  "after_second_load": {
+    "canonical_models": {
+      "rows": 616,
+      "all_columns_including_audits_md5": "8936ff098136114ab7ca4f17914dcae3"
+    },
+    "catalog_entries": {
+      "rows": 705,
+      "all_columns_including_audits_md5": "7270daa5815afac91fb4edefe51cb132"
+    },
+    "providers": {
+      "rows": 9,
+      "all_columns_including_audits_md5": "bb6515b1655af29a4138345a9b49ca64"
+    },
+    "serving_endpoints": {
+      "rows": 19,
+      "all_columns_including_audits_md5": "75a93a234bec5b64727fdd3da8fbe852"
+    }
+  },
+  "replay_row_counts_and_all_column_fingerprints_unchanged": true,
+  "finished_at_utc": "2026-11-12T23:50:33.690843+00:00",
+  "query_resume_read_only_transaction": true,
+  "query_stage_recovered_without_repeating_loaders": true,
+  "original_load_replay_receipt": {
+    "file": "acceptance.json",
+    "sha256": "d88dcb8ef00abd38706435353ba2e4711ea541604cf765e7318a378ad78dd605",
+    "query_stage_failure": "Assistant harness stripped SQL comment headers; canonical SQL was unchanged. Fixed extraction and resumed SELECTs only."
+  },
+  "live_fingerprints_rechecked": {
+    "canonical_models": {
+      "rows": 616,
+      "all_columns_including_audits_md5": "8936ff098136114ab7ca4f17914dcae3"
+    },
+    "catalog_entries": {
+      "rows": 705,
+      "all_columns_including_audits_md5": "7270daa5815afac91fb4edefe51cb132"
+    },
+    "providers": {
+      "rows": 9,
+      "all_columns_including_audits_md5": "bb6515b1655af29a4138345a9b49ca64"
+    },
+    "serving_endpoints": {
+      "rows": 19,
+      "all_columns_including_audits_md5": "75a93a234bec5b64727fdd3da8fbe852"
+    }
+  },
+  "queries": [
+    {
+      "query": "Q1",
+      "row_count": 20
+    },
+    {
+      "query": "Q2",
+      "row_count": 19
+    },
+    {
+      "query": "Q3",
+      "row_count": 89
+    },
+    {
+      "query": "Q4",
+      "row_count": 32
+    },
+    {
+      "query": "Q5",
+      "row_count": 12
+    }
+  ],
+  "total_query_rows": 172
+}

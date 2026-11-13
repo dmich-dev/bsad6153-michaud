@@ -1,0 +1,65 @@
+{
+  "verified_at_utc": "2026-11-08T17:23:03.071973+00:00",
+  "status": "local technical verification passed; student/cloud/publication gates open",
+  "runtime": {
+    "python": "3.13.5",
+    "postgresql": "17.11",
+    "psycopg": "3.3.6",
+    "python_dotenv": "1.2.4",
+    "python_3_12_tested": false
+  },
+  "tests": {
+    "exit_code": 0,
+    "ran": 48,
+    "skips": false,
+    "by_file": {
+      "test_fetch.py": 18,
+      "test_recording_room.py": 3,
+      "test_database.py": 17,
+      "test_check_db.py": 10
+    }
+  },
+  "table_counts": {
+    "canonical_models": 616,
+    "catalog_entries": 705,
+    "providers": 9,
+    "serving_endpoints": 19
+  },
+  "all_rows_and_audits_unchanged_on_replay": true,
+  "raw_catalog_records_and_hashes_verified": 705,
+  "all_five_query_row_counts": {
+    "Q1": 20,
+    "Q2": 19,
+    "Q3": 89,
+    "Q4": 32,
+    "Q5": 12
+  },
+  "real_connection_and_loader_cli_executed": true,
+  "app_and_owner_flags_used_same_synthetic_role": true,
+  "real_app_role_authorization_verified": false,
+  "local_cluster_stopped_and_port_closed": {
+    "stop_exit_code": 0,
+    "status_exit_code": 3,
+    "connection_refused": true,
+    "postmaster_pid_absent": true
+  },
+  "real_credentials_used": false,
+  "live_supabase_verified": false,
+  "student_understanding_or_acceptance_attested": false,
+  "student_surprise_attested": false,
+  "baseline_sha256": "602b4bd6edaf29ee93c91e6ee809ec3d4c0888f89643c8e506dafc512902bcc0",
+  "source_manifest": {
+    "db/schema.sql": "3ab540450c2684a5ee866b32eadfceab12af717fbcb19c3e85d50ae3ae160e54",
+    "db/queries.sql": "3cf926d5e6827dd210217a855d2b95e51394ed45463aa86e36fa7b44ca18f6a0",
+    "ingest/load.py": "ea816846890a249dcb0439de4354dd4c8b235cdfe8742b84fd8cbb8322d6c618",
+    "tests/test_database.py": "c701f166c9c9f82bbaa90b3ddf7a9c6a24270a959fe8a25af6e8a6f897e9bfb0",
+    "scripts/check_db.py": "4f23c099326883dab8ac028924401da006bf077f3b90758aa21dabf7b3467caf",
+    "tests/test_check_db.py": "d68002f5c69e945c4a9f68b5fc92a78fe37a870ff6d5cf3c238e1da75ce0d1ec",
+    "docs/baseline_log.md": "602b4bd6edaf29ee93c91e6ee809ec3d4c0888f89643c8e506dafc512902bcc0"
+  },
+  "independent_review": {
+    "initial_schema_loader_and_query_review": "no confirmed logic errors; initial failure was required-helper diagnostic privacy",
+    "focused_fixed_helper_review": "passed; 10 new tests and 38 additional independent bounded probes; no confirmed security concerns or logic errors"
+  },
+  "remote_writes_or_submission_by_this_iteration": false
+}

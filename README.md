@@ -209,3 +209,15 @@ Malformed responses and request failures still make the run incomplete. See [cur
   October 29, 2026. DJ's review remains pending; the baseline observations were not generated or edited.
 - On November 1, at DJ's request, Codex checked the API documentation, implemented and tested the
   importer, and performed both live metadata runs. These are assistant checks, not claims of DJ's own review.
+
+
+## Milestone 2: database design and SQL
+
+The Milestone 2 draft adds the relational database, insert-only loader and five SQL queries on top of Milestone 1. Start with the [GitHub-rendered Mermaid ER diagram and row meanings](docs/schema.md), then the [short recording checklist](docs/milestone2_screencast_outline.md).
+
+- [Schema SQL](db/schema.sql) and [parameterized loader](ingest/load.py)
+- [Five business queries](db/queries.sql), including the student's genuine Q1 reaction
+- [Actual November 12 cloud query results](docs/milestone2_cloud_query_results.json) and [Session-pooler/load/replay evidence](docs/milestone2_live_acceptance.json)
+- [AI review log](docs/milestone2_ai_review.md) and [current review guide](docs/milestone2_review_guide.md)
+
+The student authorized draft-PR publication on November 13. The prior design review is student-confirmed; the new recording, historical-question provenance and separate final turn-in approval remain open. Published source is not a claim of completed submission.
