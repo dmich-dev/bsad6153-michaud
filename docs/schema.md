@@ -104,7 +104,7 @@ DRAFT / FOR REVIEW, reconciled November 14, 2026. The preceding M2 section is no
 
 ## Access roles
 
-Local proof timestamp: `2026-11-13T00:17:48.935877+00:00`. Actual distinct local app_reader, synthetic data, PostgreSQL 17.11, local Unix-socket trust authentication. This does not prove Supabase password or Session pooler authentication. These SQL commands and primary error messages come from `../../evidence/access-role-proof.json`:
+Local proof timestamp: `2026-11-13T00:17:48.935877+00:00`. Actual distinct local app_reader, synthetic data, PostgreSQL 17.11, local Unix-socket trust authentication. This does not prove Supabase password or Session pooler authentication. These SQL commands and primary error messages come from `../../evidence/pre-fix/access-role-proof.json`:
 
 ```sql
 SELECT current_user;
@@ -119,11 +119,16 @@ INSERT INTO public.catalog_entries DEFAULT VALUES;
 -- SQLSTATE: 42501
 ```
 
-The actual CLI `python -I -B scripts/check_db.py --app` also reported `Database user: app_reader`; output is in `../../evidence/acceptance-current-local/acceptance.json`. Integration tests repeated SELECT, INSERT-denial and DELETE-denial across all four data tables and sync_runs, denied reading sync_state, and denied schema CREATE. `db/roles.sql` grants SELECT on the exact four tables plus sync_runs, with no password in the file. It rejects elevated or role-member existing app_reader identities and inherited PUBLIC write/CREATE privileges. Ordinary PostgreSQL catalog metadata visibility does not grant application mutation rights. Existing cloud ACLs and security-definer functions still need target-specific owner review.
+The actual CLI `python -I -B scripts/check_db.py --app` also reported `Database user: app_reader`; output is in `../../evidence/pre-fix/acceptance-current-local/acceptance.json`. Integration tests repeated SELECT, INSERT-denial and DELETE-denial across all four data tables and sync_runs, denied reading sync_state, and denied schema CREATE. `db/roles.sql` grants SELECT on the exact four tables plus sync_runs, with no password in the file. It rejects elevated or role-member existing app_reader identities and inherited PUBLIC write/CREATE privileges. Ordinary PostgreSQL catalog metadata visibility does not grant application mutation rights. Existing cloud ACLs and security-definer functions still need target-specific owner review.
 
 After review, privately set the role password and APP_DATABASE_URL using Session pooler user form `app_reader.<project-ref>`. Never put a password or connection value in this document, SQL or a workflow. The sync uses DATABASE_URL; status/quality/golden readers use APP_DATABASE_URL and reject an owner connection. No actual cloud app_reader provisioning, password setting or live M3 permission proof occurred here.
 
 Data API off remains an independent target-verification gate for this draft. Local PostgreSQL cannot prove a Supabase dashboard setting. Do not enable a disabled API or change unrelated roles to bypass an inspection failure. Follow `review_gate.md` before any cloud operation or publication.
+
+
+## Assistant-only hardened v2 update
+
+The earlier dated local measurements remain historical pre-fix evidence. Review found and actual disposable PostgreSQL tests reproduced a table-owner DROP bypass, surviving PUBLIC column UPDATE, and a committed-success audit overwritten after interruption. Independent synthetic probes also exposed stale/reused question-origin mappings. The hardened code adds fail-closed ownership/column checks, preserves terminal audit results and requires exact distinct original questions. Authoritative RED/GREEN pairs and the 67-test full/60-test A-D receipts are in the packet `parent-review/fix-cycle-1/`. Preliminary failed harness attempts are explicitly superseded in `fix-summary.json`; they are not product GREENs. Parent final acceptance/re-review is separate. None of this supplies student history, personal predictions, understanding, decisions, recordings, cloud proof or schedule evidence.
 
 ## November 14, 2026 reconciled local access proof
 

@@ -1,84 +1,123 @@
-# DRAFT / FOR REVIEW — Actual metadata quality and coverage
+# Part E: measured quality, November 14, 2026
 
-Hermes assistant measurements, November 7, 2026. These are objective data checks, **not student user-test events, personal reactions, comparative model benchmarks, or claims of human-group fairness**. The student must verify any documentation used in coursework against the saved source.
+DRAFT / FOR REVIEW. These fresh measurements are **local synthetic acceptance**, not live Supabase or scheduled-source observations. Actor: assistant. Actual database user: app_reader, PostgreSQL 17.11. Each SQL result below carries its own actual transaction measurement timestamp. Complete receipt: `../../evidence/preseal-full/cli-acceptance/quality-local.json`; SQL: `db/quality_checks.sql` (named `-- check:` blocks). No old M3 count is presented as a fresh run.
 
-## Evidence and scope
+## aliases
 
-The existing Milestone 1 importer ran anonymously with `Client(key=None)` against public OpenRouter metadata GETs. The complete run ended **2026-11-07T19:37:26.086181+00:00**, used 8 catalog pages and 10 selected endpoint lookups, and recorded no issues, no retries and no paid inference calls. The two actual empty provider responses (`openrouter/auto`, `openrouter/auto-code`) are preserved as empty, not invented offerings.
+SQL basis: `db/quality_checks.sql`, `-- check: aliases`.
 
-Durable evidence is outside Git at:
+| measured_at | shared_canonical_groups | catalog_ids_in_shared_groups |
+|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | 1 | 2 |
 
-`/home/hermes-worker/PersonalOps/10 Projects/School/AI Implementations/Working drafts/2026-11-07/3.2 Database draft/evidence/`
+## anomalies
 
-- `public-source/`: original catalog/endpoint HTTP bodies plus importer aggregates and summary; public model/provider metadata only.
-- `public-source-sha256.json`: exact-file SHA-256 provenance.
-- `quality-measurements.json` and `actual-queries-quality.log`: executed Python/SQL measurements, including the full modality table below.
-- `sql-results.json`: actual results of all five proposed SQL queries, using a read-only PostgreSQL transaction.
-- `actual-postgres-load.json`: first/second actual load counts and row-content hashes.
+SQL basis: `db/quality_checks.sql`, `-- check: anomalies`.
 
-These are this run's counts. Historical November 1 sample counts in existing documents are not relabeled as current.
+| measured_at | issue | rows |
+|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | negative_catalog_rates | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | negative_endpoint_rates | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | negative_context | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | endpoint_output_exceeds_context | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | catalog_creation_after_observation | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | unknown_output_modality_labels | 0 |
 
-## Main counts, identity and missingness
+## coverage
 
-The actual PostgreSQL load contains **705 catalog entries, 616 canonical identities, 9 serving providers and 19 endpoints**. Those endpoints cover only **8 catalog IDs**. Both runs stored the same counts, complete row contents and audit values.
+SQL basis: `db/quality_checks.sql`, `-- check: coverage`.
 
-Identity checks measured **528** IDs differing from their canonical slug, **89** canonical groups with multiple IDs, and at most **2** IDs per group in this snapshot. The difference of catalog IDs and canonical identities is **89**, measured by the analysis script. Distinct catalog count is not a distinct-architecture count; aliases must not inflate a purported market-size or quality claim.
+| measured_at | output_modalities | catalog_entries | entries_with_endpoints | coverage_percent |
+|---|---|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | ['image'] | 1 | 0 | 0.00 |
+| 2026-11-14 00:39:30.331616-06:00 | ['text'] | 3 | 2 | 66.67 |
 
-Missing-or-null checks over all **705** catalog rows:
+## endpoint_nulls
 
-| Field | Missing/null |
-|---|---:|
-| id, canonical_slug, name, created, context_length | 0 each |
-| pricing.prompt, pricing.completion | 0 each |
-| input_modalities, output_modalities, supported_parameters | 0 each |
-| top_provider.max_completion_tokens | 6 |
-| per_request_limits | 705 |
+SQL basis: `db/quality_checks.sql`, `-- check: endpoint_nulls`.
 
-Populated does not mean valid or comparable. **90** context lengths are explicitly zero; **8** prompt and **8** completion rates are negative source values and become unknown typed prices, not credits. All **19** collected endpoint records lack usable `latency_last_30m`; no speed ranking is supported. **15** endpoints have null service tiers, so ordinary nullable composite uniqueness would be insufficient for replay protection.
+| measured_at | endpoints | null_context | null_prompt | null_completion | null_tier |
+|---|---|---|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | 3 | 0 | 0 | 0 | 3 |
 
-The current selected endpoints have **0** output-limit disagreements with their joined catalog summary. This does not resolve the historical GPT-4.1/Azure disagreement in the preserved sample: that entry is outside this recent endpoint sample. Absence from the sample is not evidence that the earlier issue disappeared.
+## freshness
 
-## Genuine fairness/coverage check: metadata representation
+SQL basis: `db/quality_checks.sql`, `-- check: freshness`.
 
-**Question tested:** Does the endpoint sample represent the catalog groups to which a provider comparison might be generalized? Denominator is catalog entries in each exact, source-ordered output-modality group; numerator is entries with at least one collected endpoint. SQL uses EXISTS so a model with many providers is counted once. These groups are metadata buckets, not people or protected classes; arrays in a different order would form a different bucket.
+| measured_at | oldest_stored_payload_observation | newest_stored_payload_observation | last_successful_check |
+|---|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | 2026-11-14 00:39:25.044925-06:00 | 2026-11-14 00:39:29.454191-06:00 | 2026-11-14 00:39:29.466864-06:00 |
 
-| Output modalities | Catalog entries | With endpoints | Coverage % |
-|---|---:|---:|---:|
-| text | 441 | 8 | 1.81 |
-| image | 53 | 0 | 0.00 |
-| embeddings | 45 | 0 | 0.00 |
-| speech | 38 | 0 | 0.00 |
-| decisions | 36 | 0 | 0.00 |
-| video | 31 | 0 | 0.00 |
-| transcription | 30 | 0 | 0.00 |
-| rerank | 12 | 0 | 0.00 |
-| image + text | 10 | 0 | 0.00 |
-| text + audio | 4 | 0 | 0.00 |
-| text + image | 3 | 0 | 0.00 |
-| text + video | 2 | 0 | 0.00 |
+## important_nulls
 
-Overall collected-endpoint coverage is **1.13%** (8 of 705). Among **398** advertised text/tool entries, **8** have collected endpoints (**2.01%**). The fetcher intentionally selects the newest text/tool entries, not a random or stratified sample: **8 of 89** catalog entries added in the last 30 days have endpoints here, compared with **0 of 616** older/unknown entries. That is a measured sampling-coverage imbalance, not a claim of unfair treatment by a model.
+SQL basis: `db/quality_checks.sql`, `-- check: important_nulls`.
 
-Endpoint-row counts by provider are OpenAI **6**, Azure **6**, and Liquid, GMICloud, Tencent, Stealth, Z.AI, Particle AI and Amazon Bedrock **1 each**. Two catalog entries (`openai/gpt-6.1-terra-pro`, `openai/gpt-6.1-terra`) have **6** and **7** rows respectively. Counting endpoint rows as independent model evidence would overweight entries with more routes.
+| measured_at | field | total | null_count | null_percent |
+|---|---|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | canonical_model_id | 4 | 0 | 0.00 |
+| 2026-11-14 00:39:30.331616-06:00 | catalog_id | 4 | 0 | 0.00 |
+| 2026-11-14 00:39:30.331616-06:00 | completion_usd_per_token | 4 | 1 | 25.00 |
+| 2026-11-14 00:39:30.331616-06:00 | context_length | 4 | 1 | 25.00 |
+| 2026-11-14 00:39:30.331616-06:00 | name | 4 | 1 | 25.00 |
+| 2026-11-14 00:39:30.331616-06:00 | output_modalities | 4 | 0 | 0.00 |
+| 2026-11-14 00:39:30.331616-06:00 | prompt_usd_per_token | 4 | 2 | 50.00 |
+| 2026-11-14 00:39:30.331616-06:00 | supported_parameters | 4 | 0 | 0.00 |
 
-**Consequence and proposed mitigation:** provider comparisons must be labeled as a recency-biased collected subset. Do not infer that missing rows mean unavailable or that text-only coverage describes the whole catalog. For a future milestone, collect endpoint details for the student's actual candidate set (or a justified stratified sample), distinguish unqueried, queried-empty and failed responses, and report coverage by group. This proposal is not a claim that additional data were fetched or that the student accepted it.
+## natural_duplicates
 
-## Price/unit pitfalls
+SQL basis: `db/quality_checks.sql`, `-- check: natural_duplicates`.
 
-The source has **112 zero prompt-rate fields** and **249 zero completion-rate fields**. A zero component is not a free total request or a free personal subscription. The eight negative prompt IDs are recorded exactly in `quality-measurements.json`; raw `-1` values are preserved while typed usable rates are NULL.
+| measured_at | natural_key | duplicate_groups |
+|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | canonical_slug | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | catalog_id | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | provider_name | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | endpoint_composite | 0 |
 
-Prices are exact decimal strings in USD per **token** for prompt/completion. SQL multiplies by 1,000,000 only to display per-million token rates. Q1 uses an explicitly illustrative 1M-input/250k-output workload; it is not measured student spend. Full `pricing` JSON remains necessary: actual extra-field occurrence counts include `web_search` **190**, `input_cache_read` **339**, `input_cache_write` **102**, `overrides` **84**, `image_output` **63**, `image` **45**, `image_token` **45**, `audio` **37**, `input_cache_write_1h` **34**, `internal_reasoning` **30**, `input_audio_cache` **27**, and `audio_output` **2**. Their units and conditions must not be silently collapsed into a token sum.
+## orphans
 
-Endpoint and catalog prices/limits are stored independently. Tier, region, caching, multimodal units and overrides can change totals. Do not treat an advertised `tools` parameter as verified HERMES compatibility, coding quality or reliability.
+SQL basis: `db/quality_checks.sql`, `-- check: orphans`.
 
-## Freshness and query interpretation
+| measured_at | relationship | orphans |
+|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | catalog_canonical | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | endpoint_catalog | 0 |
+| 2026-11-14 00:39:30.331616-06:00 | endpoint_provider | 0 |
 
-All five proposed queries executed on actual PostgreSQL. Result-row counts were Q1 **20** (limited shortlist), Q2 **19** (collected routes), Q3 **89** (shared-canonical groups), Q4 **32** (text/tool additions within the observation-relative 30-day window), Q5 **12** (modality groups). The quality query counts **383** text/tool rows with >=128k context before requiring known prices or applying Q1's limit. Detailed results, not just these counts, are preserved.
+## row_counts
 
-Q1's first row is `cohere/north-mini-code:free` with base-token estimate 0 and context 256000 in the saved run. This does not prove no other charge or superior coding performance. Q3's 89 alias groups and Q5's coverage imbalance are assistant-observed findings the student may investigate; **at initial preparation this report had no student surprise**. Superseding November 12 input is now documented in [the student review notes](milestone2_student_review_notes.md): the student was surprised by the number of previously unknown free options in Q1. Its returned-twenty limit and zero-base-rate caveats still apply.
+SQL basis: `db/quality_checks.sql`, `-- check: row_counts`.
 
-The schema is insert-only for this milestone. Replaying an existing identity does not refresh its changed payload or last_updated_at. Source creation timestamps cannot detect price changes, and future sync must distinguish missing-after-failure from true removal. Display the observation date, not a claim of perpetual currency.
+| measured_at | table_name | rows |
+|---|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | canonical_models | 3 |
+| 2026-11-14 00:39:30.331616-06:00 | catalog_entries | 4 |
+| 2026-11-14 00:39:30.331616-06:00 | providers | 2 |
+| 2026-11-14 00:39:30.331616-06:00 | serving_endpoints | 3 |
+| 2026-11-14 00:39:30.331616-06:00 | sync_runs | 9 |
 
-## Boundaries
+## same_label
 
-This dataset describes model/provider metadata, not people. Human demographic fairness, actual task success, time saved, access through subscriptions/university accounts, and HERMES end-to-end compatibility cannot be evaluated from these fields. No private prompts, account activity, owner credentials or employer-confidential records were added. Instructor source approval and public-display permission remain unresolved; a grade or praise of the website is not explicit OpenRouter approval.
+SQL basis: `db/quality_checks.sql`, `-- check: same_label`.
+
+| measured_at | same_name_different_id_groups |
+|---|---|
+| 2026-11-14 00:39:30.331616-06:00 | 0 |
+
+## Decisions and fairness
+
+Preserve exact natural identities, provider/route/tier distinctions, raw JSON and decimal prices. Negative unknown-price sentinels become NULL usable rates, never zero/free. Reject invalid shapes, non-finite or out-of-range numbers, NUL/unpaired-surrogate JSON, whitespace-only route identities, conflicting duplicates and missing fetched parents before the data writer. Healthy Unicode, literal backslash escapes and meaningful whitespace survive unchanged. Foreign keys and one transaction prevent orphaned/partial committed data.
+
+Retain absent or no-longer-selected entries as last-known observations because no source deletion/modification history contract was established. A renamed route is a new natural identity. Do not infer that old retained routes remain available, or that a missing/unqueried route has no provider.
+
+The dated **synthetic** coverage result above shows the test image group has no inspected endpoints while the test text group has partial coverage. It proves that the SQL detects a gap; it is not an OpenRouter fairness finding. The unchanged latest M2 quality report is preserved separately in `data_quality_m2_baseline.md`, including its genuine November 7 source observation and later student-input clarification. That historical dataset had 8 of 705 catalog IDs covered by collected endpoints (1.13%); its dated full group breakdown is in that preserved report. This is not remeasured cloud M3 evidence.
+
+A chatbot could unfairly omit uninspected models/providers by treating absence from this recency/text/tool endpoint sample as no provider availability. Use the actual coverage denominator and date, disclose the selected sample, separate unknown from unavailable, and decline universal provider rankings. This is entity-representation bias, not measured human-demographic discrimination. Run the full suite against the approved live target as app_reader before claiming a live M3 quality report.
+
+## Part H: lineage, freshness and ownership
+
+Catalog metadata GET pages -> origin/pagination checks -> exact JSON/type/price validation -> canonical parents -> catalog entries. Selected details GETs -> fetched-parent validation -> providers -> serving endpoints. Parameterized upserts compare canonical raw-payload hashes. A durable attempt surrounds one atomic data/success/checkpoint transaction. Reader-only status, quality and golden scripts consume data and sync_runs, not owner-only sync_state. `data_dictionary.md` gives the field transformations.
+
+The healthy catalog refresh target is daily plus source visibility lag, queue delay and runtime. Worst-case freshness is **unbounded** under unbounded failures/delays. Retained unselected endpoint rows also have no finite age bound even if the catalog checks succeed daily. Latest successful check and last changed-payload observation are different facts; show both.
+
+November 14 change log: reconciled the latest published M2 preflight/privacy/runtime/timezone fixes, retained M3 role/audit/provenance hardening, and corrected M3 route preflight and golden Q04 elapsed-hour semantics with RED/GREEN evidence. Actual synthetic source changes and process-kill recovery were exercised; no hosted-source quirk or live price change is asserted. Proposed operational owner is a data-platform pipeline owner/on-call operator, with the app owner responsible for stale/coverage warnings. Verify Actions failure delivery after approved activation; no stale monitor is deployed.

@@ -1,4 +1,4 @@
-# Milestone 3 PR1: latest-M2 base plus Parts A-D
+# Milestone 3: reconciled local technical candidate
 
 DRAFT / FOR REVIEW, November 14, 2026. **No publication, cloud activation or submission is authorized.** Begin with `../READINESS.md`, `../ACTIVATION_PLAN.md` and `../recording/RECORDING_CUE.md` rather than older milestone recording instructions.
 
@@ -34,7 +34,3 @@ One actual local rehearsal launch is documented in `../recording/RECORDING_CUE.m
 Actual source/public-display approval; M1/M2-to-main integration and dispatch bootstrap decision; approved cloud migration/role/private secrets; actual Session-pooler app_reader proof and Data API-off verification; two real M3 PRs; a hosted manual smoke; three genuine successful schedule events spanning at least 48 actual hours; live golden baseline followed by at least two additional genuine scheduled syncs and a later check; live M3 quality; authentic student selection/predictions/review and own 4-6 minute recording. No secret or submission action is implicit in preparation.
 
 The November 18, 2026 workflow guidance and November 22, 2026 11:59:59 PM America/Chicago deadline are from the supplied live prompt. Primary API/GitHub/Supabase checks are in `../review/PRIMARY-REFERENCES.md`; permissions and actual target state remain separately unverified.
-
-## PR1 scope
-
-This standalone copy excludes M3 E-H quality/golden scripts and tests. References to E-H above describe the full candidate only; do not add those files to this early PR. Exact differences are in the top-level PR1 overlay allowlist.

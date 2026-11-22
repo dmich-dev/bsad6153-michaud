@@ -1,141 +1,71 @@
-# Data dictionary: Agent Model Selection
+# Milestone 3 data dictionary
 
-**Status:** Codex draft for DJ review, updated November 1. The example values below were reconfirmed in
-the November 1 real linked sample. Historical October 29 profiling is explicitly labeled separately.
-The initial two assistant-verified runs each had 687 distinct catalog IDs, 604 canonical identities,
-and 15 related endpoints. The field table retains that real GPT-4.1 sample for schema illustration.
-The live demo now selects the most recently added catalog entry with collected provider data; the
-updated complete run has 73 related endpoints, with two empty provider lists preserved and reported.
-See [current verification](latest_selection_verification_2026-11-01.json) and
-[initial verification](run_verification_2026-11-01.json). Instructor source approval, DJ's review,
-and final public-display terms review remain pending.
+DRAFT / FOR REVIEW. Assistant-prepared November 12, 2026. Historical Milestone 2 definitions remain in `schema.md`; this document describes the isolated M3 extension. No cloud schema change or student acceptance is claimed.
 
-## Source and meaning of a record
+## Data entities
 
-Source: OpenRouter. Base URL: `https://openrouter.ai/api/v1`.
+| Table | One row means | Natural identity | Mutation behavior |
+|---|---|---|---|
+| canonical_models | Exact source canonical identity, not a verified model architecture | canonical_slug | New identities insert; identity-only parents have no non-key payload to update |
+| catalog_entries | Exact catalog/request ID, including aliases or variants | catalog_id | Hash-different raw metadata updates typed columns and last_updated_at |
+| providers | Exact returned serving-provider name, not the model author prefix | provider_name | New exact names insert; a renamed provider is a new identity |
+| serving_endpoints | A collected last-known provider offering for one catalog entry | catalog_entry_id, provider_id, tag, name, service_tier | Composite conflict uses NULLS NOT DISTINCT; changed metadata updates in place |
 
-- Main resource: `GET /models?output_modalities=all&limit=100&offset=0`, followed by `links.next`.
-  One model record describes one catalog entry, including a specific variant when its ID differs.
-- Related resource: `GET /models/{author}/{slug}/endpoints`, preferably reached through the model's
-  returned `links.details`. One endpoint record describes a provider's serving offering for that model.
-- References: [model listing](https://openrouter.ai/docs/api/api-reference/models/list-all-models-and-their-properties),
-  [model endpoints](https://openrouter.ai/docs/api/api-reference/endpoints/list-all-endpoints-for-a-model),
-  [model/pricing guide](https://openrouter.ai/docs/guides/overview/models), and [terms](https://openrouter.ai/terms).
-- Authentication: the reference specifies bearer tokens; the public GETs tested returned 200 without
-  a key. This is an observation about those GETs, not an authorization rule for every OpenRouter endpoint.
+The four original table definitions are unchanged. A missing optional value remains SQL NULL. No identifier is trimmed, repaired or substituted. Zero is distinct from unknown. Prices are parsed from exact decimal strings; negative sentinels remain in raw JSON/pricing but become NULL usable rates. Non-finite rates, integer booleans, bad ranges, malformed arrays and conflicting/orphan identities are rejected. Catalog Unix `created` is an addition/creation label, not a source modification cursor. A raw JSONB record is a parsed payload, not the original HTTP byte stream.
 
-The [small linked sample](../data/sample/openrouter_sample.json) includes one actual model and its
-three returned endpoint records. Sample values below are observations, not current availability guarantees.
+## sync_runs
 
-## Important fields
+| Column | Meaning |
+|---|---|
+| run_id | Generated bigint attempt ID |
+| started_at | Database clock when the durable attempt row is created |
+| finished_at | Terminal completion/recovery time; NULL while unfinished |
+| status | CHECK-constrained success, partial or failed |
+| records_fetched | Catalog plus endpoint records collected; durably saved before applying data |
+| records_inserted, records_updated | Committed changes across all four normalized data tables, never attempted writes rolled back |
+| error_message | Fixed safe category only; no exception text, URL, header, API key or source string |
+| trigger | CHECK-constrained manual or schedule; a label is not independent evidence of a hosted schedule event |
+| table_counts | Per-table inserted/updated counts for a committed success |
 
-`model.` and `endpoint.` indicate the source resource; they are not literal prefixes in the JSON.
-Null/missing policy below describes the implemented handling. The saved default-filter response was also
-profiled across all 456 records; its observations are evidence for that dated snapshot, not guarantees
-about future responses. See the [field profile](catalog_profile_2026-10-29.json).
+An unfinished attempt initially uses `partial` with `attempt_in_progress`; it is not a successful run. A completed incomplete retrieval is partial only if some records were fetched, with zero committed changes. A retrieval that obtains nothing is failed. On process death, the next exclusive sync marks older unfinished rows failed with `interrupted_run_recovered`. That `finished_at` is recovery time, not an invented time of death. Failed connections, missing schema or a destroyed connection can prevent a row from being written at all; the CLI/CI failure is the necessary fallback.
 
-| Field | JSON type | Observed example | Meaning | Null/missing policy |
-|---|---|---|---|---|
-| `model.id` | string | `openai/gpt-4.1` | Catalog/request identifier | Required; reject a record without it |
-| `model.canonical_slug` | string | `openai/gpt-4.1-2025-04-14` | Canonical version identity | Preserve null if absent; do not substitute for `id` |
-| `model.name` | string | `OpenAI: GPT-4.1` | Human-readable label | Report absent label |
-| `model.created` | integer | `1744651385` | Unix seconds when added to OpenRouter | Unknown if absent; ordered last for recency selection; not a modification or verified release timestamp |
-| `model.context_length` | integer | `1047576` | Advertised model context in tokens | Unknown if absent; never assume zero |
-| `model.architecture.input_modalities` | array of strings | `["image", "text", "file"]` | Accepted input types | Unknown if absent |
-| `model.architecture.output_modalities` | array of strings | `["text"]` | Produced output types | Unknown if absent; needed for shortlist filtering |
-| `model.pricing.prompt` | decimal string | `"0.000002"` | Base USD per input token | Preserve decimal precision; unknown if absent |
-| `model.pricing.completion` | decimal string | `"0.000008"` | Base USD per output token | Preserve decimal precision; unknown if absent |
-| `model.supported_parameters` | array of strings | Includes `tools` and `tool_choice` | Advertised request features | Missing is unknown, not verified support |
-| `model.top_provider.max_completion_tokens` | integer or null | `32768` | Advertised primary-provider output ceiling | Unknown if absent/null; null in 6 of 456 saved records |
-| `model.per_request_limits` | object or null | `null` | Catalog's optional request-limit metadata | Null is not a promise of unlimited traffic |
-| `model.links.details` | string | `/api/v1/models/openai/gpt-4.1-2025-04-14/endpoints` | Link to related serving data | Check host/path before following |
-| `endpoint.model_id` | string | `openai/gpt-4.1` | Parent model reference | Required; verify it joins to a fetched model |
-| `endpoint.provider_name` | string | `Azure` | Serving provider, distinct from model author | Required for a usable provider comparison |
-| `endpoint.tag` | string | `azure` | Returned provider/endpoint routing tag | Preserve if present; do not assume globally unique |
-| `endpoint.context_length` | integer | `1047576` | Endpoint-specific context ceiling | Unknown if absent |
-| `endpoint.pricing.prompt` | decimal string | `"0.000002"` | This endpoint's base USD per input token | Unknown if absent; keep separate from catalog price |
-| `endpoint.max_completion_tokens` | integer | `942818` | Returned endpoint output ceiling | Preserve with source; do not silently replace model limit |
-| `endpoint.latency_last_30m` | object or null | `null` | Optional recent latency statistics | Null means no usable measurement here |
+## sync_state
 
-Token-price example: the observed prompt rate multiplied by 1,000,000 is $2 per million input tokens;
-the completion rate is $8 per million output tokens. This excludes other charge units and any conditional
-pricing overrides. It is not the price of a ChatGPT/Codex subscription. Keep the full pricing object
-so later calculations can account for extra units and overrides.
+Owner-only checkpoint keyed by source. `last_success_run_id` references the terminal success row, `observed_at` is a completed retrieval observation, `snapshot_sha256` covers sorted catalog/endpoint payloads, and `mode` is constrained to `full_snapshot_hash_diff`. It is updated only in the same transaction as successful data changes. It is not exposed to `app_reader` and does not pretend to be an API delta cursor. The inspected OpenRouter references do not document a change-since cursor for these resources (OpenRouter, n.d.-a, n.d.-b).
 
-## Identifiers and relationships
+## Lineage
 
-Within a snapshot, `model.id` identifies a main record. Preserve `canonical_slug` too: an alias can point
-to a versioned identity. Join `endpoint.model_id` to `model.id`, not to a provider name or ID prefix.
-The model author prefix (`openai`) is not necessarily the host (`Azure`).
+```text
+OpenRouter all-modalities catalog pages
+  -> inherited origin-locked GET, bounded HTTP retry and pagination checks
+  -> exact catalog IDs, complete total/boundary checks, metadata validation
+  -> canonical_slug parents -> canonical_models
+  -> Decimal prices, UTC creation time, arrays, raw JSON and hash -> catalog_entries
+Recent eligible text/tool details links, selected from that catalog
+  -> origin-locked endpoint GETs -> validate fetched model_id parent
+  -> exact provider_name parents -> providers
+  -> provisional composite offering key, Decimal prices, raw JSON and hash -> serving_endpoints
+Each attempt -> durable sync_runs row
+Validated full snapshot -> one transaction for all four tables, terminal success and sync_state
+app_reader -> SELECT on four data tables and sync_runs -> status, quality and golden checks
+```
 
-In the saved 456-record default response, 320 records have an `id` different from their
-`canonical_slug`, and 79 canonical slugs are shared by multiple IDs. A count of distinct catalog IDs
-therefore must not be described as a count of distinct underlying model architectures. Record both
-catalog-ID counts and canonical-identity counts in each run report; retain aliases/variants
-as source records, with their identity relationships visible.
+`source_observed_at` is the successful fetch finish time for the payload that was inserted or last changed. It is deliberately unchanged on an identical replay, as is `last_updated_at`. `first_seen_at` is database insertion time, not source creation. The latest successful `sync_runs.finished_at` is the check freshness signal. OpenRouter pages and endpoint requests are not an atomic upstream snapshot, so even a complete, consistent-count fetch is not proof that every source record existed simultaneously at one instant.
 
-The endpoint response supplies no obvious universal record ID. The importer uses a composite of model
-ID, provider name, tag, endpoint name, and service tier. That key was unique across the initial 15 related
-records per run and across the updated 73-record sample. It is not established as a permanent global key across all endpoints
-and time. Model-to-endpoint is one-to-many; a provider can serve many models. Endpoint limits/prices
-remain independent of the catalog summary.
+No row-level price history, task outcomes, private account information, verified HERMES interoperability or provider-completeness claim is introduced. Missing/newly unselected routes are retained as last-known records; absent is not deleted and not globally unavailable. A renamed composite endpoint can create a new row while the older row remains. Keep these limitations visible in chatbot answers.
 
-The saved sample already demonstrates why endpoint name alone is unsafe: two Azure offerings have the
-same name but distinct tags (`azure` and `azure/swedencentral`). The earlier proposed four-field key was
-expanded to include provider name during implementation. See the
-[saved-data quality audit](preflight_quality_notes_2026-10-31.md) for the historical finding.
+## Freshness guarantee
 
-## Update behavior
+Daily cron is a refresh target, not an unconditional guarantee. In a successful, bounded-delay scenario, catalog age is approximately the 24-hour cadence plus upstream visibility lag, fetch/runtime and queue delay. Worst-case age is unbounded when source access, the database or the scheduler can fail indefinitely. Retained endpoint rows outside the newest-ten sample can also age indefinitely during otherwise healthy catalog runs. Warn from last successful check time and the specific payload observation, not from a freshly generated report timestamp. GitHub can delay or drop scheduled jobs and only schedules default-branch workflows (GitHub, n.d.).
 
-The API can add or remove models, change prices/features, and change serving availability; no fixed
-refresh interval was established. Proposed sync: keep a fetch timestamp and compare full snapshots by
-model ID and normalized payload hash. The `created` field alone cannot detect price changes. Distinguish
-a removed record from one absent because a fetch failed, and retain last-known data with its timestamp.
+## Ownership
 
-## Observed quirks for DJ to review
+Proposed company ownership, not an assignment of real staff: a data-platform/pipeline owner maintains credentials, source contracts, migrations and retry policy; an on-call data-platform operator receives job-failure and stale-check alerts; the application owner surfaces stale/limited-coverage warnings. Check successful catalog observation daily and investigate when it exceeds the target plus a reviewed tolerance. GitHub notification recipients/settings must be verified after activation. A separate stale-data monitor is still an operational follow-up, not a shipped service in this draft.
 
-These are Codex's observations, not claims about what surprised DJ personally.
+## Change log
 
-1. The default response contained 456 model records; `output_modalities=all` reported 689. Default
-   filters can make a source appear too small. Those October 29 counts are historical: the complete
-   November 1 all-modalities run actually retrieved 687 catalog IDs and 604 canonical identities.
-2. Prices are decimal strings. Convert with decimal arithmetic; a missing rate is different from `"0"`.
-3. `id`, `canonical_slug`, and the slug in `links.details` can differ. The sample's endpoint `model_id`
-   still joins to the unversioned model ID.
-4. The sample's model-level output limit was 32,768, while the Azure endpoints returned 942,818.
-   Microsoft's published GPT-4.1 table lists 32,768 maximum output tokens. This is an unresolved source
-   conflict, not verified evidence of a larger routed limit. Preserve the raw observations and flag the
-   disagreement; do not silently rewrite them. Source and limits of the check are in the
-   [quality notes](preflight_quality_notes_2026-10-31.md).
-5. Recent latency can be null even when an endpoint is present. Availability does not prove measured speed.
-6. The broader saved profile has six null maximum-output limits, while every `per_request_limits`
-   value is null. Unknown output capacity and absent request-limit metadata must remain distinct from
-   zero capacity or a measured unlimited allowance.
-7. The saved default response has 19 zero prompt-price strings and 21 zero completion-price strings.
-   These are individual rate fields. A zero token rate is not evidence that every charge component or
-   every future request is free. Preserve other units and conditional overrides.
+November 12, 2026, assistant observations: the isolated extension now has changed-only upserts and durable attempt accounting rather than the frozen insert-only M2 loader. Synthetic tests demonstrated catalog context changes, provider-rate changes and safe process-death recovery. These are controlled local examples, not changes observed in live scheduled OpenRouter data. Actual hosted-run quirks remain unknown until approval and real collection.
 
-## Data-use ethics: draft answers for review
+## References
 
-- **Storage/display/commercial use/attribution:** OpenRouter's [terms](https://openrouter.ai/terms)
-  restrict automated scraping/copying (section 7), resale/competing-service use (section 7), and use of
-  protected materials without authorization (section 12). The documented API establishes an integration
-  surface but does not, in the references inspected, expressly settle bulk catalog redistribution or a
-  public comparison site's permission/attribution requirements. Retain provenance and resolve those
-  specific uses before public launch; this dictionary makes no blanket storage/display/commercial-use grant.
-- **Identifiable people:** this selected dataset describes models and providers, not individual users.
-  Do not add account activity, prompts, credentials, or employer data to the public dataset.
-- **Realistic harm:** stale or misinterpreted prices/capabilities could lead someone to choose an
-  unsuitable model or underestimate cost. Label freshness and estimates; do not claim benchmark results.
-- **Access:** proposed design gives the ingestion process write access and the public site read-only
-  access to approved catalog fields. Personal workflow logs and secrets remain outside public views.
-
-AI disclosure: Codex drafted this dictionary from official documentation and public response samples.
-DJ's review, corrections, and understanding must be recorded before submission.
-
-## Review status
-
-Assistant source checks, field profiling, implementation, tests, and full ingestion evidence are complete
-for this technical draft. DJ confirmed Lecture 3 was watched and later asked the assistant to perform
-the documentation checks while he was busy. His own review is not marked complete. Instructor source
-approval and the final public-display decision also remain pending.
+GitHub (n.d.) and OpenRouter (n.d.-a, n.d.-b), official references checked November 12, 2026. Full source metadata is in `../../evidence/pre-fix/primary-source-checks.json` and the repository README References section.
