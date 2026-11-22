@@ -1,20 +1,9 @@
-Put one small sample of your raw API data here (a few records) so others can see its shape.
-Large raw downloads go in data/raw/, which Git ignores.
+# Historical linked OpenRouter sample
 
-This committed GPT-4.1 file is a historical schema example. The live recording page now defaults
-to the most recently added entry with collected provider data and labels its dates. Its current
-run and model-menu checks are in [latest verification](../../docs/latest_selection_verification_2026-11-01.json).
+DRAFT documentation for the Milestone 3 review packet, November 12, 2026. The JSON is unchanged historical Milestone 1/2 source, not a fresh API response or M3 sync result.
 
-`openrouter_sample.json` contains one model and three related serving endpoints observed on
-November 1, 2026. Its record objects are copied from the complete assistant-executed ingestion;
-the surrounding source URLs, date, and counts are provenance metadata.
+`openrouter_sample.json` records observation `2026-11-01T06:41:30.014957+00:00`, with 1 actual historical catalog record and 3 related historical endpoint records. It is used only as a small fixture by the preserved M2 loader/query integration tests. Current M3 integration and acceptance tests use clearly synthetic loopback fixtures instead.
 
-The verified full run has 687 distinct catalog IDs, 604 canonical identities, and 15 related endpoint
-records. An independent rerun produced the same ID set and counts. This committed file is deliberately
-small; full original response pages and summaries stay under ignored `data/raw/`.
+The current schema explanation is in `../../docs/schema.md`; current transformation/lineage rules are in `../../docs/data_dictionary.md`; local-versus-cloud measurements are separated in `../../docs/data_quality.md`. No archived M1 recording, personal review attestation or unrelated submission history is needed to interpret this sample.
 
-The earlier October 29 sample remains in Git history and in the preserved handoff. It must not be
-confused with the November 1 run. [Run verification](../../docs/run_verification_2026-11-01.json)
-records hashes of the current full-run responses.
-
-See the [data dictionary](../../docs/data_dictionary.md) and [API review sheet](../../docs/api_review.md).
+The original JSON's bytes and source hash are preserved in the inherited-source receipt. This focused README replaces only the isolated packet's sample documentation so historical links outside the packet do not imply missing executable dependencies. The canonical M2 source and sample were not edited.

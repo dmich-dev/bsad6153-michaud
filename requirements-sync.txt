@@ -1,0 +1,4 @@
+# Minimal, actually exercised offline review dependencies.
+psycopg[binary]==3.3.3
+python-dotenv==1.2.1
+PyYAML==6.0.3
