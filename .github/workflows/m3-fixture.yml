@@ -1,0 +1,48 @@
+name: Milestone 3 fixture check (not a live sync)
+on:
+  push:
+    branches: [review/m3-fixture-check]
+permissions:
+  contents: read
+jobs:
+  fixture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: 123cc2a2480c3b4ab142d3f32bb0016328e790e2
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.13'
+      - run: python -I -m pip install -r requirements-sync.txt
+      - name: Run Milestone 3 tests against disposable PostgreSQL and a synthetic source
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset DATABASE_URL APP_DATABASE_URL OPENROUTER_API_KEY
+          export PYTHON_DOTENV_DISABLED=1
+          root=/home/hermes-worker/.hermes/cache/scratch
+          sudo install -d -o "$(id -u)" -g "$(id -g)" -m 700 "$root"
+          scratch=$(mktemp -d "$root/m3-ci.XXXXXXXX")
+          pg=/usr/lib/postgresql/16/bin
+          test -x "$pg/initdb"
+          mkdir -m 700 "$scratch/sock"
+          "$pg/initdb" -D "$scratch/db" --auth=trust --username=review_owner --encoding=UTF8 --no-locale
+          trap '"$pg/pg_ctl" -D "$scratch/db" -m fast -w stop' EXIT
+          "$pg/pg_ctl" -D "$scratch/db" -l "$scratch/postgres.log" -o "-k $scratch/sock -p 55439 -c listen_addresses=''" -w start
+          export PGHOST="$scratch/sock" PGPORT=55439 PGUSER=review_owner
+          for name in m3_review_tests m3_review_m2 m3_acceptance_ci; do "$pg/createdb" "$name"; done
+          "$pg/psql" -X -v ON_ERROR_STOP=1 -d m3_review_tests -c 'CREATE ROLE app_reader LOGIN'
+          export M3_TEST_DSN="host=$PGHOST port=$PGPORT dbname=m3_review_tests user=review_owner"
+          export M3_APP_DSN="host=$PGHOST port=$PGPORT dbname=m3_review_tests user=app_reader"
+          export MILESTONE2_TEST_DSN="host=$PGHOST port=$PGPORT dbname=m3_review_m2 user=review_owner"
+          python -I -B -m unittest discover -s tests -v 2>&1 | tee "$scratch/test.log"
+          grep -Eq '^Ran 119 tests? in ' "$scratch/test.log"
+          grep -qx 'OK' "$scratch/test.log"
+          export M3_TEST_DSN="host=$PGHOST port=$PGPORT dbname=m3_acceptance_ci user=review_owner"
+          export M3_APP_DSN="host=$PGHOST port=$PGPORT dbname=m3_acceptance_ci user=app_reader"
+          python -I -B tests/offline_acceptance.py --output-dir "$scratch/acceptance"
+          python -I -B -c 'import json, sys; from pathlib import Path; r=json.loads(Path(sys.argv[1]).read_text()); assert r["status"]=="PASS" and r["genuine_scheduled_runs"]==0 and len(r["steps"])==14' "$scratch/acceptance/acceptance.json"
+          printf '%s\n' '119 tests and 14 CLI checks passed using a synthetic source. Not a live, manual-dispatch, or scheduled sync.' >> "$GITHUB_STEP_SUMMARY"
