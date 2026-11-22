@@ -95,3 +95,56 @@ The endpoint API supplies no universal endpoint ID in the inspected sample. A ge
 4. A late PostgreSQL trigger failure test proves all parent/earlier-child writes roll back. Constraints are exercised in actual PostgreSQL, not merely inspected as strings.
 
 This milestone deliberately does **not** update changed payloads for an existing key, track deletions, claim an exact current snapshot after loading multiple runs, implement concurrency scheduling, or grant public API/app roles. `last_updated_at` will need honest change detection in Milestone 3. Schema application is one-time to a new trusted schema, never a destructive migration. Supabase setup and actual loader/query verification were completed in the dated continuations recorded in [the AI review log](milestone2_ai_review.md). Data API OFF was observed during setup; no new setting change or cloud app-role hardening is claimed by publishing this document.
+
+## Milestone 3 extension
+
+DRAFT / FOR REVIEW, reconciled November 14, 2026. The preceding M2 section is now the exact final published M2 schema documentation, including its dated cloud-status clarification. Its insert-only lifecycle is superseded for M3 by ingest/sync.py, not by relabeling the M2 loader as a sync. The loader is the exact final published M2 implementation; schema SQL is unchanged. Current local access proof appears below; no M3 cloud mutation is claimed.
+
+`db/milestone3.sql` adds durable `sync_runs` and owner-only `sync_state`. The checkpoint is a full-snapshot observation/hash, not an invented modification watermark. Successful upserts, checkpoint advance and terminal success commit together. A session advisory lock serializes this sync implementation; do not concurrently run the old loader or another writer that ignores the lock. Absent/unselected records remain last-known observations, not a certified current inventory.
+
+## Access roles
+
+Local proof timestamp: `2026-11-13T00:17:48.935877+00:00`. Actual distinct local app_reader, synthetic data, PostgreSQL 17.11, local Unix-socket trust authentication. This does not prove Supabase password or Session pooler authentication. These SQL commands and primary error messages come from `../../evidence/access-role-proof.json`:
+
+```sql
+SELECT current_user;
+-- app_reader
+SELECT count(*) FROM public.catalog_entries;
+-- 4
+DELETE FROM public.catalog_entries;
+-- ERROR: permission denied for table catalog_entries
+-- SQLSTATE: 42501
+INSERT INTO public.catalog_entries DEFAULT VALUES;
+-- ERROR: permission denied for table catalog_entries
+-- SQLSTATE: 42501
+```
+
+The actual CLI `python -I -B scripts/check_db.py --app` also reported `Database user: app_reader`; output is in `../../evidence/acceptance-current-local/acceptance.json`. Integration tests repeated SELECT, INSERT-denial and DELETE-denial across all four data tables and sync_runs, denied reading sync_state, and denied schema CREATE. `db/roles.sql` grants SELECT on the exact four tables plus sync_runs, with no password in the file. It rejects elevated or role-member existing app_reader identities and inherited PUBLIC write/CREATE privileges. Ordinary PostgreSQL catalog metadata visibility does not grant application mutation rights. Existing cloud ACLs and security-definer functions still need target-specific owner review.
+
+After review, privately set the role password and APP_DATABASE_URL using Session pooler user form `app_reader.<project-ref>`. Never put a password or connection value in this document, SQL or a workflow. The sync uses DATABASE_URL; status/quality/golden readers use APP_DATABASE_URL and reject an owner connection. No actual cloud app_reader provisioning, password setting or live M3 permission proof occurred here.
+
+Data API off remains an independent target-verification gate for this draft. Local PostgreSQL cannot prove a Supabase dashboard setting. Do not enable a disabled API or change unrelated roles to bypass an inspection failure. Follow `review_gate.md` before any cloud operation or publication.
+
+## November 14, 2026 reconciled local access proof
+
+Actual fresh isolated PostgreSQL proof, not Supabase Session-pooler/Data API evidence. Receipt: `../../evidence/preseal-full/cli-acceptance/acceptance.json`. The role file is still the hardened M3v2 file.
+
+| SQL | Actual result / SQLSTATE |
+|---|---|
+| SELECT count(*) FROM canonical_models | [[0]] |
+| DELETE FROM canonical_models | permission denied / 42501 |
+| INSERT INTO canonical_models DEFAULT VALUES | permission denied / 42501 |
+| SELECT count(*) FROM catalog_entries | [[0]] |
+| DELETE FROM catalog_entries | permission denied / 42501 |
+| INSERT INTO catalog_entries DEFAULT VALUES | permission denied / 42501 |
+| SELECT count(*) FROM providers | [[0]] |
+| DELETE FROM providers | permission denied / 42501 |
+| INSERT INTO providers DEFAULT VALUES | permission denied / 42501 |
+| SELECT count(*) FROM serving_endpoints | [[0]] |
+| DELETE FROM serving_endpoints | permission denied / 42501 |
+| INSERT INTO serving_endpoints DEFAULT VALUES | permission denied / 42501 |
+| SELECT count(*) FROM sync_runs | [[0]] |
+| DELETE FROM sync_runs | permission denied / 42501 |
+| INSERT INTO sync_runs DEFAULT VALUES | permission denied / 42501 |
+
+Cloud app_reader/password/pooler/TLS/Data API-off and current live outputs remain pending approved activation. No old evidence block above is relabeled as this run.

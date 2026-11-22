@@ -1,0 +1,38 @@
+# DRAFT / FOR REVIEW. No workflow exists remotely until separately approved.
+name: Catalog sync
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: catalog-sync-production
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install reviewed sync dependencies
+        run: python -I -m pip install -r requirements-sync.txt
+      - name: Synchronize source metadata
+        id: sync
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          # Fixed event-name enum only. No issue, PR or user text enters shell code.
+          SYNC_TRIGGER: ${{ github.event_name == 'schedule' && 'schedule' || 'manual' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I -B ingest/sync.py --trigger "$SYNC_TRIGGER"
+      - name: Database-unreachable fallback notice
+        if: failure()
+        run: printf '%s\n' 'Sync failed. Review private configuration and sync_runs. If the database was unreachable, this failed job is the durable attempt evidence.'

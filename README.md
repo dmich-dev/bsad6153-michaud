@@ -1,225 +1,40 @@
-# BSAD 6153 Project: Agent Model Selection
+# Milestone 3 PR1: latest-M2 base plus Parts A-D
 
-**Student:** David Michaud (DJ)
-**My decision:** Choose an AI model for coding or agent tasks, a decision I make daily.
-**Website:** Planned for Week 4.
+DRAFT / FOR REVIEW, November 14, 2026. **No publication, cloud activation or submission is authorized.** Begin with `../READINESS.md`, `../ACTIVATION_PLAN.md` and `../recording/RECORDING_CUE.md` rather than older milestone recording instructions.
 
-This repository is one complete AI system, built over eight weeks: a real API, synced on a schedule into a
-PostgreSQL database, shown on a public website, with a chatbot and an agent that answer and act from your
-own data. You build it with an AI coding agent, and you read and verify everything it writes.
+## Exact base and retained hardening
 
-## Decision and data
+The effective base is the latest verified published M2 draft PR #3 head `42ce2521bab78f68376f0ab66244bdc2f51f698e`, not an assumption that main contains M2. The canonical worktree is read-only. Inputs are copied and hash-checked under `../inputs/`; .env was never read or copied. Per-file reconciliation is recorded in `../reconciliation/`.
 
-I find it hard to choose a model consistently because new models seem to come out every other day.
+The final M2 loader, checker and business SQL are imported exactly, along with all missing declared M2 base files and regression tests. M3's password-free role hardening, post-commit durable audit and exact/distinct origin validation are retained. Narrow new fixes reject whitespace-only M3 route identities without normalizing valid identities and preserve the 720-elapsed-hour contract in golden Q04. Current manifests and fresh tests, not the older 67/60 counts, establish this revision.
 
-This project will compare current API prices, context limits, and advertised tool support from the
-[OpenRouter model catalog](https://openrouter.ai/api/v1/models). Those fields can support a shortlist;
-they are not measurements of coding quality or reliability. API price estimates will be kept separate
-from personal subscriptions and access provided through Newman.
+## Parts A-D
 
-The [baseline log](docs/baseline_log.md) records the current decision process before the system is built.
-No model benchmarks or time savings have been measured for this project yet.
+- `db/milestone3.sql`: constrained sync_runs and private observation checkpoint. Apply only after explicit target approval, over the existing M2 schema; do not recreate its tables.
+- `db/roles.sql`: SELECT on the four data tables and sync_runs only. No password; fail closed on existing elevated membership, database/schema/relation ownership and inherited PUBLIC write/CREATE or column privileges. It does not silently alter unrelated ACLs.
+- `ingest/sync.py`: source fetch plus parameterized natural-key ON CONFLICT upserts; hash-difference WHERE skips identical payloads and leaves their last_updated_at unchanged. Parents precede children. Data, terminal success and checkpoint commit together; a post-commit interruption cannot rewrite durable success as failed.
+- Creation time is not a change watermark. The inspected API has no documented modification cursor, so mode `full_snapshot_hash_diff` honestly downloads the catalog plus rolling ten-model text/tool endpoint subset and compares payload hashes. The saved checkpoint is a successful observation, not a fabricated delta cursor. Retain missing/unselected records as last-known, not asserted current availability.
+- `scripts/status.py`: actual reader-only last successful check, last data change and seven-day counts. An unreachable database cannot guarantee its own failed-attempt row; nonzero CLI/CI is the fallback.
+- `.github/workflows/sync.yml`: proposed daily 09:17 UTC cron, workflow_dispatch, secrets passed as environment references, contents:read, concurrency without cancellation, 15-minute job deadline and visible nonzero sync failure. Daily metadata collection bounds load; minute 17 avoids the start-of-hour peak. It is not a promise of finite worst-case freshness or exactly timed runs. No workflow exists remotely at the recorded preflight.
 
----
+## Parts E-H and honest gaps
 
-## Setting up your computer (Week 1 Setup)
+`db/quality_checks.sql`/`scripts/quality_report.py` produce dated read-only measurements; `docs/data_quality.md` is actual local synthetic evidence, with latest historical M2 quality preserved separately. `evals/golden_questions.csv` has 15 candidates, 12 working SQL references and three decline specifications. All sources are other until real running-list choices and provenance exist. The checker uses app_reader, a read-only repeatable-read transaction, bounded queries and immutable outputs. `--allow-candidate` is not acceptance.
 
-You need a **Windows 10/11 or macOS computer where you can install software**, Git, Python 3.12, and your AI
-coding agent (Claude Code, Codex, Antigravity, or Copilot). Let your agent help with the installs, but read
-every command before you approve it, and keep auto-approve off.
+`docs/sync_tests.md` retains real local rerun/change/rollback/key/outage/kill/recovery outcomes. `docs/data_dictionary.md` describes lineage/transforms/freshness/ownership. `docs/running_questions_2026-11-14.md` lets the student make current choices without falsifying M1 history. AI review and recording remain the student's genuine work.
 
-1. **Clone this repository** into a short folder path that isn't synced by OneDrive or Dropbox, for example
-   `C:\dev\bsad6153` on Windows or `~/dev/bsad6153` on macOS.
-2. **Create and activate a virtual environment** from the project folder:
+## Verification and one-launch local practice
 
-   | | Windows (PowerShell) | macOS (Terminal) |
-   |---|---|---|
-   | Create | `py -3.12 -m venv .venv` | `python3.12 -m venv .venv` |
-   | Activate | `.venv\Scripts\Activate.ps1` | `source .venv/bin/activate` |
+On djserver, `../.review-venv/` contains the pinned `requirements-sync.txt` dependencies. `../review/run_isolated.py` scrubs DB/libpq environment, disables dotenv, starts its own socket-only unprivileged PostgreSQL 17.11 and stops it afterward. Never point tests at Supabase or an application database. Current complete/A-D/CLI/gap receipts and source hashes are indexed in `../CURRENT_MANIFEST.json`.
 
-   You'll see `(.venv)` at the start of your prompt when it's active. Activate it every time you open a new terminal.
-3. **Install the packages:** `pip install -r requirements.txt`
-4. **Create your secrets file:** copy `.env.example` to `.env`, and put a fake value on the `TEST_SECRET=` line.
-5. **Check everything:** `python scripts/check_setup.py` should end with `Setup OK`.
-6. **Try the website:** `streamlit run app/streamlit_app.py` opens it in your browser. Press Ctrl+C to stop it.
+One actual local rehearsal launch is documented in `../recording/RECORDING_CUE.md`; it waits at READY, runs real local CLIs after RUN/Enter, prints actual outputs and holds them until finished. It never uses live credentials or activates anything.
 
-### Working with your AI agent
+## Gates that local tests cannot close
 
-- **You approve every command.** Read it first, and if you don't understand it, ask the agent what it does.
-- **Ask for a plan before code:** "Before writing anything, tell me your plan."
-- **Never paste a real key into the chat,** and never ask the agent to print your `.env` file.
-- **The agent never gets the owner database password or deploy tokens.** That's how agents delete databases.
-- **Record what you directed, read, verified, and decided** in each pull request's AI review log.
+Actual source/public-display approval; M1/M2-to-main integration and dispatch bootstrap decision; approved cloud migration/role/private secrets; actual Session-pooler app_reader proof and Data API-off verification; two real M3 PRs; a hosted manual smoke; three genuine successful schedule events spanning at least 48 actual hours; live golden baseline followed by at least two additional genuine scheduled syncs and a later check; live M3 quality; authentic student selection/predictions/review and own 4-6 minute recording. No secret or submission action is implicit in preparation.
 
----
+The November 18, 2026 workflow guidance and November 22, 2026 11:59:59 PM America/Chicago deadline are from the supplied live prompt. Primary API/GitHub/Supabase checks are in `../review/PRIMARY-REFERENCES.md`; permissions and actual target state remain separately unverified.
 
-## Project layout
+## PR1 scope
 
-| Folder | What goes there | When |
-|---|---|---|
-| `ingest/` | Fetch, load, and sync code | Weeks 1&ndash;3 |
-| `db/` | `schema.sql`, `roles.sql`, `queries.sql` | Weeks 2&ndash;6 |
-| `docs/` | Data dictionary, logs, reports (see `docs/README.md`) | Every week |
-| `evals/` | Golden questions and evaluation runs | Weeks 3&ndash;7 |
-| `app/` | Your website (Streamlit) | Weeks 4&ndash;6 |
-| `examples/` | A reference tool-using chatbot loop | Week 5 |
-| `scripts/` | Setup and database checks | Weeks 0&ndash;2 |
-| `data/sample/` | A small sample of raw API data (large downloads go in `data/raw/`, which Git ignores) | Week 1 |
-
-## Secrets: where each one lives
-
-| Secret | On your computer | On Render (website) | In GitHub Actions (sync) |
-|---|---|---|---|
-| `DATABASE_URL` (owner) | `.env` | **never** | Actions secret |
-| `APP_DATABASE_URL` (read-only) | `.env` | environment setting | if your checks need it |
-| `AGENT_DATABASE_URL` | `.env` | environment setting | no |
-| LLM key, `APP_PASSWORD` | `.env` | environment setting | no |
-| Data API key | `.env` | no | Actions secret |
-
-`.env.example` lists the names only. If a secret ever leaks, revoke or rotate it first, then tell the instructor.
-
----
-
-## Deploying on Render (Week 4)
-
-1. Claim your free domain through the GitHub Student Developer Pack.
-2. In Render, choose **New &gt; Blueprint**, pick this repository, and enter each secret when asked.
-   (`render.yaml` describes the service.) Or create a **Web Service** by hand with:
-   - Build command: `pip install -r requirements.txt`
-   - Start command: `streamlit run app/streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true`
-   - Environment variables: `PYTHON_VERSION=3.12.4`, `APP_DATABASE_URL`, and later your LLM key and `APP_PASSWORD`
-3. Under **Settings &gt; Custom Domains**, add your domain, then add the DNS records Render shows you at your
-   registrar. Ask your agent to explain each record before you add it. HTTPS turns on automatically.
-4. Free services sleep when idle and take about a minute to wake. Say so on your site.
-
----
-
-## Troubleshooting
-
-- **`pip install` fails with "No such file or directory" on Windows:** the folder path is too long. Move the
-  project to a short path such as `C:\dev\bsad6153` and recreate `.venv`.
-- **PowerShell says running scripts is disabled when you activate:** use Command Prompt instead and run
-  `.venv\Scripts\activate.bat`, or ask the instructor. Don't change system security settings without asking.
-- **`python` opens the Microsoft Store or isn't found:** use `py -3.12` on Windows or `python3.12` on macOS.
-- **The database check can't connect:** use Supabase's Session pooler string, check the password, and check
-  that your Supabase project isn't paused.
-
----
-
-## Project proposal (Week 1)
-
-**Assistant-prepared proposal for DJ's review, updated November 1.** Source approval and DJ's own
-workflow evidence remain pending. This proposal describes intended work, not a completed system.
-
-Agent Model Selection supports a daily decision: which AI model to use for coding or agent tasks.
-DJ mainly uses OpenAI's 6.1 Sol because he finds it cost-effective and it connects well with HERMES.
-His work includes bot workflows, agent interfaces, security automation, and outage investigation.
-Five historical task/model-use records support that usage history; they do not measure selection time
-or comparative quality. The student-authored decision log remains incomplete. AI-assisted reflections
-are drafted for review, and no measured improvement is claimed.
-
-The primary source is OpenRouter's model catalog, already named in the submitted repository setup.
-It supplies advertised prices, context limits, modalities, and supported request parameters. Related
-serving-endpoint records describe provider-specific offerings. The assistant-built importer collects the
-broader catalog with real pagination, preserves raw responses, and reports distinct catalog IDs alongside
-canonical identities. A later coding shortlist would filter suitable text-output and tool capabilities;
-the entire catalog is not a list of equally suitable coding models.
-
-Models.dev is the proposed backup. Its model metadata and provider offerings could support a separate
-adapter, but identifiers, price units, update behavior, and attribution must be checked before use.
-Source labels must remain visible so different providers' prices are not silently treated as identical.
-
-By Week 6, the proposed agent would create a local shortlist and a change report using task constraints
-such as budget, context requirements, and advertised tools. DJ would review its recommendation.
-Purchases, subscription changes, and transmission of task content would require approval. These are
-proposed boundaries for DJ to verify against his actual workflow.
-
-Risks include missing fields, aliases, conflicting endpoint limits, stale pricing, rate limits,
-authentication changes, and public-display terms. The design should retain timestamps and provenance,
-back off on errors, and preserve unknown values. Metadata supports comparison; it does not establish
-measured coding quality, reliability, personal subscription costs, or time savings.
-
-See the [data dictionary](docs/data_dictionary.md), [documentation review](docs/api_check_2026-10-31.md), and
-[remaining milestone checklist](docs/milestone1_checklist.md). The technical draft is implemented and
-assistant-tested; DJ's review and remaining personal evidence are still pending.
-
-## How to run this project
-
-The metadata importer needs **Python 3.12 and its standard library only**. The other pinned packages
-remain relevant to the later website/database; this script does not require installing them.
-
-From the repository directory:
-
-```console
-python ingest/fetch.py
-python -m unittest discover -s tests -v
-```
-
-If this desktop has no `python` or `py` command, the installed Codex runtime can run it from PowerShell:
-
-```powershell
-$python = "$env:USERPROFILE\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
-& $python ingest/fetch.py
-& $python -m unittest discover -s tests -v
-```
-
-The default output is a new timestamped directory inside ignored `data/raw/`. To choose a name, use
-`--output-dir data/raw/my-new-run`; it must be new or empty. Successful run: exit 0. Incomplete retrieval
-or invalid arguments: exit 2. Local configuration/file error: exit 1. Read `summary.json` even after a failure.
-
-The importer reads an optional literal `OPENROUTER_API_KEY` from the environment or repository `.env`.
-The verified catalog runs needed no key. Only the name is present in `.env.example`; values must stay local.
-All requests are metadata GETs. There are no inference, credit-purchase, or model-generation calls.
-
-The November 1 assistant clean run and independent rerun each retrieved **687 catalog IDs, 604 canonical
-identities, and 15 related endpoints**, using seven catalog pages and ten related-resource lookups.
-The initial **16 offline tests passed**. No real rate limit was deliberately triggered; retries were tested
-against a local server and injected transport failures. See [verification evidence](docs/run_verification_2026-11-01.json).
-
-Current evidence and remaining work are tracked in [submission readiness](docs/submission_readiness.md).
-
-### Recording workspace
-
-**Student screencast:** [DJ's Milestone 1 recording — about 4:35](https://www.loom.com/share/4e4644a86a7e44a189dd7626a3d36de1).
-See [review notes and technical clarifications](docs/screencast_review_2026-11-01.md) before final turn-in.
-
-For the 3–5 minute screencast, `python scripts/recording_room.py` opens a local browser workspace
-with the actual source, a fresh-run button, raw-record provenance, and a timed outline. It uses the same
-standard-library environment and does not record or upload anything. See [recording guide](docs/recording_guide.md).
-On the prepared Windows desktop, the separate **Prepare Recording.cmd** launcher opens it directly.
-
-The current importer selects related-resource lookups by the most recent valid catalog `created`
-timestamp among text/tool-capable entries. The recording page defaults to the most recently added
-entry with collected provider data and offers a model menu. This timestamp describes catalog addition,
-not a verified release date or a quality ranking. A restart uses the latest complete saved run with its
-retrieval time labeled. Original raw objects are preserved.
-
-After the fixed-example correction, **21 tests passed** and a fresh browser-triggered run retrieved
-**687 catalog IDs, 604 canonical identities, and 73 related endpoints**. Eight of ten selected models
-returned provider records; two returned actual empty arrays, which were saved and reported as unavailable.
-Malformed responses and request failures still make the run incomplete. See [current verification](docs/latest_selection_verification_2026-11-01.json).
-
-## Credits
-
-- Public catalog and serving data: [OpenRouter](https://openrouter.ai/), with [API documentation](https://openrouter.ai/docs/)
-  and [terms](https://openrouter.ai/terms). Public-display permission remains to be confirmed before Week 4.
-- Proposed backup: [Models.dev](https://models.dev/), an open-source model database with an
-  [MIT-licensed repository](https://github.com/anomalyco/models.dev). It has not been integrated.
-- Codex assisted with API research, the small public-data sample, and draft documentation/proposal on
-  October 29, 2026. DJ's review remains pending; the baseline observations were not generated or edited.
-- On November 1, at DJ's request, Codex checked the API documentation, implemented and tested the
-  importer, and performed both live metadata runs. These are assistant checks, not claims of DJ's own review.
-
-
-## Milestone 2: database design and SQL
-
-**Current recording path:** [one-command server terminal, verified checks and remaining limits](docs/milestone2_recording_ready.md). The original raw inputs stay on the prepared server; no Mac Python setup is needed.
-
-The Milestone 2 draft adds the relational database, insert-only loader and five SQL queries on top of Milestone 1. Start with the [GitHub-rendered Mermaid ER diagram and row meanings](docs/schema.md), then the [short recording checklist](docs/milestone2_screencast_outline.md).
-
-- [Schema SQL](db/schema.sql) and [parameterized loader](ingest/load.py)
-- [Five business queries](db/queries.sql), including the student's genuine Q1 reaction
-- [Actual November 12 cloud query results](docs/milestone2_cloud_query_results.json) and [Session-pooler/load/replay evidence](docs/milestone2_live_acceptance.json)
-- [AI review log](docs/milestone2_ai_review.md) and [current review guide](docs/milestone2_review_guide.md)
-
-The student authorized draft-PR publication on November 13. The prior design review is student-confirmed; the new recording, historical-question provenance and separate final turn-in approval remain open. Published source is not a claim of completed submission.
+This standalone copy excludes M3 E-H quality/golden scripts and tests. References to E-H above describe the full candidate only; do not add those files to this early PR. Exact differences are in the top-level PR1 overlay allowlist.
