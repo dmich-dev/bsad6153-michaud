@@ -121,7 +121,7 @@ every command before you approve it, and keep auto-approve off.
 
 ## Milestone 3: production catalog sync
 
-**Schedule:** daily at **09:17 UTC** (`17 9 * * *`). A maintainer can also use **Actions → Catalog sync → Run workflow → main**. The production job accepts only this repository’s `main`; other refs fail without receiving the environment secret. No PR, push, fixture or dry-run trigger is configured.
+**Schedule:** at **00:17 and 09:17 UTC** each day (6:17 p.m. and 3:17 a.m. Central Standard Time). The extra evening check picks up catalogue changes between morning runs without polling throughout the day. The morning schedule remains in place. A maintainer can also use **Actions → Catalog sync → Run workflow → main**. The production job accepts only this repository’s `main`; other refs fail without receiving the environment secret. No PR, push, fixture or dry-run trigger is configured.
 
 ### Enable once
 
