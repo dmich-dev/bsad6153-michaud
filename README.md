@@ -19,9 +19,9 @@ The final M2 loader, checker and business SQL are imported exactly, along with a
 
 ## Parts E-H and honest gaps
 
-`db/quality_checks.sql`/`scripts/quality_report.py` produce dated read-only measurements; `docs/data_quality.md` is actual local synthetic evidence, with latest historical M2 quality preserved separately. `evals/golden_questions.csv` has 15 candidates, 12 working SQL references and three decline specifications. All sources are other until real running-list choices and provenance exist. The checker uses app_reader, a read-only repeatable-read transaction, bounded queries and immutable outputs. `--allow-candidate` is not acceptance.
+`db/quality_checks.sql`/`scripts/quality_report.py` produce dated read-only measurements; `docs/data_quality.md` is actual local synthetic evidence, with latest historical M2 quality preserved separately. `evals/golden_questions.csv` has 15 candidates, 12 working SQL references and three decline specifications. Under Part F, eight are `baseline`: Q01–Q05 reuse the five published M2 business queries; Q06, Q08 and Q10 were proposed by the assistant and selected by the student on November 22. The other seven remain `other`. These are not eight historical M1 entries. The checker uses app_reader, a read-only repeatable-read transaction, bounded queries and immutable outputs. `--allow-candidate` is not acceptance.
 
-`docs/sync_tests.md` retains real local rerun/change/rollback/key/outage/kill/recovery outcomes. `docs/data_dictionary.md` describes lineage/transforms/freshness/ownership. `docs/running_questions_2026-11-14.md` lets the student make current choices without falsifying M1 history. AI review and recording remain the student's genuine work.
+`docs/sync_tests.md` retains real local rerun/change/rollback/key/outage/kill/recovery outcomes. `docs/data_dictionary.md` describes lineage/transforms/freshness/ownership. `docs/running_questions_2026-11-14.md` records the dated selections and maps the M2 queries to their current wording. AI review and recording remain the student's genuine work.
 
 ## Verification and one-launch local practice
 
@@ -29,8 +29,8 @@ On djserver, `../.review-venv/` contains the pinned `requirements-sync.txt` depe
 
 One actual local rehearsal launch is documented in `../recording/RECORDING_CUE.md`; it waits at READY, runs real local CLIs after RUN/Enter, prints actual outputs and holds them until finished. It never uses live credentials or activates anything.
 
-## Gates that local tests cannot close
+## Gates that local tests cannot close (November 14 checklist)
 
-Actual source/public-display approval; M1/M2-to-main integration and dispatch bootstrap decision; approved cloud migration/role/private secrets; actual Session-pooler app_reader proof and Data API-off verification; two real M3 PRs; a hosted manual smoke; three genuine successful schedule events spanning at least 48 actual hours; live golden baseline followed by at least two additional genuine scheduled syncs and a later check; live M3 quality; authentic student selection/predictions/review and own 4-6 minute recording. No secret or submission action is implicit in preparation.
+Actual source/public-display approval; M1/M2-to-main integration and dispatch bootstrap decision; approved cloud migration/role/private secrets; actual Session-pooler app_reader proof and Data API-off verification; two real M3 PRs; a hosted manual smoke; three genuine successful schedule events spanning at least 48 actual hours; live golden baseline followed by at least two additional genuine scheduled syncs and a later check; live M3 quality; student predictions/review and own 4-6 minute recording. No secret or submission action is implicit in preparation.
 
 The November 18, 2026 workflow guidance and November 22, 2026 11:59:59 PM America/Chicago deadline are from the supplied live prompt. Primary API/GitHub/Supabase checks are in `../review/PRIMARY-REFERENCES.md`; permissions and actual target state remain separately unverified.

@@ -1,10 +1,11 @@
 {
-  "status": "DRAFT / FOR REVIEW",
-  "baseline_source_questions_verified": 0,
-  "acceptance_gate": "At least eight authentic baseline/running-list questions remain unverified. Approval cannot rewrite historical origin.",
+  "baseline_source_questions_verified": 8,
+  "counting_rule": "Part F: five published M2 queries and three November 22 running-list selections; none is asserted to be a historical M1 question.",
+  "m2_published_commit": "42ce2521bab78f68376f0ab66244bdc2f51f698e",
+  "running_list_sha256": "ed547e3054ef1042f8e08cc476f2790d4e8df6de51812f8b9fa1063305c98c84",
   "questions": {
     "Q01": {
-      "origin_kind": "assistant_proposal",
+      "origin_kind": "published_m2_query",
       "origin_file": "docs/milestone2_questions.md",
       "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
       "original_question": "Which advertised text/tool entries satisfy a context threshold at a low illustrative base-token cost?",
@@ -14,7 +15,7 @@
       "student_historical_evidence": false
     },
     "Q02": {
-      "origin_kind": "assistant_proposal",
+      "origin_kind": "published_m2_query",
       "origin_file": "docs/milestone2_questions.md",
       "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
       "original_question": "Which collected provider routes differ in token rates, context and output limits?",
@@ -24,7 +25,7 @@
       "student_historical_evidence": false
     },
     "Q03": {
-      "origin_kind": "assistant_proposal",
+      "origin_kind": "published_m2_query",
       "origin_file": "docs/milestone2_questions.md",
       "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
       "original_question": "Which catalog IDs share a canonical identity and could inflate a shortlist count?",
@@ -34,7 +35,7 @@
       "student_historical_evidence": false
     },
     "Q04": {
-      "origin_kind": "assistant_proposal",
+      "origin_kind": "published_m2_query",
       "origin_file": "docs/milestone2_questions.md",
       "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
       "original_question": "What text/tool entries were added recently, relative to the saved observation?",
@@ -44,7 +45,7 @@
       "student_historical_evidence": false
     },
     "Q05": {
-      "origin_kind": "assistant_proposal",
+      "origin_kind": "published_m2_query",
       "origin_file": "docs/milestone2_questions.md",
       "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
       "original_question": "What metadata groups are omitted from endpoint coverage?",
@@ -54,10 +55,13 @@
       "student_historical_evidence": false
     },
     "Q06": {
-      "origin_kind": "new_assistant_candidate",
+      "origin_kind": "student_selected_proposal",
       "created_on": "2026-11-12",
       "original_question": "How many stored entries have advertised tool support?",
-      "student_historical_evidence": false
+      "student_historical_evidence": false,
+      "origin_file": "docs/running_questions_2026-11-14.md",
+      "origin_sha256": "ed547e3054ef1042f8e08cc476f2790d4e8df6de51812f8b9fa1063305c98c84",
+      "origin_excerpt": "| Q06 | How many stored entries have advertised tool support? | Kept by the student on November 22. |"
     },
     "Q07": {
       "origin_kind": "new_assistant_candidate",
@@ -66,10 +70,13 @@
       "student_historical_evidence": false
     },
     "Q08": {
-      "origin_kind": "new_assistant_candidate",
+      "origin_kind": "student_selected_proposal",
       "created_on": "2026-11-12",
       "original_question": "How many entries are missing usable base-token prices?",
-      "student_historical_evidence": false
+      "student_historical_evidence": false,
+      "origin_file": "docs/running_questions_2026-11-14.md",
+      "origin_sha256": "ed547e3054ef1042f8e08cc476f2790d4e8df6de51812f8b9fa1063305c98c84",
+      "origin_excerpt": "| Q08 | How many entries are missing usable base-token prices? | Kept by the student on November 22. |"
     },
     "Q09": {
       "origin_kind": "new_assistant_candidate",
@@ -78,10 +85,13 @@
       "student_historical_evidence": false
     },
     "Q10": {
-      "origin_kind": "new_assistant_candidate",
+      "origin_kind": "student_selected_proposal",
       "created_on": "2026-11-12",
       "original_question": "When did the sync last succeed and what changed in the past seven days?",
-      "student_historical_evidence": false
+      "student_historical_evidence": false,
+      "origin_file": "docs/running_questions_2026-11-14.md",
+      "origin_sha256": "ed547e3054ef1042f8e08cc476f2790d4e8df6de51812f8b9fa1063305c98c84",
+      "origin_excerpt": "| Q10 | When did the sync last succeed and what changed in the past seven days? | Kept by the student on November 22. |"
     },
     "Q11": {
       "origin_kind": "new_assistant_candidate",

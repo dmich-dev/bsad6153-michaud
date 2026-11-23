@@ -18,6 +18,58 @@ from dotenv import load_dotenv
 ROOT=Path(__file__).resolve().parents[1]
 COLUMNS=['id','question','category','reference_sql','correct_behavior','source']
 CATEGORIES={'lookup','aggregate','trend','compare','should_decline'}
+RUNNING_LIST='docs/running_questions_2026-11-14.md'
+# Pin the decision rows from the published November 22 worksheet, not surrounding prose.
+DECISION_ROWS_SHA256='82ebe66fb8d3e20da96ae9593bcbfaeffcb913aafc90ed42085590aa8ab25aa9'
+M2_COMMIT='42ce2521bab78f68376f0ab66244bdc2f51f698e'
+M2_NOTES='docs/milestone2_questions.md'
+M2_NOTES_SHA256='5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554'
+M2_SQL='db/queries.sql'
+M2_SQL_SHA256='35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1'
+
+
+def checked_source(root, name, expected_hash):
+    path=Path(name)
+    if (str(path)!=name or path.is_absolute() or '..' in path.parts or not path.parts
+        or path.parts[0] not in ('docs','db')):
+        raise ValueError('Origin must be an allowlisted project document')
+    target=Path(root)/path
+    if any(p.is_symlink() for p in [target,*target.parents] if p!=Path(root).parent):
+        raise ValueError('Origin symlinks are not allowed')
+    content=target.read_bytes()
+    if hashlib.sha256(content).hexdigest()!=expected_hash:
+        raise ValueError('Origin source changed')
+    return content.decode('utf-8')
+
+
+def check_part_f_origin(row, origin, ledger, root):
+    qid=row['id']
+    if origin.get('student_historical_evidence') is not False:
+        raise ValueError('Part F reuse/selection is not historical student authorship')
+    worksheet=checked_source(root,RUNNING_LIST,ledger.get('running_list_sha256'))
+    decisions=[line for line in worksheet.splitlines() if re.match(r'^\| Q[0-9]+ \|',line)]
+    if hashlib.sha256('\n'.join(decisions).encode()).hexdigest()!=DECISION_ROWS_SHA256:
+        raise ValueError('Published running-list decisions have changed')
+    prefix=f"| {qid} | {row['question']} | "
+    if origin['origin_kind']=='student_selected_proposal':
+        expected=prefix+'Kept by the student on November 22. |'
+        if (origin.get('origin_file')!=RUNNING_LIST or origin.get('origin_excerpt')!=expected
+            or origin.get('original_question')!=row['question'] or expected not in decisions):
+            raise ValueError('Question does not match a selected running-list row')
+        return
+    number=int(qid[1:])
+    if (qid not in ('Q01','Q02','Q03','Q04','Q05') or ledger.get('m2_published_commit')!=M2_COMMIT
+        or prefix+f'Reuses M2 business query {number}. |' not in decisions
+        or origin.get('origin_file')!=M2_NOTES or origin.get('origin_sha256')!=M2_NOTES_SHA256
+        or origin['origin_excerpt'].split(' | ')[:2]!=[f'| Q{number}',origin['original_question']]
+        or origin.get('query_origin')!=f'{M2_SQL} Q{number}' or origin.get('query_origin_sha256')!=M2_SQL_SHA256):
+        raise ValueError('Question does not match its published M2 origin')
+    # This is the pinned five-query M2 file, not a general SQL parser. Keep all
+    # SELECT bytes, including whitespace inside literals; only omit its terminator.
+    sql=checked_source(root,M2_SQL,M2_SQL_SHA256)
+    block=re.search(rf'^-- Q{number}:[^\n]*\n(?:--[^\n]*\n)*(SELECT\b[^;]+);$',sql,re.MULTILINE)
+    if not block or row['reference_sql']!=block[1]:
+        raise ValueError('Reference SQL differs from its numbered published M2 SELECT')
 
 
 def json_default(value):
@@ -33,8 +85,10 @@ def load_questions(csv_path,provenance_path,*,root=ROOT):
         rows=list(reader)
     if len(rows)<15 or len({r['id'] for r in rows})!=len(rows):
         raise ValueError('Need at least 15 uniquely identified questions')
-    provenance=json.loads(Path(provenance_path).read_text())['questions']
-    baseline_originals=set()
+    ledger=json.loads(Path(provenance_path).read_text())
+    provenance=ledger['questions']
+    baseline_identities=set()
+    baseline_count=0
     for row in rows:
         if (not re.fullmatch(r'Q[0-9]{2,}',row['id']) or row['category'] not in CATEGORIES
             or row['source'] not in ('baseline','other') or not row['question'].strip()
@@ -43,34 +97,33 @@ def load_questions(csv_path,provenance_path,*,root=ROOT):
         if (row['category']=='should_decline') != (not row['reference_sql'].strip()):
             raise ValueError('Decline SQL must be empty; other questions need SQL')
         origin=provenance[row['id']]
+        original=origin.get('original_question','')
         if origin.get('origin_file'):
-            path=Path(origin['origin_file'])
-            if path.is_absolute() or '..' in path.parts or path.parts[0] not in ('docs','db'):
-                raise ValueError('Origin must be an allowlisted project document')
-            target=Path(root)/path
-            if any(p.is_symlink() for p in [target,*target.parents] if p!=Path(root).parent):
-                raise ValueError('Origin symlinks are not allowed')
-            content=target.read_bytes()
-            if hashlib.sha256(content).hexdigest()!=origin.get('origin_sha256'):
-                raise ValueError('Origin source changed')
+            content=checked_source(root,origin['origin_file'],origin.get('origin_sha256'))
             excerpt=origin.get('origin_excerpt','')
-            original=origin.get('original_question','')
-            if not excerpt or not original or excerpt not in content.decode('utf-8') or original not in excerpt:
+            if origin.get('origin_kind')=='published_m2_query' and excerpt not in content.splitlines():
+                raise ValueError('Published M2 note must be a whole source row')
+            if not excerpt or not original or excerpt not in content or original not in excerpt:
                 raise ValueError('Exact original question/excerpt is not supported')
-        if row['source']=='baseline':
+        if origin.get('origin_kind') in ('published_m2_query','student_selected_proposal'):
+            check_part_f_origin(row,origin,ledger,root)
+        elif row['source']=='baseline':
             if (not origin.get('origin_file') or origin.get('student_historical_evidence') is not True
+                or origin['origin_file'] in (RUNNING_LIST,M2_NOTES,M2_SQL)
                 or origin.get('origin_kind') not in ('student_baseline','student_running_list','confirmed_business_query')):
                 raise ValueError('A proposal cannot be relabeled as historical evidence')
             if row['question']!=original:
                 raise ValueError('Baseline question must exactly match its original question')
-            if original in baseline_originals:
-                raise ValueError('Baseline original question is reused')
-            baseline_originals.add(original)
-    baseline_count=len(baseline_originals)
+        if row['source']=='baseline':
+            identities={original,row['question']}
+            if baseline_identities & identities:
+                raise ValueError('Baseline original or current question is reused')
+            baseline_identities.update(identities)
+            baseline_count+=1
     declines=sum(r['category']=='should_decline' for r in rows)
     if declines<3: raise ValueError('Need at least three decline questions')
     return rows,dict(question_count=len(rows),decline_count=declines,baseline_count=baseline_count,
-                     acceptance_ready=baseline_count>=8,gate=None if baseline_count>=8 else 'Eight authentic baseline/running-list origins remain unverified')
+                     acceptance_ready=baseline_count>=8,gate=None if baseline_count>=8 else 'Fewer than eight distinct Part F origins verified')
 
 
 def run_references(conn,rows):
@@ -105,7 +158,7 @@ def main(argv=None):
     try:
         rows,provenance=load_questions(args.csv,args.provenance)
         if not provenance['acceptance_ready'] and not args.allow_candidate:
-            print('Reference check gated: eight verified historical origins are missing. Use --allow-candidate only for explicitly labeled technical review.')
+            print('Reference check gated: fewer than eight distinct Part F origins verified. Use --allow-candidate only for explicitly labeled technical review.')
             return 2
         load_dotenv(ROOT/'.env',override=False)
         url=os.environ.get('APP_DATABASE_URL')

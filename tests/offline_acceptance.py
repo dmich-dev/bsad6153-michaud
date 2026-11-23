@@ -83,13 +83,13 @@ def main():
                 return actual
             first=sync('first_full_snapshot_with_429_and_503','success',7,12,0)
             baseline=output/'golden-before.json'
-            run('evals/check_reference.py','--allow-candidate','--scope','local_synthetic','--output',str(baseline))
+            run('evals/check_reference.py','--scope','local_synthetic','--output',str(baseline))
             replay=sync('immediate_rerun','success',7,0,0)
             fixture.data['models'][0]['context_length']=512000
             fixture.data['endpoints'][0]['pricing']['prompt']='0.000003'
             changed=sync('simulated_source_change','success',7,0,2)
             sync('unchanged_after_change','success',7,0,0)
-            run('evals/check_reference.py','--allow-candidate','--scope','local_synthetic','--baseline',str(baseline),'--output',str(output/'golden-after.json'))
+            run('evals/check_reference.py','--scope','local_synthetic','--baseline',str(baseline),'--output',str(output/'golden-after.json'))
             fixture.unauthorized=True
             sync('synthetic_invalid_api_key','failed',0,0,0,override={'OPENROUTER_API_KEY':'SYNTHETIC-SECRET-MUST-NOT-LOG'})
             fixture.unauthorized=False

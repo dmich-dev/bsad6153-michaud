@@ -6,6 +6,6 @@ The candidate is assembled per file, not by blindly overlaying M2 on M3 or vice 
 
 No .env, .git, canonical venv, private DSN or unrelated profile/repository was copied. Test binaries are the existing unprivileged PG17.11 harness; dependencies are a new task-local isolated venv pinned by requirements-sync.txt. DB/libpq variables are allowlist-scrubbed, dotenv is disabled, and all real SQL writes occur only in newly owned disposable local clusters. Their stop/socket cleanup is retained in every current receipt. No production PostgreSQL or cloud is used.
 
-All current golden sources are other. Proposed current selections are dated November 14 in running_questions_2026-11-14.md; no selection or historical origin is fabricated. Exact/distinct source binding and synthetic positive/negative origin tests are technical validation, not proof that future student declarations are true.
+On November 14, all golden sources were `other`. The [corrected set](../evals/README.md) counts five published M2 SELECTs and three proposals the student kept on November 22. The [running list](running_questions_2026-11-14.md) documents which are which; the original M1 log is unchanged.
 
 Local synthetic quality/break-it/CLI evidence, historical M2 source observations, public GitHub metadata and unresolved hosted/cloud/student gates are labeled separately. Same-assistant gap checks are called independent-style, not an independent reviewer. No cloud role, schedule success, elapsed hosted time, public change, student recording or turn-in is inferred from this packet.

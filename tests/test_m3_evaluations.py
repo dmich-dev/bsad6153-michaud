@@ -1,4 +1,5 @@
 """Part E-H real reader evaluation and quality integration tests."""
+import csv
 import json
 from pathlib import Path
 import os
@@ -7,7 +8,7 @@ import m3_support
 from m3_support import ROOT,TABLES,module
 
 class M3EvaluationTests(m3_support.M3Case):
-    def test_golden_candidate_all_reference_sql_runs_as_reader_and_persists_comparison(self):
+    def test_golden_all_reference_sql_runs_in_strict_mode_as_reader_and_persists_comparison(self):
             import tempfile
             from fixtures import snapshot
             self.migrate();self.conn.execute((ROOT/'db/roles.sql').read_text())
@@ -16,15 +17,15 @@ class M3EvaluationTests(m3_support.M3Case):
             self.assertTrue((ROOT/'evals/check_reference.py').exists(),'safe golden-reference checker is missing')
             with tempfile.TemporaryDirectory() as folder:
                 baseline=Path(folder)/'first.json'; second=Path(folder)/'second.json'
-                common=['--allow-candidate','--scope','local_synthetic']
+                common=['--scope','local_synthetic']
                 result=self.cli('evals/check_reference.py',*common,'--output',str(baseline))
                 self.assertEqual(result.returncode,0,result.stdout+result.stderr)
                 first=json.loads(baseline.read_text())
                 self.assertEqual(first['database_user'],'app_reader')
                 self.assertEqual(len(first['answers']),12)
                 self.assertEqual(first['decline_ids'],['Q13','Q14','Q15'])
-                self.assertFalse(first['provenance']['acceptance_ready'])
-                self.assertEqual(first['provenance']['baseline_count'],0)
+                self.assertTrue(first['provenance']['acceptance_ready'])
+                self.assertEqual(first['provenance']['baseline_count'],8)
                 data['models'][0]['context_length']=512000
                 self.sync().run_sync(self.conn,lambda:data)
                 self.sync().run_sync(self.conn,lambda:data)
@@ -35,7 +36,16 @@ class M3EvaluationTests(m3_support.M3Case):
                 self.assertIn('Q07',saved['comparison']['changed_ids'])
                 self.assertFalse(saved['scheduled_requirement_satisfied'])
                 self.assertNotEqual(self.cli('evals/check_reference.py',*common,'--output',str(second)).returncode,0,'baseline evidence is immutable')
-                self.assertNotEqual(self.cli('evals/check_reference.py','--scope','local_synthetic','--output',str(Path(folder)/'strict.json')).returncode,0,'missing authentic provenance is a real gate')
+                # A genuine shortfall still gates strict mode; no fallback to candidate mode.
+                short=Path(folder)/'short.csv'
+                with (ROOT/'evals/golden_questions.csv').open(newline='') as original, short.open('w',newline='') as file:
+                    reader=csv.DictReader(original)
+                    assert reader.fieldnames is not None
+                    writer=csv.DictWriter(file,fieldnames=reader.fieldnames)
+                    writer.writeheader();writer.writerows(dict(row,source='other') if row['id']=='Q08' else row for row in reader)
+                gated=Path(folder)/'gated.json'
+                self.assertEqual(self.cli('evals/check_reference.py',*common,'--csv',str(short),'--output',str(gated)).returncode,2)
+                self.assertFalse(gated.exists())
                 self.assertNotEqual(self.cli('evals/check_reference.py',*common,'--output',str(Path(folder)/'owner.json'),env={'APP_DATABASE_URL':os.environ['M3_TEST_DSN']}).returncode,0)
 
     def test_quality_sql_executes_real_counts_nulls_duplicates_anomalies_orphans_and_coverage(self):

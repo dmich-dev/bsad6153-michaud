@@ -19,7 +19,7 @@ The final M2 loader, checker and business SQL are imported exactly, along with a
 
 ## Parts E-H and honest gaps
 
-`db/quality_checks.sql`/`scripts/quality_report.py` produce dated read-only measurements; `docs/data_quality.md` is actual local synthetic evidence, with latest historical M2 quality preserved separately. `evals/golden_questions.csv` has 15 candidates, 12 working SQL references and three decline specifications. All sources are other until real running-list choices and provenance exist. The checker uses app_reader, a read-only repeatable-read transaction, bounded queries and immutable outputs. `--allow-candidate` is not acceptance.
+`db/quality_checks.sql`/`scripts/quality_report.py` produce dated read-only measurements; `docs/data_quality.md` is actual local synthetic evidence, with latest historical M2 quality preserved separately. `evals/golden_questions.csv` has 15 candidates, 12 working SQL references and three decline specifications. At this November 14 checkpoint, all sources were `other`; see the [Part F source ledger](../evals/README.md) for the corrected set. The checker uses app_reader, a read-only repeatable-read transaction, bounded queries and immutable outputs. `--allow-candidate` is not acceptance.
 
 `docs/sync_tests.md` retains real local rerun/change/rollback/key/outage/kill/recovery outcomes. `docs/data_dictionary.md` describes lineage/transforms/freshness/ownership. `docs/running_questions_2026-11-14.md` lets the student make current choices without falsifying M1 history. AI review and recording remain the student's genuine work.
 

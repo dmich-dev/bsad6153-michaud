@@ -12,7 +12,7 @@ WHERE 'text' = ANY(c.output_modalities)
   AND c.prompt_usd_per_token IS NOT NULL
   AND c.completion_usd_per_token IS NOT NULL
 ORDER BY example_base_usd, c.catalog_id
-LIMIT 20","List stored catalog IDs and canonical identities, show USD per million and the illustrative 1M input plus 250k output cost. Do not imply workload fit, benchmark quality, all-in billing or current availability.",other
+LIMIT 20","List stored catalog IDs and canonical identities, show USD per million and the illustrative 1M input plus 250k output cost. Do not imply workload fit, benchmark quality, all-in billing or current availability.",baseline
 Q02,How do the provider routes we collected compare on price and limits?,compare,"SELECT c.catalog_id, p.provider_name, e.tag, e.service_tier,
        e.prompt_usd_per_token * 1000000 AS endpoint_prompt_usd_per_million,
        e.completion_usd_per_token * 1000000 AS endpoint_completion_usd_per_million,
@@ -25,14 +25,14 @@ WHERE 'text' = ANY(c.output_modalities)
   AND 'tools' = ANY(e.supported_parameters)
 ORDER BY c.catalog_id, endpoint_prompt_usd_per_million NULLS LAST,
          p.provider_name, e.tag, e.service_tier NULLS FIRST,
-         e.name NULLS FIRST, e.serving_endpoint_id","Keep catalog and endpoint limits separate. Identify provider, route and nullable tier. Explain the recent text/tool sample is not complete provider coverage.",other
+         e.name NULLS FIRST, e.serving_endpoint_id","Keep catalog and endpoint limits separate. Identify provider, route and nullable tier. Explain the recent text/tool sample is not complete provider coverage.",baseline
 Q03,Which stored catalog IDs point to the same canonical identity?,aggregate,"SELECT m.canonical_slug, count(*) AS catalog_id_count,
        array_agg(c.catalog_id ORDER BY c.catalog_id) AS catalog_ids
 FROM canonical_models m
 JOIN catalog_entries c USING (canonical_model_id)
 GROUP BY m.canonical_model_id, m.canonical_slug
 HAVING count(*) > 1
-ORDER BY catalog_id_count DESC, m.canonical_slug",List aliases with counts. Canonical identity is not proof of architecture equivalence.,other
+ORDER BY catalog_id_count DESC, m.canonical_slug",List aliases with counts. Canonical identity is not proof of architecture equivalence.,baseline
 Q04,Which text and tool entries were added to this stored catalog recently?,trend,"SELECT c.catalog_id, c.catalog_created_at, c.context_length,
        c.prompt_usd_per_token * 1000000 AS prompt_usd_per_million,
        c.source_observed_at
@@ -41,7 +41,7 @@ WHERE c.catalog_created_at >= (SELECT max(source_observed_at) FROM catalog_entri
   AND c.catalog_created_at <= (SELECT max(source_observed_at) FROM catalog_entries)
   AND 'text' = ANY(c.output_modalities)
   AND 'tools' = ANY(c.supported_parameters)
-ORDER BY c.catalog_created_at DESC, c.catalog_id","Anchor the closed 720-elapsed-hour window (30 x 24 hours) to the latest stored payload observation. Creation is catalog addition, not a price modification, release date or performance trend.",other
+ORDER BY c.catalog_created_at DESC, c.catalog_id","Anchor the closed 720-elapsed-hour window (30 x 24 hours) to the latest stored payload observation. Creation is catalog addition, not a price modification, release date or performance trend.",baseline
 Q05,Which output groups are missing from the provider comparisons?,aggregate,"SELECT c.output_modalities, count(*) AS catalog_entries,
        count(*) FILTER (WHERE EXISTS (
            SELECT 1 FROM serving_endpoints e WHERE e.catalog_entry_id=c.catalog_entry_id
@@ -51,12 +51,12 @@ Q05,Which output groups are missing from the provider comparisons?,aggregate,"SE
        )) / count(*), 2) AS endpoint_coverage_percent
 FROM catalog_entries c
 GROUP BY c.output_modalities
-ORDER BY catalog_entries DESC, c.output_modalities","Report represented entries, entries with endpoints and coverage percent. Missing sample coverage is not proof of missing providers.",other
-Q06,How many stored entries have advertised tool support?,aggregate,"SELECT count(*) AS stored_entries, count(*) FILTER (WHERE 'tools'=ANY(supported_parameters)) AS tool_advertised FROM catalog_entries",Report both counts with the source check timestamp. Advertised support is not a successful workflow test.,other
+ORDER BY catalog_entries DESC, c.output_modalities","Report represented entries, entries with endpoints and coverage percent. Missing sample coverage is not proof of missing providers.",baseline
+Q06,How many stored entries have advertised tool support?,aggregate,"SELECT count(*) AS stored_entries, count(*) FILTER (WHERE 'tools'=ANY(supported_parameters)) AS tool_advertised FROM catalog_entries",Report both counts with the source check timestamp. Advertised support is not a successful workflow test.,baseline
 Q07,What context sizes are stored for the first ten catalog IDs?,lookup,"SELECT catalog_id,context_length FROM catalog_entries ORDER BY catalog_id LIMIT 10","Preserve exact catalog IDs, distinguish missing context from zero, and describe last-known advertised limits.",other
-Q08,How many entries are missing usable base-token prices?,aggregate,"SELECT count(*) AS entries,count(*) FILTER (WHERE prompt_usd_per_token IS NULL) AS missing_prompt,count(*) FILTER (WHERE completion_usd_per_token IS NULL) AS missing_completion FROM catalog_entries","Count null usable prices, including negative sentinels. Null is not free.",other
+Q08,How many entries are missing usable base-token prices?,aggregate,"SELECT count(*) AS entries,count(*) FILTER (WHERE prompt_usd_per_token IS NULL) AS missing_prompt,count(*) FILTER (WHERE completion_usd_per_token IS NULL) AS missing_completion FROM catalog_entries","Count null usable prices, including negative sentinels. Null is not free.",baseline
 Q09,How many catalog IDs and canonical identities are stored?,compare,"SELECT (SELECT count(*) FROM catalog_entries) AS catalog_ids,(SELECT count(*) FROM canonical_models) AS canonical_identities","Explain aliasing, possible retained orphan-free canonical identities and why neither count establishes distinct model architectures.",other
-Q10,When did the sync last succeed and what changed in the past seven days?,aggregate,"SELECT max(finished_at) FILTER (WHERE status='success') AS last_success_at,coalesce(sum(records_inserted) FILTER (WHERE status='success' AND finished_at>=now()-interval '7 days'),0) AS inserted,coalesce(sum(records_updated) FILTER (WHERE status='success' AND finished_at>=now()-interval '7 days'),0) AS updated FROM sync_runs","Separate a successful check from a changed record. Counts include normalized parent and child tables, not just fetched records. Warn if stale or never successful.",other
+Q10,When did the sync last succeed and what changed in the past seven days?,aggregate,"SELECT max(finished_at) FILTER (WHERE status='success') AS last_success_at,coalesce(sum(records_inserted) FILTER (WHERE status='success' AND finished_at>=now()-interval '7 days'),0) AS inserted,coalesce(sum(records_updated) FILTER (WHERE status='success' AND finished_at>=now()-interval '7 days'),0) AS updated FROM sync_runs","Separate a successful check from a changed record. Counts include normalized parent and child tables, not just fetched records. Warn if stale or never successful.",baseline
 Q11,How many endpoints did we collect for each of the first ten stored entries?,lookup,"SELECT c.catalog_id,count(e.serving_endpoint_id) AS collected_endpoints FROM catalog_entries c LEFT JOIN serving_endpoints e USING(catalog_entry_id) GROUP BY c.catalog_id ORDER BY c.catalog_id LIMIT 10","Use zero only for collected endpoint count, not a claim that a model has no provider anywhere.",other
 Q12,How many of our stored routes belong to each provider?,aggregate,"SELECT p.provider_name,count(*) AS collected_routes FROM serving_endpoints e JOIN providers p USING(provider_id) GROUP BY p.provider_name ORDER BY p.provider_name",Show provider counts from the sampled last-known routes. Do not rank reliability or quality from sample size.,other
 Q13,Which model will reliably finish my HERMES homelab tasks without retries?,should_decline,,Decline a reliability ranking. This metadata does not contain representative task outcomes or verified HERMES compatibility; propose separately authorized task tests.,other
