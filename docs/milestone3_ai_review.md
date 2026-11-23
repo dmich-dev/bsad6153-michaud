@@ -2,7 +2,7 @@
 
 DRAFT / FOR REVIEW. Assistant reconciliation: November 14, 2026. No student endorsement or own-word understanding is invented.
 
-Hermes used the supplied live assignment/rules/announcements, immutable hardened M3v2 source, final published M2 source and manifests, read-only local Git state, public personal-repository GETs and primary documentation. It did not read/copy canonical .env, connect to Supabase, change permissions, publish, merge, dispatch, provision secrets or submit coursework. The isolated test venv and socket-only PostgreSQL use synthetic credentials/source data.
+During the November 14 reconciliation, Hermes used the supplied live assignment/rules/announcements, immutable hardened M3v2 source, final published M2 source and manifests, read-only local Git state, public personal-repository GETs and primary documentation. It did not read/copy canonical .env, connect to Supabase, change permissions, publish, merge, dispatch, provision secrets or submit coursework. The isolated test venv and socket-only PostgreSQL use synthetic credentials/source data.
 
 ## Actual technical decisions
 
@@ -12,6 +12,14 @@ Hermes used the supplied live assignment/rules/announcements, immutable hardened
 - Created a separately labeled same-assistant independent-style probe script. It is not an independent human/second-agent sign-off. It checks real reader denials, privacy, idempotency/full audit hashes, postcommit handling, malformed source, references, status and HTTP retry behavior.
 - Original missing review-venv, a missing PyYAML dependency in the reused M2 venv, a timed-out old-loader full RED, a singular-test parser issue and a generated-identity UPDATE in the first gap harness were harness/dependency issues. Failing receipts are retained, not hidden or represented as product success. Current final results use the declared pinned isolated dependencies.
 - Prepared a current dated question-selection list; all sources remain other. This does not backdate a proposal or claim selection happened.
+
+## November 22, 2026: correction to the evidence used
+
+The student rejected using synthetic data as the sole evidence for a **live sync and database permissions** and asked for real Supabase proof. That changed what could be reported, not the schema: the local tests still show controlled failures and replay behavior; only the live receipts establish what happened on the hosted database.
+
+The [sync record](sync_tests.md#live-manual-sync-and-recovery) now identifies the recovered manual failure and the successful retry separately from GitHub's push-triggered fixture. The [access-role record](schema.md#access-roles) shows the standalone reader’s SELECT and actual INSERT/DELETE denials, not just an owner's grant inspection. The [quality report](data_quality.md#live-quality-measurement) identifies its owner read-only session, while the [reference baseline](sync_tests.md#live-reference-baseline) identifies the later `app_reader` session. Neither proves a dashboard setting, a scheduled run or authentic question origins.
+
+This is one documented correction of an evidence claim. It is not a student schema decision, a prediction made before a run, a personal sign-off on the outputs or a completed AI-use attestation. The following prompts remain for the student.
 
 ## Student completes only genuine review
 

@@ -1,4 +1,33 @@
-# Part G: actual local failure and reference checks
+# Part G: sync failures and reference checks
+
+## Live manual sync and recovery
+
+On November 22, 2026 (Central), the sync fetched OpenRouter metadata and wrote to the live Supabase catalog. These IDs are from the live `sync_runs` table, **not** the identically numbered local fixture runs below. Sources: `manual-sync-intent.json`, `manual-sync-retry-intent.json`, `manual-sync-retry-readback.json`, and the dated live sync summary. The run 1 fetched count is from the November 22 live recording deck’s run-history table; the retry receipt confirms its recovery and zero committed writes.
+
+| Live run | Trigger / outcome | Fetched | Inserted | Updated | What the database recorded |
+|---|---|---:|---:|---:|---|
+| 1 | manual / failed | 767 | 0 | 0 | The time limit interrupted the attempt. At restart, the sync marked it `interrupted_run_recovered`; no catalog writes committed. |
+| 2 | manual / success | 767 | 153 | 352 | 2026-11-23 **03:05:53.650137–03:08:05.886537 UTC**. The CLI exited 0; the checkpoint pointed to run 2. |
+
+Fetched records are source records; inserts and updates are committed rows across four normalized tables. After run 2, the database held 667 canonical models, 773 catalog entries, 15 providers and 47 endpoints. The [dated quality checks](data_quality.md#live-quality-measurement) found zero duplicate natural-key groups and zero orphans in all three relationships. This is live recovery evidence, not a live zero-change replay or proof of a particular upstream price change.
+
+At 03:14:22 UTC, the status SQL in [`scripts/status.py`](../scripts/status.py) ran in an **owner read-only transaction** (`recording-live-read-only.json`). It returned 2 attempts, 1 success, 153 inserts and 352 updates over seven days. Last successful check and last data change both read `2026-11-23 03:08:05.886537+00:00`; `stale` was false **at measurement**. This was not the status CLI logging in as the reader.
+
+## Live reference baseline
+
+The 03:14 UTC owner check returned 12 nonempty SQL results, but it was not the reader baseline. The 03:50 UTC [reader permission proof](schema.md#access-roles) also did **not** establish a baseline: its checker exited 1 with `reference_checker: null`. The separate `live-app-reader-reference-baseline.json`, recorded **2026-11-23 03:52:01 UTC** (November 22, 9:52 p.m. Central), identifies `app_reader` and `live_supabase`. Its 12 SQL answers were nonempty; Q13–Q15 were three should-decline specifications, not executed queries.
+
+| Reference | Q01 | Q02 | Q03 | Q04 | Q05 | Q06 | Q07 | Q08 | Q09 | Q10 | Q11 | Q12 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Result rows | 20 | 47 | 106 | 42 | 12 | 1 | 10 | 1 | 1 | 1 | 10 | 15 |
+
+Q09 returned **773 catalog IDs and 667 canonical identities**. The checker bound its answers to the CSV and provenance file together (set SHA-256: `ea3ca7f42c5a23ba18a0791cc27fdbacf53d9ce60e371efc20079ef06915319c`). The candidate set has 15 questions but **0 verified baseline/running-list origins**; the requirement is at least 8. Running the SQL does not establish where a question came from.
+
+At **04:00:25 UTC** the same-evening candidate-mode checker ran again as `app_reader` and exited 0: 12 SQL successes, 3 declines specified, no changed answer IDs (`checker-command-take.json`). This comparison had **not** followed two additional scheduled syncs. Keep the baseline; repeat against the same set after at least two genuine scheduled syncs and report which answers changed and why. If the set changes to establish authentic origins, establish a matching new baseline rather than comparing different sets.
+
+**Schedule evidence:** the [recorded GitHub fixture](https://github.com/dmich-dev/bsad6153-michaud/actions/runs/45029944115) was triggered by a push; live runs 1 and 2 were manual. None is a qualifying scheduled success; the repository’s Actions history returned **0 successful `schedule` events** at this documentation check. The evidence still lacks three successful automatic runs over at least 48 hours and the later scheduled-run reference comparison. No student pre-run prediction is inferred from any of these receipts.
+
+## Historical local failure and reference checks — November 14, 2026
 
 DRAFT / FOR REVIEW. Fresh assistant-run local PostgreSQL and synthetic loopback HTTP. No student prediction, live-source change or hosted scheduled event is claimed. Commands/output/run rows: `../../evidence/preseal-full/cli-acceptance/acceptance.json`. The preseal execution finished at `2026-11-14T06:39:30.358904+00:00`. This is a genuine current execution, not the older M3v2 receipt. Frozen final suites are separately indexed in the top-level READINESS and manifest.
 
@@ -46,4 +75,4 @@ All 12 reference SQL queries ran as actual app_reader; three should-decline spec
 
 Q01/Q07 reflect the controlled context update and Q02 the controlled endpoint rate. Q04 includes changed stored observation metadata; Q10 includes latest successful check time/counters. Those latter answer changes do not prove new source facts or newly added catalog records. No record count growth is invented.
 
-All 15 current CSV sources remain other, and strict checking correctly refuses the unverified eight-origin requirement. `--allow-candidate` labels technical review only. `running_questions_2026-11-14.md` is a current selection worksheet, not a backdated M1 log. The real required live baseline and later comparison after at least two **additional genuine scheduled syncs** remain missing. Local manual calls, trigger strings and simulated times do not close that gate.
+All 15 current CSV sources remain other, and strict checking correctly refuses the unverified eight-origin requirement. `--allow-candidate` labels technical review only. `running_questions_2026-11-14.md` is a current selection worksheet, not a backdated M1 log. As of November 14, the live baseline and the later comparison after at least two **additional genuine scheduled syncs** were missing. See the separate November 22 live baseline above; the scheduled comparison is still outstanding. Local manual calls, trigger strings and simulated times do not close that gate.

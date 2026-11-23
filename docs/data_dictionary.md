@@ -1,6 +1,6 @@
 # Milestone 3 data dictionary
 
-DRAFT / FOR REVIEW. Assistant-prepared November 12, 2026. Historical Milestone 2 definitions remain in `schema.md`; this document describes the isolated M3 extension. No cloud schema change or student acceptance is claimed.
+DRAFT / FOR REVIEW. Assistant-prepared November 12, 2026. Historical Milestone 2 definitions remain in `schema.md`; this document describes the isolated M3 extension. That November 12 draft did not claim a cloud schema change or student acceptance. The [change log](#change-log) records the later live migration and manual sync.
 
 ## Data entities
 
@@ -65,6 +65,17 @@ Proposed company ownership, not an assignment of real staff: a data-platform/pip
 ## Change log
 
 November 12, 2026, assistant observations: the isolated extension now has changed-only upserts and durable attempt accounting rather than the frozen insert-only M2 loader. Synthetic tests demonstrated catalog context changes, provider-rate changes and safe process-death recovery. These are controlled local examples, not changes observed in live scheduled OpenRouter data. Actual hosted-run quirks remain unknown until approval and real collection.
+
+November 22, 2026 (Central), live manual sync. `pre-migration.json` and `migration-verified.json` show the migration left all four preexisting catalog tables unchanged. The subsequent manual sync did change them (`manual-sync-retry-readback.json`):
+
+| Stored entity | Before migration | After manual run 2 |
+|---|---:|---:|
+| `canonical_models` | 616 | 667 |
+| `catalog_entries` | 705 | 773 |
+| `providers` | 9 | 15 |
+| `serving_endpoints` | 19 | 47 |
+
+Run 2 logged 767 fetched source records, 153 inserted normalized rows and 352 updated normalized rows; the checkpoint named run 2. These are not counts of newly released models. The [quality report](data_quality.md#live-quality-measurement) illustrates the distinction between *check time* and *payload age*: after the November 22 refresh, the oldest stored catalog payload observation was still November 7. The failure of run 1 and recovery by run 2 are documented in [sync tests](sync_tests.md#live-manual-sync-and-recovery). Nothing in this change log attributes a field-level change to a particular provider or to a scheduled event.
 
 ## References
 
