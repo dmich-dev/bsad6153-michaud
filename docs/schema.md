@@ -130,7 +130,7 @@ INSERT INTO public.catalog_entries (catalog_entry_id) OVERRIDING SYSTEM VALUE SE
 -- ERROR: permission denied for table catalog_entries (SQLSTATE 42501)
 ```
 
-**Data API:** the SQL marker was absent; that does not reveal whether the dashboard toggle was on or off. The November 12 setup observation is historical, not current verification. The separate [reader reference baseline](sync_tests.md#live-reference-baseline) was recorded later than these permission probes.
+**Data API:** the SQL marker was absent; that does not reveal whether the dashboard toggle was on or off. The last direct dashboard check for this project was November 10, 2026 at 8:11 p.m. CST: the switch was unchecked and Settings displayed “Data API is disabled.” The November 12 verification did not recheck this setting. Its present state is unconfirmed. The separate [reader reference baseline](sync_tests.md#live-reference-baseline) was recorded later than these permission probes.
 
 ### Historical local access proof — November 13, 2026
 

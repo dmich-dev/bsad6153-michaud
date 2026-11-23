@@ -31,3 +31,9 @@ The student may keep, reword or reject any proposal below in their own review. R
 - Rejected/changed suggestions and my reasons, only if any actually occurred:
 
 After selection, a separate technical update must bind each qualifying CSV question to the exact student-selected wording, actual running-list file/hash/excerpt/date and verified origin. The validator's legacy field `student_historical_evidence` means there is real evidence of the stated origin, not that a present-day choice happened in Milestone 1. Do not set it from this blank proposal. Recheck all reference SQL and freeze a new golden baseline if the set changes. Hashes validate bytes; they do not authenticate an unsupported statement.
+
+## November 22 source check: five published business queries
+
+Part F expressly allows the five Milestone 2 business queries to count toward the eight. In [the published M2 source](https://github.com/dmich-dev/bsad6153-michaud/blob/42ce2521bab78f68376f0ab66244bdc2f51f698e/db/queries.sql), Q1–Q5 match the SQL for [golden Q01–Q05](../evals/golden_questions.csv) respectively, apart from the final statement terminator. They cover model cost, route prices and limits, catalog aliases, recently added entries, and route coverage by modality. This documents reuse of submitted work, not a claim that the student personally asked those questions in Week 1.
+
+Three more distinct questions need a baseline or running-list source to reach eight using this allowance. The CSV and checker still report the conservative original labels; no student-selection flags or dates were changed by this audit.
