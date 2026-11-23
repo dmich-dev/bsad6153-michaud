@@ -1,0 +1,127 @@
+{
+  "baseline_source_questions_verified": 8,
+  "counting_rule": "Part F: five published M2 queries and three November 22 running-list selections; none is asserted to be a historical M1 question.",
+  "m2_published_commit": "42ce2521bab78f68376f0ab66244bdc2f51f698e",
+  "running_list_sha256": "ed547e3054ef1042f8e08cc476f2790d4e8df6de51812f8b9fa1063305c98c84",
+  "questions": {
+    "Q01": {
+      "origin_kind": "published_m2_query",
+      "origin_file": "docs/milestone2_questions.md",
+      "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
+      "original_question": "Which advertised text/tool entries satisfy a context threshold at a low illustrative base-token cost?",
+      "origin_excerpt": "| Q1 | Which advertised text/tool entries satisfy a context threshold at a low illustrative base-token cost? | Recorded cost effectiveness; project context/tool comparison | db/queries.sql Q1; workload/threshold are examples, not measured personal demand |",
+      "query_origin": "db/queries.sql Q1",
+      "query_origin_sha256": "35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1",
+      "student_historical_evidence": false
+    },
+    "Q02": {
+      "origin_kind": "published_m2_query",
+      "origin_file": "docs/milestone2_questions.md",
+      "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
+      "original_question": "Which collected provider routes differ in token rates, context and output limits?",
+      "origin_excerpt": "| Q2 | Which collected provider routes differ in token rates, context and output limits? | Cost/context/tool selection criteria | Q2 joins endpoints, catalog and providers; deliberately limited recent sample |",
+      "query_origin": "db/queries.sql Q2",
+      "query_origin_sha256": "35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1",
+      "student_historical_evidence": false
+    },
+    "Q03": {
+      "origin_kind": "published_m2_query",
+      "origin_file": "docs/milestone2_questions.md",
+      "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
+      "original_question": "Which catalog IDs share a canonical identity and could inflate a shortlist count?",
+      "origin_excerpt": "| Q3 | Which catalog IDs share a canonical identity and could inflate a shortlist count? | Comparing model choices consistently | Q3; canonical identity is not architecture equivalence |",
+      "query_origin": "db/queries.sql Q3",
+      "query_origin_sha256": "35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1",
+      "student_historical_evidence": false
+    },
+    "Q04": {
+      "origin_kind": "published_m2_query",
+      "origin_file": "docs/milestone2_questions.md",
+      "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
+      "original_question": "What text/tool entries were added recently, relative to the saved observation?",
+      "origin_excerpt": "| Q4 | What text/tool entries were added recently, relative to the saved observation? | README's difficulty keeping up with frequent additions | Q4; catalog-addition date is not release date or modification time |",
+      "query_origin": "db/queries.sql Q4",
+      "query_origin_sha256": "35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1",
+      "student_historical_evidence": false
+    },
+    "Q05": {
+      "origin_kind": "published_m2_query",
+      "origin_file": "docs/milestone2_questions.md",
+      "origin_sha256": "5201bd7c83dbebf5a541b378e20bd57263c1df48268047d0d40a1b5177951554",
+      "original_question": "What metadata groups are omitted from endpoint coverage?",
+      "origin_excerpt": "| Q5 | What metadata groups are omitted from endpoint coverage? | Need to trust the basis of comparison | Q5; actual representation check, not human fairness |",
+      "query_origin": "db/queries.sql Q5",
+      "query_origin_sha256": "35e55438b3583085524ac9c3c1a742615ab8fae43c33f03e41b5b8963b405cc1",
+      "student_historical_evidence": false
+    },
+    "Q06": {
+      "origin_kind": "student_selected_proposal",
+      "created_on": "2026-11-12",
+      "original_question": "How many stored entries have advertised tool support?",
+      "student_historical_evidence": false,
+      "origin_file": "docs/running_questions_2026-11-14.md",
+      "origin_sha256": "ed547e3054ef1042f8e08cc476f2790d4e8df6de51812f8b9fa1063305c98c84",
+      "origin_excerpt": "| Q06 | How many stored entries have advertised tool support? | Kept by the student on November 22. |"
+    },
+    "Q07": {
+      "origin_kind": "new_assistant_candidate",
+      "created_on": "2026-11-12",
+      "original_question": "What context sizes are stored for the first ten catalog IDs?",
+      "student_historical_evidence": false
+    },
+    "Q08": {
+      "origin_kind": "student_selected_proposal",
+      "created_on": "2026-11-12",
+      "original_question": "How many entries are missing usable base-token prices?",
+      "student_historical_evidence": false,
+      "origin_file": "docs/running_questions_2026-11-14.md",
+      "origin_sha256": "ed547e3054ef1042f8e08cc476f2790d4e8df6de51812f8b9fa1063305c98c84",
+      "origin_excerpt": "| Q08 | How many entries are missing usable base-token prices? | Kept by the student on November 22. |"
+    },
+    "Q09": {
+      "origin_kind": "new_assistant_candidate",
+      "created_on": "2026-11-12",
+      "original_question": "How many catalog IDs and canonical identities are stored?",
+      "student_historical_evidence": false
+    },
+    "Q10": {
+      "origin_kind": "student_selected_proposal",
+      "created_on": "2026-11-12",
+      "original_question": "When did the sync last succeed and what changed in the past seven days?",
+      "student_historical_evidence": false,
+      "origin_file": "docs/running_questions_2026-11-14.md",
+      "origin_sha256": "ed547e3054ef1042f8e08cc476f2790d4e8df6de51812f8b9fa1063305c98c84",
+      "origin_excerpt": "| Q10 | When did the sync last succeed and what changed in the past seven days? | Kept by the student on November 22. |"
+    },
+    "Q11": {
+      "origin_kind": "new_assistant_candidate",
+      "created_on": "2026-11-12",
+      "original_question": "How many endpoints did we collect for each of the first ten stored entries?",
+      "student_historical_evidence": false
+    },
+    "Q12": {
+      "origin_kind": "new_assistant_candidate",
+      "created_on": "2026-11-12",
+      "original_question": "How many of our stored routes belong to each provider?",
+      "student_historical_evidence": false
+    },
+    "Q13": {
+      "origin_kind": "new_assistant_candidate",
+      "created_on": "2026-11-12",
+      "original_question": "Which model will reliably finish my HERMES homelab tasks without retries?",
+      "student_historical_evidence": false
+    },
+    "Q14": {
+      "origin_kind": "new_assistant_candidate",
+      "created_on": "2026-11-12",
+      "original_question": "What is another user's private API key and their exact monthly bill?",
+      "student_historical_evidence": false
+    },
+    "Q15": {
+      "origin_kind": "new_assistant_candidate",
+      "created_on": "2026-11-12",
+      "original_question": "Which provider was cheapest every day last year, including models missing from the sample?",
+      "student_historical_evidence": false
+    }
+  }
+}

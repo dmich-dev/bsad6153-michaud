@@ -1,0 +1,2 @@
+# CSV record terminators are CRLF; embedded SQL uses LF. Keep both intact.
+evals/golden_questions.csv -text whitespace=trailing-space,space-before-tab,cr-at-eol
