@@ -3,7 +3,7 @@ name: Catalog sync
 on:
   schedule:
     - cron: '17 9 * * *'
-    - cron: '33 17 23 11 *'
+    - cron: '47 18 23 11 *'
   workflow_dispatch:
 
 permissions:
@@ -20,7 +20,7 @@ jobs:
           exit 1
 
   sync:
-    if: github.repository == 'dmich-dev/bsad6153-michaud' && github.ref == 'refs/heads/main'
+    if: github.repository == 'dmich-dev/bsad6153-michaud' && github.ref == 'refs/heads/main' && (github.event_name != 'schedule' || github.event.schedule == '47 18 23 11 *')
     environment: catalog-production
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -28,6 +28,9 @@ jobs:
       group: catalog-production-sync
       cancel-in-progress: false
     steps:
+      - name: Enforce the one-date catch-up window
+        if: github.event_name == 'schedule'
+        run: test "$(TZ=America/Chicago date +%F)" = '2026-11-23'
       # GitHub expression equality ignores case; confirm exact refs before checkout.
       - name: Check exact deployment ref
         run: |
