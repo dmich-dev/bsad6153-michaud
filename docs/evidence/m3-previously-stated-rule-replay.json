@@ -1,0 +1,46 @@
+{
+  "scope": "disposable PostgreSQL; identical synthetic source, not a hosted sync",
+  "student_rule_source": "https://www.loom.com/share/553667de249549b4b422f01b6086bdd7",
+  "student_rule_timestamp": "3:27",
+  "student_rule": "If neither changed, it leaves that row alone.",
+  "numeric_prediction_author": "Hermes",
+  "frozen_at": "2026-11-23T04:44:12.460637+00:00",
+  "before_receipt_sha256": "49e51f148375811365d112eb9c6c9be95d484504bf81016ce424c507f3b12305",
+  "prediction": {
+    "reason": "The snapshot has the same natural IDs and content; no stable IDs or fingerprints should change. Fetch count is objects inspected, not changed database rows.",
+    "status": "success",
+    "records_fetched": 7,
+    "records_inserted": 0,
+    "records_updated": 0
+  },
+  "observed_run": {
+    "run_id": 2,
+    "started_at": "2026-11-23 04:46:11.080020+00:00",
+    "finished_at": "2026-11-23 04:46:11.162838+00:00",
+    "status": "success",
+    "records_fetched": 7,
+    "records_inserted": 0,
+    "records_updated": 0,
+    "trigger": "manual",
+    "table_counts": {
+      "providers": {
+        "updated": 0,
+        "inserted": 0
+      },
+      "catalog_entries": {
+        "updated": 0,
+        "inserted": 0
+      },
+      "canonical_models": {
+        "updated": 0,
+        "inserted": 0
+      },
+      "serving_endpoints": {
+        "updated": 0,
+        "inserted": 0
+      }
+    }
+  },
+  "unchanged_business_tables": true,
+  "matches_prediction": true
+}
