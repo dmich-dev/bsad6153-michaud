@@ -1,0 +1,54 @@
+name: Catalog sync
+
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reject-other-refs:
+    if: github.repository != 'dmich-dev/bsad6153-michaud' || github.ref != 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - run: |
+          printf '%s\n' 'Production sync is available only on the original repository main branch.' >&2
+          exit 1
+
+  sync:
+    if: github.repository == 'dmich-dev/bsad6153-michaud' && github.ref == 'refs/heads/main'
+    environment: catalog-production
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    concurrency:
+      group: catalog-production-sync
+      cancel-in-progress: false
+    steps:
+      # GitHub expression equality ignores case; confirm exact refs before checkout.
+      - name: Check exact deployment ref
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/main'
+          test "$GITHUB_REPOSITORY" = 'dmich-dev/bsad6153-michaud'
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13.18'
+          architecture: x64
+      - name: Install hash-locked wheels
+        env:
+          PIP_CONFIG_FILE: /dev/null
+        run: |
+          python -I -m venv "$RUNNER_TEMP/catalog-venv"
+          "$RUNNER_TEMP/catalog-venv/bin/python" -I -m pip --isolated install --no-cache-dir --disable-pip-version-check \
+            --only-binary=:all: --require-hashes --index-url https://pypi.org/simple -r requirements-sync.txt
+      - name: Fetch anonymous metadata and commit an audited sync
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          # Only fixed event-name literals enter the command, not dispatch input.
+          SYNC_TRIGGER: ${{ github.event_name == 'schedule' && 'schedule' || 'manual' }}
+        run: '"$RUNNER_TEMP/catalog-venv/bin/python" -I -B ingest/sync.py --trigger "$SYNC_TRIGGER"'

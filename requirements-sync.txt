@@ -1,0 +1,3 @@
+# CPython 3.13, Ubuntu x86-64. Only the reviewed PyPI wheels are accepted.
+psycopg[binary]==3.3.9 --hash=sha256:d2d7d04a1ce6dab4f5b27316bea3b52585cafa2f2d631e5b09dd69823f5c26f6
+psycopg-binary==3.3.9 --hash=sha256:180e4a99904d7a77f826fbb6dd16834bb3313675d8a6f055e39742fda00c33dc

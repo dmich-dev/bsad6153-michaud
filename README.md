@@ -70,11 +70,11 @@ every command before you approve it, and keep auto-approve off.
 
 | Secret | On your computer | On Render (website) | In GitHub Actions (sync) |
 |---|---|---|---|
-| `DATABASE_URL` (owner) | `.env` | **never** | Actions secret |
-| `APP_DATABASE_URL` (read-only) | `.env` | environment setting | if your checks need it |
+| `DATABASE_URL` | private SQL administrator connection for provisioning only | **never** | `catalog-production` environment secret: **dedicated sync writer only; never the owner** |
+| `APP_DATABASE_URL` (read-only) | `.env` | environment setting | no |
 | `AGENT_DATABASE_URL` | `.env` | environment setting | no |
 | LLM key, `APP_PASSWORD` | `.env` | environment setting | no |
-| Data API key | `.env` | no | Actions secret |
+| Data API key | not needed by the sync | no | no; the OpenRouter catalog is fetched anonymously |
 
 `.env.example` lists the names only. If a secret ever leaks, revoke or rotate it first, then tell the instructor.
 
@@ -118,3 +118,25 @@ every command before you approve it, and keep auto-approve off.
 ## Credits
 
 <!-- Your data API's required attribution, plus any open-source code or samples you used. -->
+
+## Milestone 3: production catalog sync
+
+**Schedule:** daily at **09:17 UTC** (`17 9 * * *`). A maintainer can also use **Actions → Catalog sync → Run workflow → main**. The production job accepts only this repository’s `main`; other refs fail without receiving the environment secret. No PR, push, fixture or dry-run trigger is configured.
+
+### Enable once
+
+1. As database administrator, review the SQL privately. For an **empty** PostgreSQL 15+ database, apply `db/schema.sql`, then `db/milestone3.sql` and `db/roles.sql`, stopping on errors. For an existing Milestone 2/3 database, compare its schema and grants to those files; **do not rerun the baseline, drop data, or replace a working `app_reader`**. Only apply a missing reviewed migration. Confirm that `app_reader` can select the catalog and `sync_runs` but cannot write them.
+2. In the target database, privately run `db/sync_writer.sql` once as the administrator. This creates a **new** `catalog_sync_writer`; a collision or inherited write/DDL privileges abort the transaction. It grants no membership, ownership, grant options, sequence management, DELETE or schema CREATE. It grants column-specific inserts and updates on the six sync tables. Keep public writable schemas, privileged user-defined `SECURITY DEFINER` routines, and unsafe triggers out of reach of this login; review these and row-level policies before activation. The script does not change PUBLIC grants, RLS, or existing roles. Ordinary PUBLIC connection, temporary-object and function privileges are not revoked. If the checks fail, investigate rather than granting a broader role.
+3. Set a unique generated password privately (e.g. the interactive `\password catalog_sync_writer` command in an authenticated `psql` administrator session). Keep it out of shell history, repository files, logs and chat. In GitHub **Settings → Environments**, create/verify `catalog-production` and restrict **deployment branches/tags to the branch `main` only**, with no tag patterns. Protect `main` and review changes to the workflow, ingestion code and dependency lock. For unattended schedules, do not enable a mandatory per-run human reviewer unless you intend to approve each run.
+4. In **that environment only**, set `DATABASE_URL` to the writer’s Supabase PostgreSQL URI. Do not also define a repository/organization fallback secret of that name. Use the project’s **Session pooler**, port `5432`, database `postgres`, username `catalog_sync_writer.<project-ref>`; percent-encode reserved characters in the password. A direct `db.<project-ref>.supabase.co` connection uses username `catalog_sync_writer` and requires runner connectivity. Use `postgresql://` and no query string, fragment or local certificate path. Transaction poolers on `6543` are not suitable for session advisory locking. The sync enforces `verify-full`, checks the actual database identity and resolves `db/supabase-root-2021.crt` from the checkout. The public CA’s file SHA-256 is `700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7`; verify against the [Supabase Studio certificate configuration](https://github.com/supabase/supabase/blob/4a73166675642dc3c1d1fc767a65adbee746d894/apps/studio/hooks/custom-content/custom-content.json) when rotating. Never put the `postgres` URI, the reader URI, or an OpenRouter key in this workflow.
+5. Enable Actions and land the reviewed workflow on default branch `main`. Dispatch once from `main`. Verify an actual fetch and the matching committed row below. A manual success is **not** scheduled-run evidence. The schedule can start late; count only completed jobs with event `schedule` and a corresponding successful nonempty `sync_runs` row. An unchanged snapshot is a real fetch (positive fetched count, zero inserted/updated), not a skipped job.
+
+```sql
+SELECT run_id, trigger, started_at, finished_at, status,
+       records_fetched, records_inserted, records_updated, error_message
+FROM public.sync_runs ORDER BY run_id DESC LIMIT 10;
+```
+
+**Coverage and failure behavior.** The source is [OpenRouter catalog metadata](https://openrouter.ai/api/v1/models), not inference. Each attempt paginates the full catalog and samples provider details for up to ten recent text/tool-capable models. This is a full retrieval followed by SHA-256 change detection, not a source modification cursor. Equal payloads retain their timestamps; missing records are not deleted. An incomplete/invalid snapshot does not advance the checkpoint. Counts of inserted/updated rows span four normalized tables and need not equal the number of fetched source records. The workflow fails on a partial run, missing secret or unavailable database. If the DB is unreachable before the attempt is logged, only the failed Actions run can serve as evidence. Temporarily disable **Catalog sync** in Actions to pause; rotate/revoke the writer credential privately if necessary.
+
+**Local verification (no hosted database):** on Linux x86-64/Python 3.13, install `requirements-sync.txt` in a fresh venv with `--only-binary=:all: --require-hashes`; run `python -I -B -m unittest discover -s tests` and `python -I -B tests/accept_postgres.py --pg-bin /path/to/postgresql/17/bin`. The latter creates, tests and stops its own disposable cluster in `TMPDIR`; use a private, short, writable path as a non-root OS user. It does not accept an existing database URL.
