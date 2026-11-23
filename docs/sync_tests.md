@@ -31,7 +31,13 @@ At **10:50 p.m. CST on November 22** (04:50:02 UTC on November 23), `evals/check
 
 The integrated source at commit `105d24c8194360d25302010597dadbb1c9ac8274` also passed 121 tests (zero skipped) and 14 CLI acceptance checks on disposable PostgreSQL. Those are local regression checks, not hosted syncs.
 
-**Schedule evidence:** the [recorded GitHub fixture](https://github.com/dmich-dev/bsad6153-michaud/actions/runs/45029944115) was triggered by a push; live runs 1 and 2 were manual. None is a qualifying scheduled success; the repository’s Actions history returned **0 successful `schedule` events** at this documentation check. The evidence still lacks three successful automatic runs over at least 48 hours and the later scheduled-run reference comparison. No student pre-run prediction is inferred from any of these receipts.
+### Live workflow on the default branch
+
+On November 22, 2026 (Central), the [production workflow](https://github.com/dmich-dev/bsad6153-michaud/blob/133d6e21e82fb1addf75eeffd9aa718ceca951b4/.github/workflows/sync.yml) was deployed to `main` without merging the older milestone branches. It reads anonymous OpenRouter metadata and uses a dedicated `catalog_sync_writer` through a main-only GitHub environment. The database owner password is not used by GitHub. The workflow is configured to run daily at **09:17 UTC** and also accepts an explicit manual dispatch. The daily interval limits source requests; an upstream outage or a delayed job can leave the data older than 24 hours.
+
+The first [hosted manual run, 45115971859](https://github.com/dmich-dev/bsad6153-michaud/actions/runs/45115971859), succeeded on its first attempt. GitHub started it at **05:09:08 UTC on November 23**. The matching Supabase `sync_runs` row was **3**, `manual`, `success`, **771 fetched, 0 inserted, 12 updated**. Its database transaction finished at 05:12:20 UTC (11:12 p.m. Central on November 22). This is a different run from both the earlier locally started manual success and the push-triggered fixture. The [matched GitHub and database receipt](evidence/m3-first-hosted-manual-dispatch.json) records the timestamps and deployed commit.
+
+This hosted dispatch verifies that the production job can fetch and commit changes, but does **not** count toward the three successful `schedule` events spanning 48 hours. The corrected-set baseline above also still needs a follow-up after two genuine scheduled updates.
 
 ## Historical local failure and reference checks — November 14, 2026
 
