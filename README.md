@@ -2,7 +2,7 @@
 
 **Student:** David Michaud (DJ)
 **My decision:** Choose an AI model for coding or agent tasks, a decision I make daily.
-**Website:** Planned for Week 4.
+**Website:** Milestone 4 review branch. No verified public HTTPS address yet. The private catalogue preview is not the public deployment.
 
 This repository is one complete AI system, built over eight weeks: a real API, synced on a schedule into a
 PostgreSQL database, shown on a public website, with a chatbot and an agent that answer and act from your
@@ -72,8 +72,8 @@ every command before you approve it, and keep auto-approve off.
 |---|---|---|---|
 | `DATABASE_URL` | private SQL administrator connection for provisioning only | **never** | `catalog-production` environment secret: **dedicated sync writer only; never the owner** |
 | `APP_DATABASE_URL` (read-only) | `.env` | environment setting | no |
-| `AGENT_DATABASE_URL` | `.env` | environment setting | no |
-| LLM key, `APP_PASSWORD` | `.env` | environment setting | no |
+| `AGENT_DATABASE_URL` | not used by this website | no | no |
+| LLM key, `APP_PASSWORD` | not used by this website | no | no |
 | Data API key | not needed by the sync | no | no; the OpenRouter catalog is fetched anonymously |
 
 `.env.example` lists the names only. If a secret ever leaks, revoke or rotate it first, then tell the instructor.
@@ -82,15 +82,13 @@ every command before you approve it, and keep auto-approve off.
 
 ## Deploying on Render (Week 4)
 
-1. Claim your free domain through the GitHub Student Developer Pack.
-2. In Render, choose **New &gt; Blueprint**, pick this repository, and enter each secret when asked.
-   (`render.yaml` describes the service.) Or create a **Web Service** by hand with:
-   - Build command: `pip install -r requirements.txt`
-   - Start command: `streamlit run app/streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true`
-   - Environment variables: `PYTHON_VERSION=3.12.4`, `APP_DATABASE_URL`, and later your LLM key and `APP_PASSWORD`
-3. Under **Settings &gt; Custom Domains**, add your domain, then add the DNS records Render shows you at your
-   registrar. Ask your agent to explain each record before you add it. HTTPS turns on automatically.
-4. Free services sleep when idle and take about a minute to wake. Say so on your site.
+**Run locally:** In a project virtual environment, `python -m pip install -r requirements-app.txt`. Make only `APP_DATABASE_URL` available to the app using the private `app_reader` session-pooler URI; do not run it with the administrator or sync writer's environment. From the project root: `python -m streamlit run app/streamlit_app.py --server.address 127.0.0.1`. The tested data source is the existing project database, not an embedded sample. The checked-in `db/supabase-root-2021.crt` is a public trust certificate, not a password.
+
+**Cache:** The planned cache lifetime is five minutes. The sync runs daily and the freshness target is 24 hours. A one-day cache could hide an entire successful update; querying the pooler on every widget interaction would repeat identical work. A five-minute cache bounds the normal visibility delay for a particular query after a committed update. The banner uses the most recent successful **sync**, not the time a visitor opened the page. See the code tour and direct database checks for the implementation.
+
+**Public release:** Confirm permitted display of the selected metadata before publishing; public API access and attribution do not, on their own, settle republication rights. Following review, release the approved app on `main`, then create a **Free web service** using `render.yaml`. Only `APP_DATABASE_URL` is requested as a secret. Do not copy a general-purpose `.env`, owner URL, writer URI, LLM API key, or private usage logs into Render. The platform provides `PORT`. Free web services can sleep after 15 minutes without traffic and take about a minute to wake ([Render documentation](https://render.com/docs/free)). A green health endpoint checks that Streamlit started, not that the catalogue can reach its database.
+
+**Domain:** Claim the student benefit if eligible. Record the actual renewal price and currency before accepting it. Add the custom domain in Render, then use **that service's** exact DNS targets at the registrar. A CNAME aliases a hostname to Render; an A record points a hostname at an IPv4 address; an ALIAS/ANAME can give an apex host a provider-managed target without using a conventional CNAME. Only add verification records if requested, and leave mail records alone. Once DNS and the certificate are ready, open the HTTPS site without credentials and verify both live views. Add the verified URL at the top of this README. If student approval is pending at the deadline, the instructor accepts the verified `onrender.com` URL with an actual pending-application screenshot; redact private education documents, identifiers and codes.
 
 ---
 

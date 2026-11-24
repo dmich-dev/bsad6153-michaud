@@ -1,0 +1,9 @@
+# What the public site may show | pre-release decision
+
+The Milestone 1 ethics check explicitly left public display unresolved. The [models API reference](https://openrouter.ai/docs/api/api-reference/models/list-all-models-and-their-properties) documents the fields the app needs. The [OpenRouter Terms, section 12](https://openrouter.ai/terms) reserve rights in the service's materials, including data and compilations. I did not locate an explicit authorization in those two sources for this particular public comparison site. That is not a finding that every use is forbidden: it is a limit on the evidence we have. Attribution alone does not settle it.
+
+The proposed display is narrow: catalogue ID, provider/route name, supported filters, listed input/output token prices, advertised limits, the project's example cost, and its last successful sync time. No full payloads, model descriptions, logos, prompts, bills, credentials, personal usage logs, or employer details. Credit OpenRouter, link to the source, label listed versus calculated values, and never imply endorsement or benchmark results.
+
+**Question prepared for the source owner, not sent:** “May a noncommercial student project display a filtered subset of model IDs, advertised limits, supported parameters, public base prices and sampled provider routes retrieved from your documented API? The site would link to OpenRouter, show when prices were checked, and would not redistribute raw downloads or use branding. Is a particular attribution or other restriction required?”
+
+A written permission or an applicable documented grant can close this gate. A response from the instructor can clarify the assignment but cannot grant rights the instructor does not own. Until the scope is resolved, use the private app for verification. A narrower aggregate-only presentation or differently licensed data would change the project; do not silently substitute it for the work under review.
