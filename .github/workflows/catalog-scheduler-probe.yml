@@ -1,0 +1,21 @@
+name: Catalog scheduler probe (no database access)
+
+on:
+  schedule:
+    - cron: '43,58 3 * * *'
+
+permissions: {}
+
+jobs:
+  scheduler-probe:
+    if: github.repository == 'dmich-dev/bsad6153-michaud' && github.ref == 'refs/heads/main' && github.event_name == 'schedule'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Confirm native scheduling reached a runner
+        env:
+          CRON_EXPRESSION: ${{ github.event.schedule }}
+        run: |
+          test "$GITHUB_EVENT_NAME" = schedule
+          test "$CRON_EXPRESSION" = '43,58 3 * * *'
+          printf 'Native schedule reached runner at %s UTC\n' "$(date -u +%Y-%m-%dT%H:%M:%S)"
